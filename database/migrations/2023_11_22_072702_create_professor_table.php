@@ -13,10 +13,11 @@ class CreateProfessorTable extends Migration
      */
     public function up()
     {
-        Schema::create('Professor', function (Blueprint $table) {
+        Schema::create('professor', function (Blueprint $table) {
             $table->increments('id');
             $table->string('fish')->nullable();
             $table->string('image')->nullable();
+            $table->string('slug')->nullable();
             $table->mediumText('small_desc')->nullable();
             $table->float('custom_ball')->nullable();
             $table->boolean('status')->nullable();
@@ -31,6 +32,6 @@ class CreateProfessorTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Professor');
+        Schema::dropIfExists('professor');
     }
 }
