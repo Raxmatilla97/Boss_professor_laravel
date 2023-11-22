@@ -28,8 +28,7 @@ class ProfessorController extends AdminController
 
         $grid->column('id', __('Id'));
         $grid->column('fish', __('Fish'));
-        $grid->column('image')->image();
-        $grid->column('small_info', __('Small info'));
+        $grid->column('image', __('Image'));       
         $grid->column('custom_ball', __('Custom ball'));
         $grid->column('status', __('Status'));
         $grid->column('created_at', __('Created at'));
@@ -51,7 +50,7 @@ class ProfessorController extends AdminController
         $show->field('id', __('Id'));
         $show->field('fish', __('Fish'));
         $show->field('image', __('Image'));
-        $show->field('small_info', __('Small info'));
+        $show->field('small_desc', __('Small desc'));
         $show->field('custom_ball', __('Custom ball'));
         $show->field('status', __('Status'));
         $show->field('created_at', __('Created at'));
@@ -69,10 +68,9 @@ class ProfessorController extends AdminController
     {
         $form = new Form(new Professor());
 
-        $form->text('fish', __('Fish'));
-        $form->image('image', __('Image'));
-        $form->textarea('small_info', __('Small info'));
-        $form->decimal('custom_ball', __('Custom ball'));
+        $form->text('fish', __('Professor F.I.SH'));
+        $form->image('image')->image();   
+        $form->decimal('custom_ball', __('To\'plagan bali'));
         $form->switch('status', __('Status'));
 
         return $form;
