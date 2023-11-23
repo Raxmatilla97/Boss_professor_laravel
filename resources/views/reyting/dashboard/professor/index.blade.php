@@ -18,12 +18,11 @@
                             <thead>
                                 <tr>
                                     <th class="border px-4 py-2">ID</th>
-                                    <th class="border px-4 py-2">Fish</th>
-                                    <th class="border px-4 py-2">Image</th>
+                                    <th class="border px-4 py-2">Professor F.I.SH</th>
+                                    <th class="border px-4 py-2">Surati</th>
                                     <th class="border px-4 py-2">Status</th>
-                                    <th class="border px-4 py-2">Custom Ball</th>
-                                    <th class="border px-4 py-2">Small Info</th>
-                                    <th class="border px-4 py-2">Actions</th>
+                                    <th class="border px-4 py-2">To'plagan ballari</th>                                  
+                                    <th class="border px-4 py-2">Amaliyot</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -32,15 +31,15 @@
                                         <td class="border px-4 py-2">{{ $item->id }}</td>
                                         <td class="border px-4 py-2">{{ $item->fish }}</td>
                                         <td class="border px-4 py-2">{{ $item->image }}</td>
-                                        <td class="border px-4 py-2">{{ $item->status ? 'Active' : 'Inactive' }}</td>
+                                        <td class="border px-4 py-2">{{ $item->status ? 'Aktiv!' : 'Aktiv emas' }}</td>
                                         <td class="border px-4 py-2">{{ $item->custom_ball }}</td>
-                                        <td class="border px-4 py-2">{{ $item->small_info }}</td>
+                                       
                                         <td class="border px-4 py-2">
-                                            <a href="{{ route('professors.edit', $item->id) }}" class="text-blue-500">Edit</a>
+                                            <a href="{{ route('professors.edit', $item->id) }}" class="text-blue-500">Tahrirlash</a>
                                             <form action="{{ route('professors.destroy', $item->id) }}" method="POST" class="inline-block">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="text-red-500">Delete</button>
+                                                <button type="submit" class="text-red-500">O'chirish</button>
                                             </form>
                                         </td>
                                     </tr>
