@@ -13,6 +13,7 @@ class Professor extends Model
         'image',
         'status',
         'custom_ball',
-        'small_info'
+        'small_info',
+        'slug_number'
     ];
 }

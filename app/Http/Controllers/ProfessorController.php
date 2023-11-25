@@ -14,7 +14,7 @@ class ProfessorController extends Controller
      */
     public function index()
     {
-        $professors = Professor::all();
+        $professors = Professor::paginate(25);
 
         return view('reyting.dashboard.professor.index', compact('professors'));
     }
@@ -38,18 +38,52 @@ class ProfessorController extends Controller
     public function store(Request $request)
     {
         $validated = $this->validate($request, [
-            "fish" => "string",
-            "image" => "string",
+            "fish" => "required|string|min:5|max:100",
+            "image" => "required|mimes:png,jpg,jpeg|max:3024",
             "status" => "boolean",
-            "custom_ball" => "float",
-            "small_info" => "text"
+            'small_info' => 'nullable|string'
+        ], [
+            'fish.required' => 'F.I.SH maydoni majburiy.',
+            'fish.string' => 'F.I.SH  maydoni matn bo\'lishi kerak.',
+            'fish.min' => 'F.I.SH maydoni kamida 5 belgi bo\'lishi kerak.',
+            'fish.max' => 'F.I.SH maydoni maksimum 100 belgidan kam bo\'lishi kerak.',
+            'image.required' => 'Rasm majburiy! rasm joylashingiz kerak.',
+            'image.mimes' => 'Rasm png, jpg, jpeg turlaridan biri bo\'lishi kerak.',
+            'image.max' => 'Rasm :max kilobaytdan katta bo\'lmasligi kerak.',            
+            'small_info.string' => 'Professor haqida ma\'lumot maydoni matn bo\'lishi kerak.',
         ]);
+    
+        $tempPath = $request->image->path(); // Temp fayl joylashuvi
+        $fileName = time().'.'.$request->image->extension();
+        $publicPath = public_path('uploads/'.$fileName); // Public fayl joylashuvi
+    
+        // Faylni temp papkadan public papkaga ko'chirish
+        move_uploaded_file($tempPath, $publicPath);
 
-        Professor::create($validated);
+        // Slug uchun generatsiya kodi
 
-        return back()->with('message', 'item stored successfully');
+        $lowercase_letters = 'abcdefghijklmnopqrstuvwxyz';
+        $uppercase_letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $numbers = '0123456789';
+
+        $random_string = substr(str_shuffle($lowercase_letters), 0, 4) .
+                        substr(str_shuffle($uppercase_letters), 0, 4) .
+                        substr(str_shuffle($numbers), 0, 5) .
+                        substr(str_shuffle($lowercase_letters.$uppercase_letters.$numbers), 0, 6);
+                        
+     
+        $slug_number = $random_string;
+        // Professor modelini yaratish va ma'lumotlarni saqlash
+        $professor = Professor::create([
+            'fish' => $validated['fish'],
+            'image' => $fileName,
+            'status' => $validated['status'] ?? 0,
+            'small_info' => $validated['small_info'],
+            'slug_number' => $slug_number
+        ]);
+    
+        return redirect()->route('professors.edit', $professor->slug_number)->with('toaster', ['success', "Yangi professor yaratildi!"]);
     }
-
     /**
      * Display the specified resource.
      *
@@ -67,9 +101,11 @@ class ProfessorController extends Controller
      * @param  \App\Models\Professor $professor
      * @return \Illuminate\Http\Response
      */
-    public function edit(Professor $professor)
-    {
-        return view('professors.edit', compact('professor'));
+    public function edit($slug_number)
+    {       
+        $professor = Professor::where('slug_number', $slug_number)->firstOrFail();
+       
+        return view('reyting.dashboard.professor.edit', compact('professor'));
     }
 
     /**
@@ -82,16 +118,36 @@ class ProfessorController extends Controller
     public function update(Request $request, Professor $professor)
     {
         $validated = $this->validate($request, [
-            "fish" => "string",
-            "image" => "string",
+            "fish" => "required|string|min:5|max:100",
+            "image" => "nullable|mimes:png,jpg,jpeg|max:3024",
             "status" => "boolean",
-            "custom_ball" => "float",
-            "small_info" => "text"
+            'small_info' => 'nullable|string'
+        ], [
+            'fish.required' => 'F.I.SH maydoni majburiy.',
+            'fish.string' => 'F.I.SH  maydoni matn bo\'lishi kerak.',
+            'fish.min' => 'F.I.SH maydoni kamida 5 belgi bo\'lishi kerak.',
+            'fish.max' => 'F.I.SH maydoni maksimum 100 belgidan kam bo\'lishi kerak.',
+            'image.required' => 'Rasm majburiy! rasm joylashingiz kerak.',
+            'image.mimes' => 'Rasm png, jpg, jpeg turlaridan biri bo\'lishi kerak.',
+            'image.max' => 'Rasm :max kilobaytdan katta bo\'lmasligi kerak.',            
+            'small_info.string' => 'Professor haqida ma\'lumot maydoni matn bo\'lishi kerak.',
         ]);
+
+        if ($request->hasFile('image')) {
+            $tempPath = $request->image->path(); // Temp fayl joylashuvi
+            $fileName = time().'.'.$request->image->extension();
+            $publicPath = public_path('uploads/'.$fileName); // Public fayl joylashuvi
+        
+            // Faylni temp papkadan public papkaga ko'chirish
+            move_uploaded_file($tempPath, $publicPath);
+    
+            // Yangi fayl nomini validated ma'lumotlarga qo'shish
+            $validated['image'] = $fileName;
+        }
 
         $professor->update($validated);
 
-        return back()->with('message', 'item updated successfully');
+        return back()->with('toaster', ['success', "Professor ma'lumotlari o'zgartirildi"]);
     }
 
     /**
@@ -100,10 +156,11 @@ class ProfessorController extends Controller
      * @param  \App\Models\Professor $professor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Professor $professor)
+    public function destroy($slug_number)
     {
+        $professor = Professor::where('slug_number', $slug_number)->firstOrFail();
         $professor->delete();
 
-        return back()->with('message', 'item deleted successfully');
+        return back()->with('toaster', ['success', "Professor o'chirildi!"]);
     }
 }
