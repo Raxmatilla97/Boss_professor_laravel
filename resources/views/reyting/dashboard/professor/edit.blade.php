@@ -43,93 +43,176 @@
             }
         </script>
     @endif
-    
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <div class="container mx-auto">
-                        <h1 class="text-2xl font-bold mb-6">Professor ma'lumotlarinio tahrirlash sahifasi</h1>
 
-                        @if ($message = Session::get('success'))
-                        <div class="alert alert-success alert-dismissible fade show mb-2 mt-4" role="alert">
-                            {{ $message }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
 
-                    {{-- @if(session('message'))
-                        <div class="alert alert-success">
-                            {{ session('message') }}
-                        </div>
-                    @endif --}}
-                
-                   
-                        <form action="{{ route('professors.update', ['professor' => $professor]) }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            @method('PATCH') 
-                            <div class="mb-5">
-                                <label for="fish" class="block text-gray-600">Professor F.I.SH to'liq yozing:</label>
-                                <input type="text" name="fish" value="{{ old('fish') ?? $professor->fish }}" id="fish" class="border px-4 py-2 w-full" required>
-                                @error('fish')
-                                <span class="text-red-500">{{ $message }}</span>
-                                @enderror
+
+  <!-- head bo'lagi o'zgartirib, kerakli stil va skriptlarni qo'shing -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Tablarni boshqarish uchun JavaScript kodi
+        const tabs = document.querySelectorAll('.tab-link');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach((tab, index) => {
+            tab.addEventListener('click', () => {
+                // Aktiv tabni tanlash
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                // Faol kontentni ko'rsatish
+                tabContents.forEach(tc => tc.classList.add('hidden'));
+                tabContents[index].classList.remove('hidden');
+            });
+        });
+    });
+</script>
+</head>
+<body>
+<div class="container mx-auto my-8" style="max-width: 1300px;">
+    <div class="border rounded">
+        <ul class="flex">
+            <li class="mr-1">
+                <a href="#" class="block py-2 px-4 bg-gray-200 text-gray-800 font-semibold hover:bg-gray-300 focus:outline-none focus:bg-gray-300 tab-link">Professor haqida ma'lumotlar</a>
+            </li>
+            <li class="mr-1">
+                <a href="#" class="block py-2 px-4 bg-gray-200 text-gray-800 font-semibold hover:bg-gray-300 focus:outline-none focus:bg-gray-300 tab-link">Moderator qo'shish</a>
+            </li>
+            <!-- Boshqa tablar uchun ham shu tarzda linklar qo'shing -->
+        </ul>
+        <div class="p-4">
+            <!-- Tab 1 kontenti -->
+            <div class="tab-content">
+                <div class="py-2">
+                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                            <div class="p-6 text-gray-900">
+                                <div class="container mx-auto">
+                                    <h1 class="text-2xl font-bold mb-6">Professor ma'lumotlarinio tahrirlash sahifasi</h1>
+            
+                                    @if ($message = Session::get('success'))
+                                    <div class="alert alert-success alert-dismissible fade show mb-2 mt-4" role="alert">
+                                        {{ $message }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                @endif
+            
+                                {{-- @if(session('message'))
+                                    <div class="alert alert-success">
+                                        {{ session('message') }}
+                                    </div>
+                                @endif --}}
+                            
+                               
+                                    <form action="{{ route('professors.update', ['professor' => $professor]) }}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PATCH') 
+                                        <div class="mb-5">
+                                            <label for="fish" class="block text-gray-600">Professor F.I.SH to'liq yozing:</label>
+                                            <input type="text" name="fish" value="{{ old('fish') ?? $professor->fish }}" id="fish" class="border px-4 py-2 w-full" required>
+                                            @error('fish')
+                                            <span class="text-red-500">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+            
+                                        <div class="mb-4">
+                                            <label for="image" class="block text-gray-600">Professor suratini yuklash:</label>
+                                            <input 
+                                                type="file" 
+                                                name="image" 
+                                                id="image"
+                                                value="{{ old('image')}}"
+                                                class="form-control @error('image') is-invalid @enderror  accept="image/*" onchange="previewImage(event)">
+                                            
+                                            @error('image')
+                                                <span class="text-red-500">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <img id="image-preview" style="width: 150px; margin: auto;" class="rounded-full" src="{{url('/uploads')}}/{{$professor->image}}" alt="Image Preview" style="display: none;">
+                                        <div class="mb-4">                              
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" value="1" name="status" class="hidden peer" {{ $professor->status == 1 ? 'checked' : '' }}>
+                                                <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300  rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all  peer-checked:bg-blue-600"></div>
+                                                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Statusini belgilash</span>
+                                              </label>
+                                        </div>
+            
+                                        <div class="mb-4">
+                                            <label for="small_info" class="block text-gray-600">Professor haqida qisqacha yozish:</label>
+                                            <textarea name="small_info" id="small_info" class="border px-4 py-2 w-full" rows="6" >{{old('small_info') ?? $professor->small_info}}</textarea>
+                                            @error('small_info')
+                                            <span class="text-red-500">{{ $message }}</span>
+                                            @enderror
+                                        </div>                
+                                   
+                            
+                                        <div class="mb-4 text-right">
+                                            <button type="submit" class="bg-blue-500 text-white py-2 px-4">Yaratish</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-
-                            <div class="mb-4">
-                                <label for="image" class="block text-gray-600">Professor suratini yuklash:</label>
-                                <input 
-                                    type="file" 
-                                    name="image" 
-                                    id="image"
-                                    value="{{ old('image')}}"
-                                    class="form-control @error('image') is-invalid @enderror  accept="image/*" onchange="previewImage(event)">
-                                
-                                @error('image')
+                        </div>
+                    </div>
+                    
+                </div>
+                <script>
+                    function previewImage(event) {
+                        var input = event.target;
+                
+                        if (input.files && input.files[0]) {
+                            var reader = new FileReader();
+                
+                            reader.onload = function (e) {
+                                document.getElementById('image-preview').src = e.target.result;
+                                document.getElementById('image-preview').style.display = 'block';
+                            }
+                
+                            reader.readAsDataURL(input.files[0]);
+                        }
+                    }
+                </script>
+            </div>
+            <!-- Tab 2 kontenti -->
+            <div class="hidden tab-content">
+                <div class="py-12">
+                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                            <div class="p-6 text-gray-900">
+                                <h1 class="text-2xl font-bold mb-6">Professorga moderator qo'shish</h1>
+                                <div class="mb-5">
+                                    <label for="moder_fish" class="block text-gray-600">Moderator F.I.SH:</label>
+                                    <input type="text" name="moder_fish" value="{{ old('moder_fish')}}" id="moder_fish" class="border px-4 py-2 w-full" required>
+                                    @error('moder_fish')
                                     <span class="text-red-500">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <img id="image-preview" style="width: 150px; margin: auto;" class="rounded-full" src="{{url('/uploads')}}/{{$professor->image}}" alt="Image Preview" style="display: none;">
-                            <div class="mb-4">                              
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" value="1" name="status" class="hidden peer" {{ $professor->status == 1 ? 'checked' : '' }}>
-                                    <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300  rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all  peer-checked:bg-blue-600"></div>
-                                    <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Statusini belgilash</span>
-                                  </label>
-                            </div>
+                                    @enderror
+                                </div>
 
-                            <div class="mb-4">
-                                <label for="small_info" class="block text-gray-600">Professor haqida qisqacha yozish:</label>
-                                <textarea name="small_info" id="small_info" class="border px-4 py-2 w-full" rows="6" >{{old('small_info') ?? $professor->small_info}}</textarea>
-                                @error('small_info')
-                                <span class="text-red-500">{{ $message }}</span>
-                                @enderror
-                            </div>                
-                       
-                
-                            <div class="mb-4 text-right">
-                                <button type="submit" class="bg-blue-500 text-white py-2 px-4">Yaratish</button>
+                                <div class="mb-4">
+                                    <label for="moder_theme_info" class="block text-gray-600">Moderator mavzusi haqida:</label>
+                                    <textarea name="moder_theme_info" id="moder_theme_info" class="border px-4 py-2 w-full" rows="4" >{{old('moder_theme_info')}}</textarea>
+                                    @error('small_info')
+                                    <span class="text-red-500">{{ $message }}</span>
+                                    @enderror
+                                </div>                
+                           
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
+
+                <div class="py-1">
+                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                            <div class="p-6 text-gray-900">
+                                {{ __("You're logged in!") }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+            <!-- Boshqa tablarning kontentlarini ham shu tarzda qo'shing -->
         </div>
     </div>
-    <script>
-        function previewImage(event) {
-            var input = event.target;
-    
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-    
-                reader.onload = function (e) {
-                    document.getElementById('image-preview').src = e.target.result;
-                    document.getElementById('image-preview').style.display = 'block';
-                }
-    
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-    </script>
+</div>
 </x-app-layout>
