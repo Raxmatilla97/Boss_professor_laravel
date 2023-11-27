@@ -50,7 +50,7 @@
           
             <div class="flex space-x-8 mt-5">
                 <button onclick="toggleModal(1)" class="bg-blue-500 text-white px-4 py-2 rounded">Moderatorlar ro'yxati</button>
-                <button class="bg-green-500 text-white px-4 py-2 rounded">Operatorlar ro'yxati</button>
+                {{-- <button class="bg-green-500 text-white px-4 py-2 rounded">Operatorlar ro'yxati</button> --}}
             </div>
 
             
