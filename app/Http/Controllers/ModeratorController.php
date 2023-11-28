@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Moderator;
+use App\Models\Professor;
 use Illuminate\Http\Request;
 use App\Models\Files;
 
@@ -29,11 +30,13 @@ class ModeratorController extends Controller
      */
     public function store(Request $request)
     {
+        // Moderator ma'lumotlarini validatsiyasi
+
         $validated = $this->validate($request, [
             "moder_fish" => "required|string|min:5|max:100",
             "moder_small_info" => "nullable|string",
             "moder_status" => "boolean",
-            'professor_id' => 'required|number'
+            'professor_id' => 'required|integer'
            
         ], [
             'moder_fish.required' => 'F.I.SH maydoni majburiy.',
@@ -59,6 +62,19 @@ class ModeratorController extends Controller
         //     'is_active' => $fileName,
         // ]);
 
+        // Professor sahifasiga qaytish uchun uni aniqlash kodi      
+        
+        $professor = Professor::find($request->professor_id);
+
+        if ($professor) {   
+
+            $professor_slug = $professor->slug_number;
+
+        } else {
+
+            return redirect()->back()->with('error', "Professor topilmadi! Sahifani yangilab qayta urunib ko'ring.");
+        }
+
         // Slug uchun generatsiya kodi
 
         $lowercase_letters = 'abcdefghijklmnopqrstuvwxyz';
@@ -68,20 +84,21 @@ class ModeratorController extends Controller
         $random_string = substr(str_shuffle($lowercase_letters), 0, 4) .
                         substr(str_shuffle($uppercase_letters), 0, 4) .
                         substr(str_shuffle($numbers), 0, 4) .
-                        substr(str_shuffle($lowercase_letters.$uppercase_letters.$numbers), 0, 3);
-                        
+                        substr(str_shuffle($lowercase_letters.$uppercase_letters.$numbers), 0, 3);                        
      
         $slug_number = $random_string;
+
         // Professor modelini yaratish va ma'lumotlarni saqlash
-        $professor = Professor::create([
-            'fish' => $validated['fish'],
-            'image' => $fileName,
-            'status' => $validated['status'] ?? 0,
-            'small_info' => $validated['small_info'],
-            'slug_number' => $slug_number
+        $moderator = Moderator::create([
+            'moder_fish' => $validated['moder_fish'],
+            'moder_slug_number' => $slug_number,
+            'moder_status' => $validated['moder_status'] ?? 0,
+            'moder_small_info' => $validated['moder_small_info'],
+            'professor_id' => $validated['professor_id']
         ]);
     
-        return redirect()->route('professors.edit', $professor->slug_number)->with('toaster', ['success', "Yangi professor yaratildi!"]);
+        return redirect()->to(route('professors.edit', $professor_slug) . '#moder')->with('toaster', ['success', "(". $request->moder_fish .") moderator sifatida yaratildi!"]);
+
     }
 
     /**

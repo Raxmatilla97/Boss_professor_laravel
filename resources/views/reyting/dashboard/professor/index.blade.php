@@ -87,12 +87,12 @@
                                             <a href="{{ route('professors.edit', $item->slug_number) }}"><span class="bg-indigo-100 text-indigo-800 text-md font-medium me-2 px-2.5 py-0.5 rounded border border-indigo-400">Tahrirlash</span></a>
                                             <div x-data="{ showModal: false }">
                                                 <!-- Modal Trigger Button -->
-                                                <button data-modal-trigger="popup-modal" @click="showModal = true" class="text-red-500">O'chirish</button>
+                                                <button data-modal-trigger="popup-modal-{{$item->id}}" @click="showModal = true" class="text-red-500">O'chirish</button>
                                             
                                                 <!-- Modal -->
-                                                <div x-show="showModal" @click.away="showModal = false" class="fixed inset-0 overflow-y-auto">                                                   
+                                                <div x-show="showModal" @click.away="showModal = true" class="fixed inset-0 overflow-y-auto">                                                   
                                                     
-                                                    <div id="popup-modal" class="relative z-10 hidden"  aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                                                    <div id="popup-modal-{{$item->id}}" class="relative z-10 hidden"  aria-labelledby="modal-title" role="dialog" aria-modal="true">
                                                     
                                                         <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
                                                     
@@ -128,22 +128,7 @@
                                                         </div>
                                                         </div>
                                                     </div>
-                                                    <script>
-                                                        document.addEventListener('DOMContentLoaded', function () {
-                                                            var modalTriggers = document.querySelectorAll('[data-modal-trigger]');
-                                                    
-                                                            modalTriggers.forEach(function (trigger) {
-                                                                trigger.addEventListener('click', function () {
-                                                                    var modalId = this.getAttribute('data-modal-trigger');
-                                                                    var modal = document.getElementById(modalId);
-                                                    
-                                                                    if (modal) {
-                                                                        modal.classList.remove('hidden'); // O'chirish uchun 'hidden' klassini olib tashlash
-                                                                    }
-                                                                });
-                                                            });
-                                                        });
-                                                    </script>
+                                                   
 
                                                 </div>
 
@@ -155,6 +140,23 @@
                                         </td>
                                     </tr>
                                 @endforeach
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        var modalTriggers = document.querySelectorAll('[data-modal-trigger]');
+                                
+                                        modalTriggers.forEach(function (trigger) {
+                                            trigger.addEventListener('click', function () {
+                                                var modalId = this.getAttribute('data-modal-trigger');
+                                                var modal = document.getElementById(modalId);
+                                
+                                                if (modal) {
+                                                    modal.classList.remove('hidden'); // O'chirish uchun 'hidden' klassini olib tashlash
+                                                }
+                                            });
+                                        });
+                                    });
+                                </script>
                             </tbody>
                         </table>
                     </div>

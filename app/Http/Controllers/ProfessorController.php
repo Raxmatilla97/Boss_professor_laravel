@@ -104,8 +104,10 @@ class ProfessorController extends Controller
     public function edit($slug_number)
     {       
         $professor = Professor::where('slug_number', $slug_number)->firstOrFail();
+        $professor_moder = $professor->moderator()->orderBy('created_at', 'desc')->paginate(12);
+        
        
-        return view('reyting.dashboard.professor.edit', compact('professor'));
+        return view('reyting.dashboard.professor.edit', compact('professor', 'professor_moder'));
     }
 
     /**

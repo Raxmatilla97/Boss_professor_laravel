@@ -22,4 +22,9 @@ class Moderator extends Model
     {
         return $this->hasMany('App\Models\Files');
     }
+
+    public function professor()
+    {
+        return $this->belongsTo('App\Models\Professor');
+    }
 }

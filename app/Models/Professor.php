@@ -16,4 +16,9 @@ class Professor extends Model
         'small_info',
         'slug_number'
     ];
+
+    public function moderator()
+    {
+        return $this->hasMany('App\Models\Moderator');
+    }
 }

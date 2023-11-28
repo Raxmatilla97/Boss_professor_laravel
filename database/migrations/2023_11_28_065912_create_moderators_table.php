@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('moder_small_info')->nullable();       
             $table->boolean('moder_status')->nullable(); 
             $table->foreignId('professor_id')->constrained('professors')->onDelete('cascade');
-            $table->foreignId('file_id')->constrained('files')->onDelete('cascade');
+            $table->foreignId('file_id')->nullable()->constrained('files')->onDelete('cascade');
             $table->timestamps();
         });
     }
