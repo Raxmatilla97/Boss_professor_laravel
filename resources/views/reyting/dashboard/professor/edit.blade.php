@@ -179,24 +179,37 @@
                         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                             <div class="p-6 text-gray-900">
                                 <h1 class="text-2xl font-bold mb-6">Professorga moderator qo'shish</h1>
-                                <div class="mb-5">
-                                    <label for="moder_fish" class="block text-gray-600">Moderator F.I.SH:</label>
-                                    <input type="text" name="moder_fish" value="{{ old('moder_fish')}}" id="moder_fish" class="border px-4 py-2 w-full" required>
-                                    @error('moder_fish')
-                                    <span class="text-red-500">{{ $message }}</span>
-                                    @enderror
-                                </div>
+                                <form action="{{ route('professors.create') }}" method="POST">
+                                    @csrf
+                                    @method('POST') 
+                                    <div class="mb-5">
+                                        <label for="moder_fish" class="block text-gray-600">Moderator F.I.SH:</label>
+                                        <input type="text" name="moder_fish" value="{{ old('moder_fish')}}" id="moder_fish" class="border px-4 py-2 w-full" required>
+                                        @error('moder_fish')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                        @enderror
+                                    </div>
 
-                                <div class="mb-4">
-                                    <label for="moder_theme_info" class="block text-gray-600">Moderator mavzusi haqida:</label>
-                                    <textarea name="moder_theme_info" id="moder_theme_info" class="border px-4 py-2 w-full" rows="4" >{{old('moder_theme_info')}}</textarea>
-                                    @error('moder_theme_info')
-                                    <span class="text-red-500">{{ $message }}</span>
-                                    @enderror
-                                </div>                
-                                <div class="mb-4 text-right">
-                                    <button type="submit" class="bg-blue-500 text-white py-2 px-4">Moderator yaratish</button>
-                                </div>
+                                    <div class="mb-4">
+                                        <label for="moder_theme_info" class="block text-gray-600">Moderator mavzusi haqida:</label>
+                                        <textarea name="moder_theme_info" id="moder_theme_info" class="border px-4 py-2 w-full" rows="4" >{{old('moder_theme_info')}}</textarea>
+                                        @error('moder_theme_info')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                        @enderror
+                                    </div>  
+                                    
+                                    <div class="mb-4">                              
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" value="1" name="moder_status" class="hidden peer" {{ old('moder_status') == 1 ? 'checked' : '' }}>
+                                            <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300  rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all  peer-checked:bg-blue-600"></div>
+                                            <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Statusini belgilash</span>
+                                        </label>
+                                    </div>
+
+                                    <div class="mb-4 text-right">
+                                        <button type="submit" class="bg-blue-500 text-white py-2 px-4">Moderator yaratish</button>
+                                    </div>
+                                </form>
                             </div>
 
                           
@@ -264,8 +277,11 @@
                                             </svg>
                                             <div class="ml-4 flex min-w-0 flex-1 gap-2">
                                             <span class="truncate font-medium">resume_back_end_developer.pdf</span>
-                                            <span class="flex-shrink-0 text-gray-400">2.4mb</span>                   
+                                            <span class="flex-shrink-0 text-gray-400">23.11.2023</span>                   
                                             </div>
+                                        </div>
+                                        <div class="mr-28 flex-shrink-0">
+                                            <span class="bg-blue-100 text-blue-800 text-md font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">Category_name  dfg df gdf gdf gfd fg</span>
                                         </div>
                                         <div class="mr-28 flex-shrink-0">
                                             <span class="bg-blue-100 text-blue-800 text-md font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">Ball: 102</span>
@@ -342,7 +358,10 @@
                                         <div id="accordion-nested-collapse-body-1" class="hidden mb-5" aria-labelledby="accordion-nested-collapse-heading-1">
                                         <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700">
                                             <p class="text-gray-500 dark:text-gray-400">
-                                                <b>Mavzu:</b>  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod fugit cumque beatae nisi! Inventore omnis, quae mollitia nemo dolore iusto quibusdam. Aspernatur dolore quasi tenetur expedita magni minima ut voluptates.
+                                                <blockquote class="p-4 my-4 border-s-4 text-sm border-gray-300 bg-gray-50 dark:border-gray-500 dark:bg-gray-800">
+                                                    <b>Mavzu:</b>  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod fugit cumque beatae nisi! Inventore omnis, quae mollitia nemo dolore iusto quibusdam. Aspernatur dolore quasi tenetur expedita magni minima ut voluptates.
+                                                </blockquote>
+                                               
 
                                             </p>
 
