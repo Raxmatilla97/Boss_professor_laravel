@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ config('app.name', 'Laravel') }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/flowbite.min.css" rel="stylesheet" />
+    <style>
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        .modal {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 80%;
+            max-height: 80%;
+            overflow: auto;
+        }
+         /* CSS styling for card */
+         .card {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Hover effect */
+        .card:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-200">
+    @include('reyting.frontend.nav')
+    @yield('content')  
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/flowbite.min.js"></script>
+</body>
+
+</html>

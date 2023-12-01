@@ -27,4 +27,9 @@ class Moderator extends Model
     {
         return $this->belongsTo('App\Models\Professor');
     }
+
+    public function operator()
+    {
+        return $this->hasMany('App\Models\Operator');
+    }
 }

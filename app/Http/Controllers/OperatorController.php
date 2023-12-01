@@ -2,20 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Professor;
+use App\Models\Operator;
 use Illuminate\Http\Request;
 
-class IndexController extends Controller
+class OperatorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $professors = Professor::orderBy('created_at', 'desc')->paginate('8');
-       
-        
-        return view('welcome', compact('professors'));
+        //
     }
 
     /**
@@ -37,20 +34,15 @@ class IndexController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($slug_number)
+    public function show(Operator $operator)
     {
-        $professor = Professor::where('slug_number', $slug_number)->firstOrFail();
-        $professor_moder = $professor->moderator()->orderBy('created_at', 'desc')->paginate(12);
-        
-       
-     
-        return view('reyting.frontend.showProfessor', compact('professor', 'professor_moder'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Operator $operator)
     {
         //
     }
@@ -58,7 +50,7 @@ class IndexController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Operator $operator)
     {
         //
     }
@@ -66,7 +58,7 @@ class IndexController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Operator $operator)
     {
         //
     }

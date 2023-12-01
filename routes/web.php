@@ -4,6 +4,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfessorController;
 use App\Http\Controllers\ModeratorController;
+use App\Http\Controllers\OperatorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [IndexController::class, 'index'])->name('site.index');
+Route::get('/show/{slug_number?}', [IndexController::class, 'show'])->name('show.index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -30,6 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('professors', ProfessorController::class);
     Route::resource('moderator', ModeratorController::class);
+    Route::resource('operator', OperatorController::class);
+
 });
 
 require __DIR__.'/auth.php';
