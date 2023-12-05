@@ -225,14 +225,25 @@
                                             </dd>
                                         </div>
                                         <div class="inline-flex items-center justify-center w-full mb-3">
-                                            <hr class="w-64 h-1 my-8 bg-gray-200 border-0 rounded dark:bg-gray-700">
-                                            <div class="absolute px-4 -translate-x-1/2 bg-white left-1/2 dark:bg-gray-900">
+                                            <hr class=" h-1 my-8 bg-gray-200 border-0 rounded dark:bg-gray-700" style="width: 920px;">
+                                            <div class="absolute px-4 -translate-x-1/2 bg-white left-1/2 dark:bg-gray-900 flex">
                                                 <svg class="w-4 h-4 text-gray-700 dark:text-gray-300" aria-hidden="true"
                                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                                     viewBox="0 0 18 14">
                                                     <path
                                                         d="M6 0H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3H2a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Zm10 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3h-1a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Z" />
-                                                </svg>
+                                                
+                                                    </svg>
+                                                   
+                                                    <p class="ml-2 mr-2"> OPERATORLAR</p>
+
+                                                    <svg class="w-4 h-4 text-gray-700 dark:text-gray-300" aria-hidden="true"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                    viewBox="0 0 18 14">
+                                                    <path
+                                                        d="M6 0H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3H2a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Zm10 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3h-1a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Z" />
+                                                
+                                                    </svg>
                                             </div>
                                         </div>
                                         <div class="w-md">
@@ -240,25 +251,12 @@
                                                 Operatorlarni birlashtirganizdan so'ng bu yerda ularning ism
                                                 sharifi ko'rinadi!</p>
 
-
-
-                                        </div>
-                                        <div class="inline-flex items-center justify-center w-full ">
-                                            <hr class="w-full h-1 my-8 bg-gray-200 border-0 rounded dark:bg-gray-700">
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            @endforeach
-
-                            @foreach ($professor_moder as $item)
-                            <!-- Nested accordion -->
-                            <div id="accordion-nested-collapse" data-accordion="collapse"
+                                                 <!-- Nested accordion -->
+                            <div id="accordion-nested-collapse-{{ $item->id }}" data-accordion="collapse"
                                 class="mt-4 mb-12 m-auto w-[1100px]">
                                 <h2 id="accordion-nested-collapse-heading-{{ $item->id }}">
                                     <button type="button"
-                                        class="flex items-center justify-between w-full p-5 rounded-t-xl font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3"
+                                        class="flex items-center justify-between w-full py-1 px-3 rounded-t-xl font-medium rtl:text-right text-gray-500 border border-b-1 border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3"
                                         data-accordion-target="#accordion-nested-collapse-body-{{ $item->id }}"
                                         aria-expanded="false"
                                         aria-controls="accordion-nested-collapse-body-{{ $item->id }}">
@@ -381,7 +379,17 @@
 
                             </div>
                             <!-- End: Nested accordion -->
+
+                                        </div>
+                                        <div class="inline-flex items-center justify-center w-full ">
+                                            <hr class="w-full h-1 my-8 bg-gray-200 border-0 rounded dark:bg-gray-700">
+
+                                        </div>
+
+                                    </div>
+                                </div>
                             @endforeach
+
 
                         </div>
                     </div>
