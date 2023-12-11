@@ -106,7 +106,7 @@ class ProfessorController extends Controller
         $professor = Professor::where('slug_number', $slug_number)->firstOrFail();
         $professor_moder = $professor->moderator()->orderBy('created_at', 'desc')->paginate(12);
         $professor_moder_operators_create = $professor->moderator()->orderBy('moder_fish', 'asc')->paginate(12);
-        $professor_operators_list = $professor->operators()->orderBy('oper_fish', 'asc')->paginate(12);
+        $professor_operators_list = $professor->operators()->orderBy('created_at', 'desc')->paginate(50);
        
         return view('reyting.dashboard.professor.edit', compact('professor', 'professor_moder', 'professor_moder_operators_create', 'professor_operators_list'));
     }

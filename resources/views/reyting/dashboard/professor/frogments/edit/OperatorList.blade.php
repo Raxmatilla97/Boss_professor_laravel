@@ -30,7 +30,7 @@
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg bg-white p-8 ">
             <div
                 class="flex items-center justify-end flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
-              
+
                 <label for="table-search" class="sr-only">Qidirish</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -45,7 +45,7 @@
                         placeholder="Operatorni qidirish">
                 </div>
             </div>
-            
+
             @php
             $i = 1;
             @endphp
@@ -54,7 +54,7 @@
                     <tr>
                         <th scope="col" class="p-4">
                             <div class="flex items-center">
-                               №
+                                №
                             </div>
                         </th>
                         <th scope="col" class="px-6 py-3">
@@ -72,34 +72,43 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($professor_operators_list as $items)
                     <tr
                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                       <th class="text-center">
-                        {{$i++}}
-                       </th>
-                        <th scope="row"
-                            class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                            <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-1.jpg"
-                                alt="Jese image">
+                        <th class="text-center">
+                            {{$i++}}
+                        </th>
+                        <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                            <div style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%;">
+                                <img style="width: 100%; height: 100%; object-fit: cover;" src="{{'/uploads/operator_image'}}/{{$items->oper_image}}" alt="Jese image">
+                            </div>
                             <div class="ps-3">
-                                <div class="text-base font-semibold">Neil Sims</div>
-                                <div class="font-normal text-gray-500">neil.sims@flowbite.com</div>
+                                <div class="text-base font-semibold">{{$items->oper_fish}}</div>
+                                <div class="font-normal text-gray-500">{{$items->oper_slug_number}}</div>
                             </div>
                         </th>
+                        
                         <td class="px-6 py-4">
-                            React Developer
+                            {{$items->moderator->moder_fish}}
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex items-center">
-                                <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> Online
+                                @if($items->oper_status)
+                                <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> Aktiv
+                                @else
+                                <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div> Aktiv emas
+                                @endif
+                                
                             </div>
                         </td>
                         <td class="px-6 py-4">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
-                                user</a>
+                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Tahrirlash
+                                </a>
                         </td>
                     </tr>
-               
+                    @endforeach
+
+
                 </tbody>
             </table>
         </div>
