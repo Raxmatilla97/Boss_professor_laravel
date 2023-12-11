@@ -51,7 +51,8 @@
 
                 <!-- Tab 3 kontenti -->
                 <div id="oper" class="hidden tab-content">
-                    Uchunchisi
+                    {{-- Sahifada moderatorlar ro'yxatini chiqarish frogmenti --}}
+                    @include('reyting.dashboard.professor.frogments.edit.OperatorCreateForm')
                 </div>
 
             </div>
