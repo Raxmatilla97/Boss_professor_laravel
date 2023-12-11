@@ -15,7 +15,8 @@ class Moderator extends Model
         'moder_small_info',
         'moder_status',
         'professor_id',
-        'file_id'
+        'file_id',
+        'moder_image'
     ];
 
     public function files()

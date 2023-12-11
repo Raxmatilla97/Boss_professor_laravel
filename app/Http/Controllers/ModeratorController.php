@@ -35,9 +35,9 @@ class ModeratorController extends Controller
             return redirect()->back()->with('error', "Professor topilmadi! Sahifani yangilab qayta urunib ko'ring.");
         }
 
-        $professor_id = $professor->id;
+        $professor_info = ['id' => $professor->id, 'slug' => $professor->slug_number];
       
-        return view('reyting.dashboard.professor.frogments.edit.moderatorCreateForm', compact('professor_id'));
+        return view('reyting.dashboard.professor.frogments.edit.moderatorCreateForm', compact('professor_info'));
     }
 
     /**
@@ -59,7 +59,7 @@ class ModeratorController extends Controller
             'moder_fish.min' => 'F.I.SH maydoni kamida 5 belgi bo\'lishi kerak.',
             'moder_fish.max' => 'F.I.SH maydoni maksimum 100 belgidan kam bo\'lishi kerak.',          
             'small_info.string' => 'Moderator haqida ma\'lumot maydoni matn bo\'lishi kerak.',
-        ]);
+        ]);       
 
         // Bu yerdan faylni yuklash va DB ga saqlash bo'yicha kod yozilgan.
     
@@ -90,6 +90,14 @@ class ModeratorController extends Controller
             return redirect()->back()->with('error', "Professor topilmadi! Sahifani yangilab qayta urunib ko'ring.");
         }
 
+        // Suratni saytga yuklash kodi
+        $tempPath = $request->moder_image->path(); // Temp fayl joylashuvi
+        $fileName = time().'.'.$request->moder_image->extension();
+        $publicPath = public_path('uploads/moderator_images/'.$fileName); // Public fayl joylashuvi
+    
+        // Faylni temp papkadan public papkaga ko'chirish
+        move_uploaded_file($tempPath, $publicPath);
+
         // Slug uchun generatsiya kodi
 
         $lowercase_letters = 'abcdefghijklmnopqrstuvwxyz';
@@ -106,6 +114,7 @@ class ModeratorController extends Controller
         // Professor modelini yaratish va ma'lumotlarni saqlash
         $moderator = Moderator::create([
             'moder_fish' => $validated['moder_fish'],
+            'moder_image' => $fileName,
             'moder_slug_number' => $slug_number,
             'moder_status' => $validated['moder_status'] ?? 0,
             'moder_small_info' => $validated['moder_small_info'],
