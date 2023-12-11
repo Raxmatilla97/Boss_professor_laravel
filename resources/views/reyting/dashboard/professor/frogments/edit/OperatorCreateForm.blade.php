@@ -15,14 +15,14 @@
                 <form action="{{ route('operator.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
-
+                    <input type="hidden" name="professor_id" value="{{$professor_info['slug']}}">
                     <div class="mb-4">
-                        <label for="image" class="block text-gray-600">Professor suratini yuklash:</label>
-                        <input type="file" name="image" id="image" value="{{ old('image') }}"
-                            class="form-control @error('image') is-invalid @enderror  accept="image/*"
+                        <label for="oper_image" class="block text-gray-600">Professor suratini yuklash:</label>
+                        <input type="file" name="oper_image" id="oper_image" value="{{ old('oper_image') }}"
+                            class="form-control @error('oper_image') is-invalid @enderror  accept="image/*"
                             onchange="previewImage(event)">
 
-                        @error('image')
+                        @error('oper_image')
                             <span class="text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
