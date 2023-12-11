@@ -35,7 +35,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('moderator', ModeratorController::class)
     ->except(['create', 'edit']); // Exclude 'create' and 'edit' since they may not follow the typical RESTful conventions
     Route::get('/moderator/{id}/create', [ModeratorController::class, 'create'])->name('moderator.create');
+
+
     Route::resource('operator', OperatorController::class);
+    Route::resource('operator', OperatorController::class)
+    ->except(['create', 'edit']); // Exclude 'create' and 'edit' since they may not follow the typical RESTful conventions
+    Route::get('/operator/{id}/create', [OperatorController::class, 'create'])->name('operator.create');
 
 });
 

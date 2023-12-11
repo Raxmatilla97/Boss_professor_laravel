@@ -1,3 +1,10 @@
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Operator yaratish sahifasi') }}
+        </h2>
+        
+    </x-slot>     
 
 
 <div class="py-2">
@@ -5,7 +12,7 @@
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 text-gray-900">
                 <h1 class="text-2xl font-bold mb-6">Moderatorga operatorni biriktirish formasi</h1>
-                <form action="{{ route('operator.store') }}" method="POST">
+                <form action="{{ route('operator.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
 
@@ -39,7 +46,7 @@
                         <select id="moderator_id" name="moderator_id"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option selected>Tanlang...</option>
-                            @foreach ($professor_moder_operators_create as $item)
+                            @foreach ($professor_moderators as $item)
                                 <option value="{{ $item->id }}">{{ $item->moder_fish }}</option>
                             @endforeach
 
@@ -82,3 +89,20 @@
 
     </div>
 </div>
+<script>
+    function previewImage(event) {
+        var input = event.target;
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                document.getElementById('image-preview').src = e.target.result;
+                document.getElementById('image-preview').style.display = 'block';
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+</x-app-layout>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Operator;
+use App\Models\Professor;
 use Illuminate\Http\Request;
 
 class OperatorController extends Controller
@@ -18,10 +19,26 @@ class OperatorController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($request)
     {
-        //
+        
+        $professor = Professor::find($request);
+       
+
+        if ($professor) {   
+
+            $professor_slug = $professor->slug_number;
+
+        } else {
+
+            return redirect()->back()->with('error', "Professor topilmadi! Sahifani yangilab qayta urunib ko'ring.");
+        }
+        $professor_moderators = $professor->moderator()->orderBy('moder_fish', 'asc')->get();      
+        $professor_info = ['id' => $professor->id, 'slug' => $professor->slug_number];
+      
+        return view('reyting.dashboard.professor.frogments.edit.OperatorCreateForm', compact('professor_info', 'professor_moderators'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -92,7 +109,7 @@ class OperatorController extends Controller
     
         return redirect()->route('professors.edit', $professor->slug_number)->with('toaster', ['success', "Yangi professor yaratildi!"]);
     }
-    }
+   
 
     /**
      * Update the specified resource in storage.
