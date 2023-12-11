@@ -31,7 +31,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('professors', ProfessorController::class);
-    Route::resource('moderator', ModeratorController::class);
+    Route::resource('moderator', ModeratorController::class);    
+    Route::resource('moderator', ModeratorController::class)
+    ->except(['create', 'edit']); // Exclude 'create' and 'edit' since they may not follow the typical RESTful conventions
+    Route::get('/moderator/{id}/create', [ModeratorController::class, 'create'])->name('moderator.create');
     Route::resource('operator', OperatorController::class);
 
 });

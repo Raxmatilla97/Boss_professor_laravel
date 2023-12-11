@@ -20,13 +20,12 @@
                 </li>
                 <li class="mr-1">
                     <a href="#moder"
-                        class="block py-2 px-4 bg-gray-200 text-gray-800 font-semibold hover:bg-gray-300 focus:outline-none focus:bg-gray-300 tab-link">Moderator
-                        qo'shish</a>
+                        class="block py-2 px-4 bg-gray-200 text-gray-800 font-semibold hover:bg-gray-300 focus:outline-none focus:bg-gray-300 tab-link">
+                        Moderatorlar</a>
                 </li>
                 <li class="mr-1">
                     <a href="#oper"
-                        class="block py-2 px-4 bg-gray-200 text-gray-800 font-semibold hover:bg-gray-300 focus:outline-none focus:bg-gray-300 tab-link">Operator
-                        qo'shish</a>
+                        class="block py-2 px-4 bg-gray-200 text-gray-800 font-semibold hover:bg-gray-300 focus:outline-none focus:bg-gray-300 tab-link">Operatorlar</a>
                 </li>
                 <!-- Boshqa tablar uchun ham shu tarzda linklar qo'shing -->
             </ul>
@@ -41,7 +40,9 @@
                 <!-- Tab 2 kontenti -->
                 <div id="moder" class="hidden tab-content">
                     {{-- Sahifada yangi moderator yaratish formasi frogmenti --}}
-                    @include('reyting.dashboard.professor.frogments.edit.moderatorCreateForm')              
+                    {{-- @include('reyting.dashboard.professor.frogments.edit.moderatorCreateForm')               --}}
+
+                   
                    
                     {{-- Sahifada moderatorlar ro'yxatini chiqarish frogmenti --}}
                     @include('reyting.dashboard.professor.frogments.edit.moderatorsList')

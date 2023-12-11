@@ -20,9 +20,24 @@ class ModeratorController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($request)
     {
-        //
+        
+        $professor = Professor::find($request);
+       
+
+        if ($professor) {   
+
+            $professor_slug = $professor->slug_number;
+
+        } else {
+
+            return redirect()->back()->with('error', "Professor topilmadi! Sahifani yangilab qayta urunib ko'ring.");
+        }
+
+        $professor_id = $professor->id;
+      
+        return view('reyting.dashboard.professor.frogments.edit.moderatorCreateForm', compact('professor_id'));
     }
 
     /**

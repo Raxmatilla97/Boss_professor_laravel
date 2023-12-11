@@ -1,3 +1,5 @@
+
+
 <div class="py-2">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -21,14 +23,31 @@
                         src="https://cspi.uz/storage/app/media/2023/avgust/i.webp" alt="Image Preview"
                         style="display: none;">
 
+                        <div class="mb-5">
+                            <label for="oper_fish" class="block text-gray-600">Operator F.I.SH:</label>
+                            <input type="text" name="oper_fish" value="{{ old('oper_fish') }}" id="oper_fish"
+                                class="border px-4 py-2 w-full" required>
+                            @error('oper_fish')
+                                <span class="text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+
                     <div class="mb-5">
-                        <label for="oper_fish" class="block text-gray-600">Operator F.I.SH:</label>
-                        <input type="text" name="oper_fish" value="{{ old('oper_fish') }}" id="oper_fish"
-                            class="border px-4 py-2 w-full" required>
-                        @error('oper_fish')
+                        <label for="moderator_id"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Moderator nomini
+                            belgilang:</label>
+                        <select id="moderator_id" name="moderator_id"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option selected>Tanlang...</option>
+                            @foreach ($professor_moder_operators_create as $item)
+                                <option value="{{ $item->id }}">{{ $item->moder_fish }}</option>
+                            @endforeach
+
+                        </select>
+                        @error('moderator_id')
                             <span class="text-red-500">{{ $message }}</span>
                         @enderror
-                    </div>
+                    </div>                  
 
                     <div class="mb-4">
                         <label for="oper_small_info" class="block text-gray-600">Operator mavzusi
