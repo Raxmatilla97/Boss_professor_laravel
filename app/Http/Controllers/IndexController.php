@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Professor;
+use App\Models\Moderator;
+use App\Models\Operator;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -69,5 +71,30 @@ class IndexController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+       public function kirishUchunSlugQidirish(Request $request)
+    {
+        // dd($request->code);
+
+        if ($request->code) {
+            $professor = Professor::where('slug_number', $request->code)->first();
+            $moderator = Moderator::where('moder_slug_number', $request->code)->first();
+            $operator = Operator::where('oper_slug_number', $request->code)->first();
+    
+            if ($professor) {
+               return view('reyting.frontend.malumot_yuborish_formasi');
+            } elseif ($moderator) {
+                return view('reyting.frontend.malumot_yuborish_formasi');
+            } elseif ($operator) {
+                return view('reyting.frontend.malumot_yuborish_formasi');
+            } else {
+                // Agar kod mavjud emas bo'lsa, foydalanuvchiga xabar berish
+                return redirect()->back()->with('error', "Bunday kod mavjud emas!");
+            }
+        } else {
+            // Agar kod kiritilmagan bo'lsa, 404 xatolikni chiqaring yoki bosh sahifaga yo'naltiring
+            return redirect()->back()->with('error', "Bunday kod mavjud emas!");
+        }
     }
 }

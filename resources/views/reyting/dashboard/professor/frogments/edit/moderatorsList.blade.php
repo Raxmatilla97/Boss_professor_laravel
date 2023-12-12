@@ -193,16 +193,20 @@
                                 <!-- Nested accordion -->
                                 <div id="accordion-nested-collapse" data-accordion="collapse"
                                     class="mt-4 mb-12 m-auto w-[1100px]">
-                                    <h2 id="accordion-nested-collapse-heading-1">
+                                    @php
+                                        $i = 1;
+                                    @endphp
+                                    @foreach($item->operator as $items)
+                                    <h2 id="accordion-nested-collapse-heading-{{$items->id}}">
                                         <button type="button"
-                                            class="flex items-center justify-between w-full p-5 rounded-t-xl font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3"
-                                            data-accordion-target="#accordion-nested-collapse-body-1"
-                                            aria-expanded="false" aria-controls="accordion-nested-collapse-body-1">
+                                            class="flex items-center justify-between w-full p-3 rounded-t-xl font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3"
+                                            data-accordion-target="#accordion-nested-collapse-body-{{$items->id}}"
+                                            aria-expanded="false" aria-controls="accordion-nested-collapse-body-{{$items->id}}">
                                             <tr
                                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                                 <td class="w-4 p-4">
                                                     <div class="flex items-center">
-                                                        №1
+                                                        №{{$i++}}
                                                     </div>
                                                 </td>
                                                 <th scope="row"
@@ -210,19 +214,22 @@
 
                                                     <div class="ps-3">
                                                         <div class="text-base font-semibold">
-                                                            Fayziyev Raxmatilla Xanshor o'g'li
+                                                            {{$items->oper_fish}}
                                                         </div>
                                                         <div class="font-normal text-gray-500">
-                                                            3JHlo3J54oO!ool</div>
+                                                            {{$items->oper_slug_number}}</div>
                                                     </div>
                                                 </th>
                                                 <td class="px-6 py-4">
-                                                    Umumiy ball: 204
+                                                    Ball: 204
                                                 </td>
                                                 <td class="px-6 py-4">
-                                                    <div class="flex items-center">
-                                                        <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2">
-                                                        </div> Aktiv!
+                                                    <div class="flex items-center">                                                       
+                                                        @if($items->oper_status)
+                                                        <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> Aktiv
+                                                        @else
+                                                        <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div> Aktiv emas
+                                                        @endif
                                                     </div>
                                                 </td>
                                                 <td class="px-6 py-4">
@@ -238,17 +245,13 @@
                                             </svg>
                                         </button>
                                     </h2>
-                                    <div id="accordion-nested-collapse-body-1" class="hidden mb-5"
+                                    <div id="accordion-nested-collapse-body-{{$items->id}}" class="hidden mb-5"
                                         aria-labelledby="accordion-nested-collapse-heading-1">
                                         <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700">
                                             <p class="text-gray-500 dark:text-gray-400">
                                             <blockquote
                                                 class="p-4 my-4 border-s-4 text-sm border-gray-300 bg-gray-50 dark:border-gray-500 dark:bg-gray-800">
-                                                <b>Mavzu:</b> Lorem ipsum dolor sit amet
-                                                consectetur adipisicing elit. Quod fugit cumque
-                                                beatae nisi! Inventore omnis, quae mollitia nemo
-                                                dolore iusto quibusdam. Aspernatur dolore quasi
-                                                tenetur expedita magni minima ut voluptates.
+                                                <b>Mavzu:</b> {{$items->oper_small_info}}
                                             </blockquote>
 
 
@@ -321,125 +324,9 @@
 
                                         </div>
                                     </div>
-                                    <h2 id="accordion-nested-collapse-heading-2">
-                                        <button type="button"
-                                            class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3"
-                                            data-accordion-target="#accordion-nested-collapse-body-2"
-                                            aria-expanded="false" aria-controls="accordion-nested-collapse-body-2">
-                                            <tr
-                                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                                <td class="w-4 p-4">
-                                                    <div class="flex items-center">
-                                                        №1
-                                                    </div>
-                                                </td>
-                                                <th scope="row"
-                                                    class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-
-                                                    <div class="ps-3">
-                                                        <div class="text-base font-semibold">
-                                                            Fayziyev Raxmatilla Xanshor o'g'li
-                                                        </div>
-                                                        <div class="font-normal text-gray-500">
-                                                            3JHlo3J54oO!ool</div>
-                                                    </div>
-                                                </th>
-                                                <td class="px-6 py-4">
-                                                    Umumiy ball: 204
-                                                </td>
-                                                <td class="px-6 py-4">
-                                                    <div class="flex items-center">
-                                                        <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2">
-                                                        </div> Aktiv!
-                                                    </div>
-                                                </td>
-                                                <td class="px-6 py-4">
-                                                    <a href="#"
-                                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Tahrirlash</a>
-                                                </td>
-                                            </tr>
-                                            <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0"
-                                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                viewBox="0 0 10 6">
-                                                <path stroke="currentColor" stroke-linecap="round"
-                                                    stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5" />
-                                            </svg>
-                                        </button>
-                                    </h2>
-                                    <div id="accordion-nested-collapse-body-2" class="hidden"
-                                        aria-labelledby="accordion-nested-collapse-heading-2">
-                                        <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700">
-                                            <p class="text-gray-500 dark:text-gray-400">Another
-                                                difference is that Flowbite relies on smaller
-                                                and standalone components, whereas Tailwind UI
-                                                offers sections of pages.</p>
-                                        </div>
-                                    </div>
-                                    <h2 id="accordion-nested-collapse-heading-3">
-                                        <button type="button"
-                                            class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3"
-                                            data-accordion-target="#accordion-nested-collapse-body-3"
-                                            aria-expanded="false" aria-controls="accordion-nested-collapse-body-3">
-                                            <tr
-                                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                                <td class="w-4 p-4">
-                                                    <div class="flex items-center">
-                                                        №1
-                                                    </div>
-                                                </td>
-                                                <th scope="row"
-                                                    class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-
-                                                    <div class="ps-3">
-                                                        <div class="text-base font-semibold">
-                                                            Fayziyev Raxmatilla Xanshor o'g'li
-                                                        </div>
-                                                        <div class="font-normal text-gray-500">
-                                                            3JHlo3J54oO!ool</div>
-                                                    </div>
-                                                </th>
-                                                <td class="px-6 py-4">
-                                                    Umumiy ball: 204
-                                                </td>
-                                                <td class="px-6 py-4">
-                                                    <div class="flex items-center">
-                                                        <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2">
-                                                        </div> Aktiv!
-                                                    </div>
-                                                </td>
-                                                <td class="px-6 py-4">
-                                                    <a href="#"
-                                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Tahrirlash</a>
-                                                </td>
-                                            </tr>
-                                            <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0"
-                                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                viewBox="0 0 10 6">
-                                                <path stroke="currentColor" stroke-linecap="round"
-                                                    stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5" />
-                                            </svg>
-                                        </button>
-                                    </h2>
-                                    <div id="accordion-nested-collapse-body-3" class="hidden"
-                                        aria-labelledby="accordion-nested-collapse-heading-3">
-                                        <div class="p-5 border border-gray-200 dark:border-gray-700">
-                                            <p class="mb-2 text-gray-500 dark:text-gray-400">We
-                                                actually recommend using both Flowbite, Flowbite
-                                                Pro, and even Tailwind UI as there is no
-                                                technical reason stopping you from using the
-                                                best of two worlds.</p>
-                                            <p class="mb-2 text-gray-500 dark:text-gray-400">
-                                                Learn more about these technologies:</p>
-                                            <ul class="ps-5 text-gray-500 list-disc dark:text-gray-400">
-                                                <li><a href="https://flowbite.com/pro/"
-                                                        class="text-blue-600 dark:text-blue-500 hover:underline">Flowbite
-                                                        Pro</a></li>
-                                                <li><a href="https://tailwindui.com/" rel="nofollow"
-                                                        class="text-blue-600 dark:text-blue-500 hover:underline">Tailwind
-                                                        UI</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                    @endforeach
+                                   
+                                
                                 </div>
                                 <!-- End: Nested accordion -->
                             </div>
