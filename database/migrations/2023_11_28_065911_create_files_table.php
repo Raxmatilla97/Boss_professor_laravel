@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->id();
-            $table->string('file_name');
+            $table->string('filename')->nullable();
+            $table->string('folder')->nullable();
             $table->string('category_name')->nullable();
             $table->integer('points')->nullable();
             $table->boolean('is_active')->default(true);

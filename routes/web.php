@@ -5,6 +5,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfessorController;
 use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\FilesController;
+use App\Http\Controllers\TemporaryFileController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,8 +32,17 @@ Route::get('/dashboard', function () {
 Route::get('/malumot-joylash', function () {
     return view('reyting.frontend.malumot_joylash_uchun_kirish');
 })->name('malumotJoylash');
+
 Route::post('/malumot-joylash-sahifasi', [IndexController::class, 'kirishUchunSlugQidirish'])->name('site.kirishUchunSlugQidirish');
 
+Route::post('/file-upload', [FilesController::class, 'store'])->name('site.fileupload');
+
+// Route::resource('files', FilesController::class);
+
+
+Route::controller(TemporaryFileController::class)->group(function(){
+    Route::match(['post','delete'],'temp/upload','index')->name('temporary.upload');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

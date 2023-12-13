@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Models\TemporaryFile;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,13 +20,18 @@ class Operator extends Model
         'oper_image'
     ];
 
-    public function files()
-    {
-        return $this->hasMany('App\Models\Files');
-    }
+    // public function files()
+    // {
+    //     return $this->hasMany('App\Models\Files');
+    // }
 
     public function moderator()
     {
         return $this->belongsTo('App\Models\Moderator');
+    }
+
+    public function files()
+    {
+        return $this->hasMany(TemporaryFile::class, 'operator_id');
     }
 }

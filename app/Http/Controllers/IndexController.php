@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Professor;
 use App\Models\Moderator;
 use App\Models\Operator;
+use App\Models\Files;
+use App\Models\TemporaryFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class IndexController extends Controller
 {
@@ -14,6 +19,7 @@ class IndexController extends Controller
      */
     public function index()
     {
+       
         $professors = Professor::orderBy('created_at', 'desc')->paginate('8');
        
         
@@ -33,7 +39,7 @@ class IndexController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       dd($request);
     }
 
     /**
@@ -83,11 +89,34 @@ class IndexController extends Controller
             $operator = Operator::where('oper_slug_number', $request->code)->first();
     
             if ($professor) {
-               return view('reyting.frontend.malumot_yuborish_formasi');
+                $user_info = [
+                    'id' => $professor->id,
+                    'fish' => $professor->fish,
+                    'position'=> "Professor",
+                    'image'=> $professor->image,
+                    'img_path' => "/uploads/professor_images"
+                ];
+               return view('reyting.frontend.malumot_yuborish_formasi', compact('user_info'));   
+
             } elseif ($moderator) {
-                return view('reyting.frontend.malumot_yuborish_formasi');
+                $user_info = [
+                    'id' => $moderator->id,
+                    'fish' => $moderator->moder_fish,
+                    'position'=> "Moderator",
+                    'image'=> $moderator->moder_image,
+                    'img_path' => "/uploads/moderator_images"
+                ];
+                return view('reyting.frontend.malumot_yuborish_formasi', compact('user_info'));
+
             } elseif ($operator) {
-                return view('reyting.frontend.malumot_yuborish_formasi');
+                $user_info = [
+                    'id' => $operator->id,
+                    'fish' => $operator->oper_fish,
+                    'position'=> "Operator",
+                    'image'=> $operator->oper_image,
+                    'img_path' => "/uploads/operator_images"
+                ];
+                return view('reyting.frontend.malumot_yuborish_formasi', compact('user_info'));
             } else {
                 // Agar kod mavjud emas bo'lsa, foydalanuvchiga xabar berish
                 return redirect()->back()->with('error', "Bunday kod mavjud emas!");
@@ -97,4 +126,6 @@ class IndexController extends Controller
             return redirect()->back()->with('error', "Bunday kod mavjud emas!");
         }
     }
+
+ 
 }

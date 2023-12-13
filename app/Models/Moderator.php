@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Models\TemporaryFile;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,10 +20,10 @@ class Moderator extends Model
         'moder_image'
     ];
 
-    public function files()
-    {
-        return $this->hasMany('App\Models\Files');
-    }
+    // public function files()
+    // {
+    //     return $this->hasMany('App\Models\Files');
+    // }
 
     public function professor()
     {
@@ -33,4 +34,10 @@ class Moderator extends Model
     {
         return $this->hasMany('App\Models\Operator');
     }
+
+    public function files()
+    {
+        return $this->hasMany(TemporaryFile::class, 'moderator_id');
+    }
+
 }

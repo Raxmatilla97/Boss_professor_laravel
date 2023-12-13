@@ -33,13 +33,13 @@
                                     </svg>
                                    </span>
 								</div>
-								<input type="text" name="code" class="flex-shrink flex-grow flex-auto leading-normal w-px flex-1 border border-l-0 h-10 border-grey-light rounded-lg rounded-l-none px-3 relative focus:border-blue focus:shadow" placeholder="aBc123.......">
+								<input type="text" name="code" required class="flex-shrink flex-grow flex-auto leading-normal w-px flex-1 border border-l-0 h-10 border-grey-light rounded-lg rounded-l-none px-3 relative focus:border-blue focus:shadow" placeholder="aBc123.......">
                   </div>
 							</div>					
 						
 							
 								<div class="mt-5 text-right md:space-x-3 md:block flex flex-col-reverse">
-									<a href="{{'/'}}"><button class="mb-2 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-full hover:shadow-lg hover:bg-gray-100"> Orqaga qaytish </button></a>
+									<a href="{{'/'}}"><button type="button" class="mb-2 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-full hover:shadow-lg hover:bg-gray-100"> Orqaga qaytish </button></a>
 									<button type="submit" class="mb-2 md:mb-0 bg-green-400 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-green-500">Davom etish</button>
 								</div>
               </form>

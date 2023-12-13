@@ -10,11 +10,11 @@ class Files extends Model
     use HasFactory;
 
     protected $fillable = [
-        'file_name',
-        'file_path',
+        'filename',        
         'category_name',
         'points',
-        'is_active'
+        'is_active',
+        'folder'
        
     ];
 
