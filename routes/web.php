@@ -35,7 +35,7 @@ Route::get('/malumot-joylash', function () {
 
 Route::post('/malumot-joylash-sahifasi', [IndexController::class, 'kirishUchunSlugQidirish'])->name('site.kirishUchunSlugQidirish');
 
-Route::post('/file-upload', [FilesController::class, 'store'])->name('site.fileupload');
+Route::post('/murojatni-yuborish', [IndexController::class, 'store'])->name('site.sendRequest');
 
 // Route::resource('files', FilesController::class);
 

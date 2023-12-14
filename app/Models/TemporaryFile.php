@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class TemporaryFile extends Model
 {
     use HasFactory;
-    protected $fillable = ['folder', 'filename', 'category_name', 'points', 'is_active', 'professor_id', 'moderator_id', 'operator_id'];
+    protected $fillable = ['folder', 'filename', 'category_name', 'points', 'is_active', 'professor_id', 'moderator_id', 'operator_id', 'site_url'];
 
     public function filesProfessor()
     {

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('filename');
             $table->string('category_name')->nullable();     
             $table->string('site_url')->nullable(); 
+            $table->string('ariza_holati')->nullable(); 
             $table->integer('points')->nullable();
             $table->boolean('is_active')->default(true);
             $table->foreignId('professor_id')->nullable()->constrained('professors')->onDelete('cascade');
