@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('oper_image')->nullable();  
             $table->text('oper_small_info')->nullable();       
             $table->boolean('oper_status')->nullable(); 
+            $table->string('oper_custom_ball')->nullable(); 
             $table->foreignId('moderator_id')->constrained('moderators')->onDelete('cascade');
             $table->foreignId('file_id')->nullable()->constrained('files')->onDelete('cascade');
             $table->timestamps();

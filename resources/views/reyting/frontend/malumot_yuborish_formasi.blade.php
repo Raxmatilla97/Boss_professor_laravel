@@ -9,7 +9,7 @@
 @endpush
 <!-- component -->
 <div class="relative min-h-screen flex items-center justify-center bg-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 bg-gray-500 bg-no-repeat bg-cover relative items-center"
-	style="background-image: url(https://www.cspi.uz/storage/app/uploads/public/b13/36b/feb/thumb__1_0_0_0_auto.jpg);">
+	style="background-image: url({{ asset('assets/thumb__1_0_0_0_auto.jpg')}});">
 	<div class="absolute bg-black opacity-60 inset-0 z-0"></div>
 	<div class="max-w-xl w-full space-y-8 p-10 bg-white rounded-xl shadow-lg z-10">
 		<div class="grid  gap-8 grid-cols-1">

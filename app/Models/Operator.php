@@ -17,7 +17,8 @@ class Operator extends Model
         'oper_status',
         'moderator_id',
         'file_id',
-        'oper_image'
+        'oper_image',
+        'oper_custom_ball'
     ];
 
     // public function files()
