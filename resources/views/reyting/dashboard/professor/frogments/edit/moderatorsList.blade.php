@@ -26,11 +26,7 @@
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 text-gray-900 mb-8">
-
-                @php
-                    $i = 1;
-                @endphp
-
+                
                 <div id="accordion-color" data-accordion="collapse"
                     data-active-classes="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white">
                     @if (isset($professor_moder) && count($professor_moder) > 0)
@@ -45,7 +41,7 @@
                                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                         <td class="w-4 p-4">
                                             <div class="flex items-center">
-                                                № {{ $i++ }}
+                                                № {{ $loop->iteration }}
                                             </div>
                                         </td>
                                         <th scope="row"
@@ -195,10 +191,7 @@
                                     <div class="w-md">
                                         <p class="text-gray-500 dark:text-gray-400">Moderatorga
                                             Operatorlarni birlashtirganizdan so'ng bu yerda ularning ism
-                                            sharifi ko'rinadi!</p>
-                                        @php
-                                            $i = 1;
-                                        @endphp
+                                            sharifi ko'rinadi!</p>                                  
                                       
                                             <!-- Nested accordion -->
                                             <div id="accordion-nested-collapse-{{$item->id}}"
@@ -214,7 +207,7 @@
                                                             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                                             <td class="w-4 p-4">
                                                                 <div class="flex items-center">
-                                                                    №{{ $i++ }}
+                                                                    №{{ $loop->iteration }}
                                                                 </div>
                                                             </td>
                                                             <th scope="row"

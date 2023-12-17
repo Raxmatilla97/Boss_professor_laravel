@@ -83,10 +83,6 @@
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 mb-8">
 
-                        @php
-                            $i = 1;
-                        @endphp
-
                         <div id="accordion-color" data-accordion="collapse"
                             data-active-classes="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white">
 
@@ -100,7 +96,7 @@
                                             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                             <td class="w-4 p-4">
                                                 <div class="flex items-center">
-                                                    №{{ $i++ }}
+                                                    №{{ $loop->iteration }}
                                                 </div>
                                             </td>
                                             <th scope="row"
@@ -252,9 +248,7 @@
                                             <!-- Nested accordion -->
                                             <div id="accordion-nested-collapse-{{$item->id}}"
                                             data-accordion="collapse" class="mt-4 mb-12 m-auto w-[1100px]">
-                                                @php
-                                                    $i = 1;
-                                                @endphp
+                                               
                                                 @foreach ($item->operator as $items)
                                                     <h2 id="accordion-nested-collapse-heading-{{ $items->id }}">
                                                         <button type="button"
@@ -266,7 +260,7 @@
                                                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                                                 <td class="w-4 p-4">
                                                                     <div class="flex items-center">
-                                                                        №{{ $i++ }}
+                                                                        №{{ $loop->iteration }}
                                                                     </div>
                                                                 </td>
                                                                 <th scope="row "
