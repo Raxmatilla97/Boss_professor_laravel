@@ -6,8 +6,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/flowbite.min.css" rel="stylesheet" /> --}}
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/flowbite.min.css" rel="stylesheet" />
     @stack('styles')
     <style>
         .overlay {
@@ -41,11 +40,12 @@
         }
     </style>
 </head>
-<body class="font-sans bg-gray-200">
+<body class="font-sans bg-gray-200 min-h-screen">
     @include('reyting.frontend.nav')
     @yield('content')  
    
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script> --}}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+  
     @stack('scripts')
 </body>
 
