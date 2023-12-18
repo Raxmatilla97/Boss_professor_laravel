@@ -124,7 +124,11 @@ class IndexController extends Controller
             foreach ($moderator->files as $files) {
                 if (array_key_exists($files->category_name, $mavzular_turi)) {
                     $files->category_name = $mavzular_turi[$files->category_name];
-                    $files_ballar_moderator += $files->points;
+
+                    if($files->is_active == 1 && $files->ariza_holati == "maqullandi") {
+                        $files_ballar_moderator += $files->points;
+                    }
+                   
                 }
             }
 
@@ -141,9 +145,17 @@ class IndexController extends Controller
                 foreach ($operator->files as $files) {
                     if (array_key_exists($files->category_name, $mavzular_turi)) {
                         $files->category_name = $mavzular_turi[$files->category_name];
-                        $files_ballar_operator += $files->points;
+
+                        if($files->is_active == 1 && $files->ariza_holati == "maqullandi") {
+                            $files_ballar_operator += $files->points;
+                        }
+                       
                     }
+                    $operator->oper_custom_ball = $files_ballar_operator;
                 }
+              
+
+                
             }
 
             // Operator uchun 

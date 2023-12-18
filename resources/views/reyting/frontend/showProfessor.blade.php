@@ -240,7 +240,7 @@
                                                                     </div>
                                                                 </th>
                                                                 <td class="px-6 py-4">
-                                                                    Ball: 204
+                                                                    Ball: {{$items->oper_custom_ball}}
                                                                 </td>
                                                                 <td class="px-6 py-4">
                                                                     <div class="flex items-center">
