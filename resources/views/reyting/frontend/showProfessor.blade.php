@@ -108,7 +108,7 @@
                                                     <div class="text-base font-semibold">
                                                         {{ substr($item->moder_fish, 0, strpos($item->moder_fish, ' ', strpos($item->moder_fish, ' ') + 1)) }}
                                                     </div>
-                                                    <div class="font-normal text-gray-500">                                                    
+                                                    <div class="font-normal text-gray-500">
                                                         {{ str_pad(substr($item->moder_slug_number, 0, -3), strlen($item->moder_slug_number), '*', STR_PAD_RIGHT) }}
                                                     </div>
                                                 </div>
@@ -142,55 +142,103 @@
                                     <div
                                         class="p-5 border border-b-1 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
                                         <div class="flex justify-center">
-                                            <img class="w-20 mr-8 h-20 rounded" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="Large avatar">
+                                            <img class="w-20 mr-8 h-20 rounded"
+                                                style="object-fit: cover; object-position: 50% 50%;"
+                                                src="/uploads/moderator_images/{{ $item->moder_image }}"
+                                                alt="Large avatar">
+
                                             <p class="mb-2  text-gray-500 dark:text-gray-400 ">
-                                            <p class="text-gray-500 text-xl mt-6 dark:text-gray-400">Moderator <b><span
-                                                        class="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{ $item->moder_fish }}</span></b>ga
+                                            <p class="text-gray-500 text-xl mt-6 dark:text-gray-400">Moderator <b>
+                                                    <span
+                                                        class="bg-green-100 text-green-800 text-m font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{ $item->moder_fish }}</span></b>ga
                                                 Biriktirilgan mavzu nomi:</p>
                                             </p>
                                         </div>
-                                        
+
                                         <blockquote
                                             class="p-4 my-4 border-s-4 border-gray-300 bg-gray-50 dark:border-gray-500 dark:bg-gray-800">
                                             <p
                                                 class="text-xl italic font-medium leading-relaxed text-gray-900 dark:text-white">
                                                 Mavzu: "{{ $item->moder_small_info }}"</p>
                                         </blockquote>
-                                       
+
                                         <p class="text-gray-500 dark:text-gray-400">Moderator tomonidan
                                             yuklangan fayllar va ularga qo'yilgan ballar:</p>
                                         <div class="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
                                             <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                                 <ul role="list"
                                                     class="divide-y divide-gray-100 rounded-md border border-gray-200">
-                                                    <li
-                                                        class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                                                        <div class="flex w-0 flex-1 items-center">
-                                                            <svg class="h-5 w-5 flex-shrink-0 text-gray-400"
-                                                                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                                <path fill-rule="evenodd"
-                                                                    d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"
-                                                                    clip-rule="evenodd"></path>
-                                                            </svg>
-                                                            <div class="ml-4 flex min-w-0 flex-1 gap-2">
-                                                                <span
-                                                                    class="truncate font-medium">resume_back_end_developer.pdf</span>
-                                                                <span class="flex-shrink-0 text-gray-400">23.11.2023</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mr-28 flex-shrink-0">
-                                                            <span
-                                                                class="bg-blue-100 text-blue-800 text-md font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">Category_name
-                                                                dfg df gdf gdf gfd fg</span>
-                                                        </div>
-                                                        <div class="mr-28 flex-shrink-0">
-                                                            <span
-                                                                class="bg-blue-100 text-blue-800 text-md font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">Ball:
-                                                                102</span>
-                                                        </div>
 
-                                                    </li>
-                                                    <li
+                                                    @foreach ($item->files as $files_or_urls)
+                                                        <li
+                                                            class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                                                            <div class="flex w-0 flex-1 items-center">
+                                                                <svg class="h-5 w-5 flex-shrink-0 text-gray-400"
+                                                                    viewBox="0 0 20 20" fill="currentColor"
+                                                                    aria-hidden="true">
+                                                                    <path fill-rule="evenodd"
+                                                                        d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"
+                                                                        clip-rule="evenodd"></path>
+                                                                </svg>
+                                                                <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                                                                    <span class="truncate font-medium">
+                                                                        @if (isset($files_or_urls->filename) && $files_or_urls->filename != 'Yuklanmagan!')
+                                                                            @php
+                                                                                $filename = pathinfo($files_or_urls->filename, PATHINFO_FILENAME);
+                                                                                $extension = pathinfo($files_or_urls->filename, PATHINFO_EXTENSION);
+                                                                                $allowedExtensions = ['zip', 'doc', 'docx', 'pdf'];
+                                                                            @endphp
+
+                                                                            @if (in_array($extension, $allowedExtensions))
+                                                                                @if (strlen($filename) > 10)
+                                                                                    {{ substr($filename, 0, 10) . '...' }}
+                                                                                @else
+                                                                                    {{ $filename }}
+                                                                                @endif
+
+                                                                                @if (isset($files_or_urls->site_url))
+                                                                                    <span
+                                                                                        class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">{{ '' . strtoupper($extension) }}
+                                                                                        + WEB </span>
+                                                                                @else
+                                                                                    <span
+                                                                                        class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">{{ '' . strtoupper($extension) }}</span>
+                                                                                @endif
+                                                                            @else
+                                                                                {{ $files_or_urls->filename }}
+                                                                            @endif
+                                                                        @else
+                                                                            {{ strlen($files_or_urls->site_url) > 15 ? substr(str_replace(['www.', 'http://', 'https://'], '', $files_or_urls->site_url), 0, 15) . '...' : $files_or_urls->site_url }}
+                                                                            <span
+                                                                                class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">WEB</span>
+                                                                        @endif
+                                                                    </span>
+                                                                    <span
+                                                                        class="flex-shrink-0 text-gray-400">{{ $files_or_urls->created_at->format('d-M-Y') }}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mr-28 flex-shrink-0">
+                                                                <span
+                                                                    class="bg-blue-100 text-blue-800 text-md font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300"  data-tooltip-target="tooltip-mavzu">{{ substr($files_or_urls->category_name, 0, 30) . '...' }}</span>
+                                                                    
+                                                                <div id="tooltip-mavzu" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                                                                    {{$files_or_urls->category_name}}
+                                                                    <div class="tooltip-arrow" data-popper-arrow></div>
+                                                                </div>
+
+                                                                
+                                                            </div>
+                                                            
+                                                            <div class="mr-28 flex-shrink-0">
+                                                                <span
+                                                                    class="bg-blue-100 text-blue-800 text-md font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">Ball:
+                                                                    102</span>
+                                                            </div>
+
+
+                                                        </li>
+                                                    @endforeach
+                                                    {{-- <li
                                                         class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
                                                         <div class="flex w-0 flex-1 items-center">
                                                             <svg class="h-5 w-5 flex-shrink-0 text-gray-400"
@@ -212,7 +260,7 @@
                                                                 102</span>
                                                         </div>
 
-                                                    </li>
+                                                    </li> --}}
                                                 </ul>
                                             </dd>
                                         </div>
@@ -246,9 +294,9 @@
                                                 sharifi ko'rinadi!</p>
 
                                             <!-- Nested accordion -->
-                                            <div id="accordion-nested-collapse-{{$item->id}}"
-                                            data-accordion="collapse" class="mt-4 mb-12 m-auto w-[1100px]">
-                                               
+                                            <div id="accordion-nested-collapse-{{ $item->id }}"
+                                                data-accordion="collapse" class="mt-4 mb-12 m-auto w-[1100px]">
+
                                                 @foreach ($item->operator as $items)
                                                     <h2 id="accordion-nested-collapse-heading-{{ $items->id }}">
                                                         <button type="button"
@@ -273,7 +321,7 @@
                                                                         <div class="font-normal text-gray-500">
                                                                             {{ str_pad(substr($items->oper_slug_number, 0, -3), strlen($items->oper_slug_number), '*', STR_PAD_RIGHT) }}
                                                                         </div>
-                                                                        
+
                                                                     </div>
                                                                 </th>
                                                                 <td class="px-6 py-4">

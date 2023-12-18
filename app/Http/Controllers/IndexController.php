@@ -110,7 +110,14 @@ class IndexController extends Controller
         $professor = Professor::where('slug_number', $slug_number)->firstOrFail();
         $professor_moder = $professor->moderator()->orderBy('created_at', 'desc')->paginate(12);
 
-
+        $mavzular_turi = $this->mavzular();
+        foreach ($professor_moder as $key) {
+            foreach ($key->files as $files) {
+                if (array_key_exists($files->category_name, $mavzular_turi)) {
+                    $files->category_name = $mavzular_turi[$files->category_name];
+                }
+            }
+        }
 
         return view('reyting.frontend.showProfessor', compact('professor', 'professor_moder'));
     }
@@ -148,35 +155,7 @@ class IndexController extends Controller
             $moderator = Moderator::where('moder_slug_number', $request->code)->first();
             $operator = Operator::where('oper_slug_number', $request->code)->first();
 
-            $mavzular_turi = [
-                'world_top1000_phd_dsc' => "Dunyoning nufuzli 1000 taligiga kiruvchi OTMlarning PhD yoki DSc ilmiy darajasini olgan",
-                'world_top1000_lectures' => "Dunyoning nufuzli 1000 taligiga kiruvchi OTMlarida o‘quv mashg‘ulotlari o‘tkazgan",
-                'prof_title' => "Professor unvoniga ega",
-                'dsc' => "Fan doktori (DSc) ilmiy darajasiga ega",
-                'assoc_prof' => "Dotsent unvoniga ega",
-                'phd' => "Fan nomzodi (PhD) ilmiy darajasiga ega",
-                'h_index_wos' => "«Web of Science» bazasida h-indeksiga ega (indeksga ko'paytiriladi)",
-                'h_index_scopus' => "«Scopus» bazasida h-indeksiga ega  (indeksga ko'paytiriladi)",
-                'citations_wos' => "«Web of Science» bazasida mavjud bo‘lgan iqtiboslar ",
-                'citations_scopus' => "«Scopus» bazasida mavjud bo‘lgan iqtiboslar (iqtiboslar soniga ko'paytiriladi)",
-                'citations_gscholar' => "«Google Scholar» bazasida iqtiboslarga ega",
-                'papers_wos_scopus' => "«Web of Science», «Scopus» bazasiga kiritilgan jurnallarda chqarilgan maqolaga ega ",
-                'papers_int_journal' => "Xalqaro jurnallarda (OAK ro‘yxatidagi)  chqarilgan ilmiy maqolaga ega ",
-                'papers_local_journal' => "Respublika ilmiy jurnallarida (OAK ro‘yxatidagi)  chqarilgan ilmiy maqolalar  ega ",
-                'foreign_grants' => "Xorijiy ilmiy tadqiqot markazlari grantlari va xorijiy ilmiy fondlari mablag‘lariga (eng kamida 50 mln. so'm) ega (koordinator)",
-                'industrial_funds' => "Sohalar buyurtmalari asosida o‘tkazilgan tadqiqotlardan olingan mablag‘larga (eng kamida 15 mln. so'm) ega (koordinator)",
-                'state_grants' => "Davlat grantlari asosida o‘tkazilgan tadqiqotlardan olingan mablag‘larga ega (eng kamida 30 mln. so'm) (koordinator)",
-                'monographs' => "Nashr etilgan monografiyalarga ega ",
-                'patents' => "Intellektual mulk uchun olingan himoya hujjatlari (patentlar)ga ega ",
-                'ict_certifications' => "Axborot-kommunikatsiya texnologiyalariga oid dasturlar va elektron bazalari uchun olingan guvohnomalar, mualliflik huquqi bilan himoya qilinadigan turli materiallarga ega ",
-                'textbooks' => "Darsliklarga ega",
-                'guides' => "O‘quv qo‘llanmalarga ega",
-                'int_confs' => "Xalqaro konferensiya va seminarlarda, ilmiy yoki ta’lim loyihalarida (xorijiy, qo‘shma) ishtirok etgan ",
-                'foreign_lang_courses' => "Horijiy tilda o‘qitiladigan o‘quv kurs(fan)lariga ega ",
-                'int_comp_awards' => "Xalqaro olimpiadalarda va nufuzli tanlovlarda sovrinli o‘rinlarni qo‘lga kiritgan ",
-                'pres_scholarship' => "O‘zbekiston Respublikasi Prezidenti davlat stipendiyasi sovrindori bo‘lgan",
-                'nat_comp_awards' => "Respublika olimpiadalarda va nufuzli tanlovlarda sovrinli o‘rinlarni qo‘lga kiritgan"
-            ];
+            $mavzular_turi = $this->mavzular();
 
 
             if ($professor) {
@@ -219,6 +198,38 @@ class IndexController extends Controller
             // Agar kod kiritilmagan bo'lsa, 404 xatolikni chiqaring yoki bosh sahifaga yo'naltiring
             return redirect()->back()->with('error', "Bunday kod mavjud emas!");
         }
+    }
+
+    public function mavzular(){
+        return $mavzular_turi = [
+            'world_top1000_phd_dsc' => "Dunyoning nufuzli 1000 taligiga kiruvchi OTMlarning PhD yoki DSc ilmiy darajasini olgan",
+            'world_top1000_lectures' => "Dunyoning nufuzli 1000 taligiga kiruvchi OTMlarida o‘quv mashg‘ulotlari o‘tkazgan",
+            'prof_title' => "Professor unvoniga ega",
+            'dsc' => "Fan doktori (DSc) ilmiy darajasiga ega",
+            'assoc_prof' => "Dotsent unvoniga ega",
+            'phd' => "Fan nomzodi (PhD) ilmiy darajasiga ega",
+            'h_index_wos' => "«Web of Science» bazasida h-indeksiga ega (indeksga ko'paytiriladi)",
+            'h_index_scopus' => "«Scopus» bazasida h-indeksiga ega  (indeksga ko'paytiriladi)",
+            'citations_wos' => "«Web of Science» bazasida mavjud bo‘lgan iqtiboslar ",
+            'citations_scopus' => "«Scopus» bazasida mavjud bo‘lgan iqtiboslar (iqtiboslar soniga ko'paytiriladi)",
+            'citations_gscholar' => "«Google Scholar» bazasida iqtiboslarga ega",
+            'papers_wos_scopus' => "«Web of Science», «Scopus» bazasiga kiritilgan jurnallarda chqarilgan maqolaga ega ",
+            'papers_int_journal' => "Xalqaro jurnallarda (OAK ro‘yxatidagi)  chqarilgan ilmiy maqolaga ega ",
+            'papers_local_journal' => "Respublika ilmiy jurnallarida (OAK ro‘yxatidagi)  chqarilgan ilmiy maqolalar  ega ",
+            'foreign_grants' => "Xorijiy ilmiy tadqiqot markazlari grantlari va xorijiy ilmiy fondlari mablag‘lariga (eng kamida 50 mln. so'm) ega (koordinator)",
+            'industrial_funds' => "Sohalar buyurtmalari asosida o‘tkazilgan tadqiqotlardan olingan mablag‘larga (eng kamida 15 mln. so'm) ega (koordinator)",
+            'state_grants' => "Davlat grantlari asosida o‘tkazilgan tadqiqotlardan olingan mablag‘larga ega (eng kamida 30 mln. so'm) (koordinator)",
+            'monographs' => "Nashr etilgan monografiyalarga ega ",
+            'patents' => "Intellektual mulk uchun olingan himoya hujjatlari (patentlar)ga ega ",
+            'ict_certifications' => "Axborot-kommunikatsiya texnologiyalariga oid dasturlar va elektron bazalari uchun olingan guvohnomalar, mualliflik huquqi bilan himoya qilinadigan turli materiallarga ega ",
+            'textbooks' => "Darsliklarga ega",
+            'guides' => "O‘quv qo‘llanmalarga ega",
+            'int_confs' => "Xalqaro konferensiya va seminarlarda, ilmiy yoki ta’lim loyihalarida (xorijiy, qo‘shma) ishtirok etgan ",
+            'foreign_lang_courses' => "Horijiy tilda o‘qitiladigan o‘quv kurs(fan)lariga ega ",
+            'int_comp_awards' => "Xalqaro olimpiadalarda va nufuzli tanlovlarda sovrinli o‘rinlarni qo‘lga kiritgan ",
+            'pres_scholarship' => "O‘zbekiston Respublikasi Prezidenti davlat stipendiyasi sovrindori bo‘lgan",
+            'nat_comp_awards' => "Respublika olimpiadalarda va nufuzli tanlovlarda sovrinli o‘rinlarni qo‘lga kiritgan"
+        ];
     }
 
 
