@@ -114,7 +114,7 @@
                                                 </div>
                                             </th>
                                             <td class="px-6 py-4">
-                                                Umumiy ball: 204
+                                                Umumiy ball: {{ $item->custom_ball}}
                                             </td>
                                             <td class="px-6 py-4">
                                                 <div class="flex items-center">
@@ -168,109 +168,14 @@
                                             <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                                 <ul role="list"
                                                     class="divide-y divide-gray-100 rounded-md border border-gray-200">
-
-                                                    @foreach ($item->files as $files_or_urls)
-                                                        <li
-                                                            class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                                                            <div class="flex w-0 mr-3 flex-1 items-center"> 
-                                                                <svg class="w-6 h-6 text-gray-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 19">
-                                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15h.01M4 12H2a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-3M9.5 1v10.93m4-3.93-4 4-4-4"/>
-                                                                  </svg>
-                                                                <div class="ml-4 flex min-w-0 flex-1 gap-2">
-                                                                    <span class="truncate font-medium">
-                                                                        @if (isset($files_or_urls->filename) && $files_or_urls->filename != 'Yuklanmagan!')
-                                                                            @php
-                                                                                $filename = pathinfo($files_or_urls->filename, PATHINFO_FILENAME);
-                                                                                $extension = pathinfo($files_or_urls->filename, PATHINFO_EXTENSION);
-                                                                                $allowedExtensions = ['zip', 'doc', 'docx', 'pdf'];
-                                                                            @endphp
-
-                                                                            @if (in_array($extension, $allowedExtensions))
-                                                                                @if (strlen($filename) > 10)
-                                                                                    {{ substr($filename, 0, 10) . '...' }}
-                                                                                @else
-                                                                                    {{ $filename }}
-                                                                                @endif
-
-                                                                                @if (isset($files_or_urls->site_url))
-                                                                                    <span
-                                                                                        class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">{{ '' . strtoupper($extension) }}
-                                                                                        + WEB </span>
-                                                                                @else
-                                                                                    <span
-                                                                                        class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">{{ '' . strtoupper($extension) }}</span>
-                                                                                @endif
-                                                                            @else
-                                                                                {{ $files_or_urls->filename }}
-                                                                            @endif
-                                                                        @else
-                                                                            {{ strlen($files_or_urls->site_url) > 15 ? substr(str_replace(['www.', 'http://', 'https://'], '', $files_or_urls->site_url), 0, 15) . '...' : $files_or_urls->site_url }}
-                                                                            <span
-                                                                                class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">WEB</span>
-                                                                        @endif
-                                                                    </span>
-                                                                    <span
-                                                                        class="flex-shrink-0 text-gray-400">{{ $files_or_urls->created_at->format('d-M-Y') }}</span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="mr-12 flex-shrink-0 items-start">
-                                                                <span data-tooltip-target="tooltip-mavzu"
-                                                                    class="bg-blue-100 text-blue-800 text-center text-sm font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">{{ substr($files_or_urls->category_name, 0, 70) . '...' }}</span>
-                                                                    
-                                                                <div id="tooltip-mavzu" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                                                                    {{$files_or_urls->category_name}}
-                                                                    <div class="tooltip-arrow" data-popper-arrow></div>
-                                                                </div>
-
-                                                                
-                                                            </div>
-                                                            
-                                                            <div class="mr-6 flex-shrink-0">
-                                                                <span
-                                                                class="bg-blue-100 text-blue-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Ball:
-                                                                    @if (empty($files_or_urls->points))
-                                                                        0
-                                                                    @else
-                                                                    {{ $files_or_urls->points }}
-                                                                    @endif    
-                                                                    
-                                                                </span>
-                                                            </div>
-
-                                                            <div class="mr-2 flex-shrink-0" style="    min-width: 150px;">
-                                                                @if($files_or_urls->ariza_holati == "maqullandi")
-                                                                <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Maqullangan!</span>
-                                                                @elseif($files_or_urls->ariza_holati == "rad_etildi")
-                                                                <span class="bg-pink-100 text-pink-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-pink-900 dark:text-pink-300">Rad etilgan!</span>
-                                                                @else
-                                                                <span class="bg-purple-100 text-purple-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300">Ko'rib chiqilmoqda!</span>
-                                                                @endif
-                                                            </div>
-                                                        </li>
-                                                    @endforeach
-                                                    {{-- <li
-                                                        class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                                                        <div class="flex w-0 flex-1 items-center">
-                                                            <svg class="h-5 w-5 flex-shrink-0 text-gray-400"
-                                                                viewBox="0 0 20 20" fill="currentColor"
-                                                                aria-hidden="true">
-                                                                <path fill-rule="evenodd"
-                                                                    d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"
-                                                                    clip-rule="evenodd"></path>
-                                                            </svg>
-                                                            <div class="ml-4 flex min-w-0 flex-1 gap-2">
-                                                                <span
-                                                                    class="truncate font-medium">coverletter_back_end_developer.pdf</span>
-                                                                <span class="flex-shrink-0 text-gray-400">4.5mb</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mr-28 flex-shrink-0">
-                                                            <span
-                                                                class="bg-blue-100 text-blue-800 text-md font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">Ball:
-                                                                102</span>
-                                                        </div>
-
-                                                    </li> --}}
+                                                    @if (count($item->files) > 0)
+                                                        @foreach ($item->files as $files_or_urls)
+                                                            @include('reyting.frontend.frogments.showProfessorFiles')
+                                                        @endforeach
+                                                    @else
+                                                    <h1 class="text-center text-xl font-medium mb-4 mt-2 text-gray-400">Ma'lumotlar joylanmagan!</h1>
+                                                        @include('reyting.frontend.frogments.skeletonTable')
+                                                    @endif
                                                 </ul>
                                             </dd>
                                         </div>
@@ -383,66 +288,19 @@
                                                                     class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                                                     <ul role="list"
                                                                         class="divide-y divide-gray-100 rounded-md border border-gray-200">
-                                                                        <li
-                                                                            class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                                                                            <div class="flex w-0 flex-1 items-center">
-                                                                                <svg class="h-5 w-5 flex-shrink-0 text-gray-400"
-                                                                                    viewBox="0 0 20 20"
-                                                                                    fill="currentColor"
-                                                                                    aria-hidden="true">
-                                                                                    <path fill-rule="evenodd"
-                                                                                        d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"
-                                                                                        clip-rule="evenodd">
-                                                                                    </path>
-                                                                                </svg>
-                                                                                <div
-                                                                                    class="ml-4 flex min-w-0 flex-1 gap-2">
-                                                                                    <span
-                                                                                        class="truncate font-medium">resume_back_end_developer.pdf</span>
-                                                                                    <span
-                                                                                        class="flex-shrink-0 text-gray-400">2.4mb</span>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="mr-28 flex-shrink-0">
-                                                                                <span
-                                                                                    class="bg-blue-100 text-blue-800 text-md font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">Ball:
-                                                                                    102</span>
-                                                                            </div>
-                                                                            <div class="ml-4 flex-shrink-0">
-                                                                                <a href="#"
-                                                                                    class="font-medium text-indigo-600 hover:text-indigo-500">Yuklash</a>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li
-                                                                            class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                                                                            <div class="flex w-0 flex-1 items-center">
-                                                                                <svg class="h-5 w-5 flex-shrink-0 text-gray-400"
-                                                                                    viewBox="0 0 20 20"
-                                                                                    fill="currentColor"
-                                                                                    aria-hidden="true">
-                                                                                    <path fill-rule="evenodd"
-                                                                                        d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"
-                                                                                        clip-rule="evenodd">
-                                                                                    </path>
-                                                                                </svg>
-                                                                                <div
-                                                                                    class="ml-4 flex min-w-0 flex-1 gap-2">
-                                                                                    <span
-                                                                                        class="truncate font-medium">coverletter_back_end_developer.pdf</span>
-                                                                                    <span
-                                                                                        class="flex-shrink-0 text-gray-400">4.5mb</span>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="mr-28 flex-shrink-0">
-                                                                                <span
-                                                                                    class="bg-blue-100 text-blue-800 text-md font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">Ball:
-                                                                                    102</span>
-                                                                            </div>
-                                                                            <div class="ml-4 flex-shrink-0">
-                                                                                <a href="#"
-                                                                                    class="font-medium text-indigo-600 hover:text-indigo-500">Yuklash</a>
-                                                                            </div>
-                                                                        </li>
+
+                                                                        @if (count($items->files) > 0)
+                                                                            @foreach ($items->files as $files_or_urls)
+                                                                                @include('reyting.frontend.frogments.showProfessorFiles')
+                                                                            @endforeach
+                                                                        @else
+                                                                        <h1 class="text-center text-xl font-medium mb-4 mt-2 text-gray-400">Ma'lumotlar joylanmagan!</h1>
+                                                                            @include('reyting.frontend.frogments.skeletonTable')
+                                                                        @endif
+
+
+
+
                                                                     </ul>
                                                                 </dd>
                                                             </div>

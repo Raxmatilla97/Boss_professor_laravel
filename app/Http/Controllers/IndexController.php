@@ -77,27 +77,27 @@ class IndexController extends Controller
 
             return redirect()->route('site.index')->with('success', $infogramma);
 
-        }else{
+        } else {
 
             $faylni_qidirish = TemporaryFile::where('filename', $request->document)->first();
 
-            if ($faylni_qidirish) { 
+            if ($faylni_qidirish) {
 
                 $faylni_qidirish->update([
                     'category_name' => $validated['category_name'],
-                    'site_url' => $validated['site_url'],             
+                    'site_url' => $validated['site_url'],
                     $variableName => $validated['user_id'],
                     'ariza_holati' => "kutulmoqda"
                 ]);
 
                 return redirect()->route('site.index')->with('success', $infogramma);
 
-            }else {
+            } else {
 
                 return redirect()->back()->with('error', "Fayl yuklangandan keyin uni qaytib DB dan topish imkoni bo'lmadi!");
             }
-            
-          
+
+
         }
 
     }
@@ -107,17 +107,51 @@ class IndexController extends Controller
      */
     public function show($slug_number)
     {
+        // Kerakli ma'lumotlarni tayyorlab olish
         $professor = Professor::where('slug_number', $slug_number)->firstOrFail();
-        $professor_moder = $professor->moderator()->orderBy('created_at', 'desc')->paginate(12);
+        $professor_moder = $professor->moderator()->orderBy('created_at', 'desc')->get();
 
+        // Mavzularni ro'yxatini boshqa funksiyadan olish
         $mavzular_turi = $this->mavzular();
-        foreach ($professor_moder as $key) {
-            foreach ($key->files as $files) {
+
+        // Mavzular nomini oldindan Moderator va Operatorga o'zgartirish
+        foreach ($professor_moder as $moderator) {
+
+            // Oldindan inseliatsiya qilish
+            $files_ballar_moderator = 0;
+
+            // Moderator uchun
+            foreach ($moderator->files as $files) {
                 if (array_key_exists($files->category_name, $mavzular_turi)) {
                     $files->category_name = $mavzular_turi[$files->category_name];
+                    $files_ballar_moderator += $files->points;
                 }
             }
+
+            // Agarda Moderatorga ruchnoy ball belgilash lozim bo'lsa shu kodni aktivlashtiriladi!
+            // $ballar = $moderator->custom_ball + $files_ballar;
+            $moderator_points = $files_ballar_moderator; // Bu kod esa Izohga olinadi!
+         
+
+            // Oldindan inseliatsiya qilish
+            $files_ballar_operator = 0;
+            
+            // Operator uchun
+            foreach ($moderator->operator as $operator) {
+                foreach ($operator->files as $files) {
+                    if (array_key_exists($files->category_name, $mavzular_turi)) {
+                        $files->category_name = $mavzular_turi[$files->category_name];
+                        $files_ballar_operator += $files->points;
+                    }
+                }
+            }
+
+            // Operator uchun 
+            $moderator->custom_ball = $files_ballar_operator + $moderator_points;
+            
+           
         }
+
 
         return view('reyting.frontend.showProfessor', compact('professor', 'professor_moder'));
     }
@@ -200,7 +234,8 @@ class IndexController extends Controller
         }
     }
 
-    public function mavzular(){
+    public function mavzular()
+    {
         return $mavzular_turi = [
             'world_top1000_phd_dsc' => "Dunyoning nufuzli 1000 taligiga kiruvchi OTMlarning PhD yoki DSc ilmiy darajasini olgan",
             'world_top1000_lectures' => "Dunyoning nufuzli 1000 taligiga kiruvchi OTMlarida o‘quv mashg‘ulotlari o‘tkazgan",
