@@ -114,6 +114,9 @@ class IndexController extends Controller
         // Mavzularni ro'yxatini boshqa funksiyadan olish
         $mavzular_turi = $this->mavzular();
 
+        // Barcha ballarni yig'indisini Professorga uzatish
+        $professor_customBall = 0;
+
         // Mavzular nomini oldindan Moderator va Operatorga o'zgartirish
         foreach ($professor_moder as $moderator) {
 
@@ -159,11 +162,17 @@ class IndexController extends Controller
             }
 
             // Operator uchun 
-            $moderator->custom_ball = $files_ballar_operator + $moderator_points;
-            
+            // $moderator->custom_ball = $files_ballar_operator + $moderator_points;
+            $moderator->custom_ball = $files_ballar_operator + $files_ballar_moderator;
+            $professor_customBall += $moderator->custom_ball;
            
         }
 
+        // Barcha ballarni yigindisini Professorga uzatish
+        $professor->custom_ball = $professor_customBall;
+        
+        $professor->save();
+        // dd($professor->custom_ball);
 
         return view('reyting.frontend.showProfessor', compact('professor', 'professor_moder'));
     }

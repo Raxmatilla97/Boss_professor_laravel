@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('slug_number')->nullable();
             $table->string('image')->nullable();
             $table->boolean('status')->nullable();
-            $table->float('custom_ball')->nullable();
+            $table->integer('custom_ball')->nullable();
             $table->text('small_info')->nullable();
             $table->timestamps();
         });

@@ -38,9 +38,15 @@
         .card:hover {
             transform: scale(1.05);
         }
+
+        .antialiased, .subpixel-antialiased {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
     </style>
 </head>
-<body class="font-sans bg-gray-200 min-h-screen">
+<body class="font-sans bg-gray-200 bg-hero bg-no-repeat bg-cover bg-center bg-fixed" style="background-image: url({{ asset('assets/thumb__1_0_0_0_auto.jpg') }});">
+
     @include('reyting.frontend.nav')
     @yield('content')  
    

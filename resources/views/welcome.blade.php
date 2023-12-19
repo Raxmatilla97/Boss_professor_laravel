@@ -1,13 +1,58 @@
 @extends('layouts.frontend')
 @section('content')
+
+@if (session('success'))
+<div style="background: url('{{ asset('assets/images/bg-success.webp') }}') no-repeat center center; background-size: cover;"
+    id="notification-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+    x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 10000)">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div class="mt-3 text-center">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">
+                Bildirishnoma!
+            </h3>
+            <div class="mt-2 px-1 py-3">
+                <div id="alert-additional-content-1"
+                    class="p-4 mb-4 text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800"
+                    role="alert">
+                    <div class="flex items-center">
+                        <svg class="flex-shrink-0 w-4 h-4 me-2" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                        </svg>
+                        <span class="sr-only">Info</span>
+                        <h3 class="text-lg font-medium">Murojatingiz qabul qilindi!</h3>
+                    </div>
+                    <div class="mt-2 mb-4 text-md">
+
+                        {{ session('success') }}
+                    </div>
+
+                </div>
+            </div>
+            <div class="items-center px-4 py-3">
+                <button id="close-modal"
+                    onclick="document.getElementById('notification-modal').style.display='none'"
+                    class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md w-5/12 shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                    Yoping
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+
+
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-8">
         @foreach ($professors as $item)
             <!-- Sample Card -->
-            <div class="bg-white p-5 rounded shadow-lg">
-                <img src="{{ '/uploads/' }}{{ $item->image }}" alt="Image 1" class="w-full h-62 object-cover mb-4 rounded">
+            <div class="bg-white p-5 rounded shadow-lg relative">
+
+                <img src="{{ '/uploads/' }}{{ $item->image }}" alt="{{ $item->fish }}" class="w-full h-62 object-cover mb-4 rounded">
+                <span class="absolute top-7 left-7 px-2 py-1 text-md font-semibold tracking-wider text-white uppercase bg-blue-600 rounded">Ball: {{$item->custom_ball}}</span>
                 <h3 class="text-2xl font-bold mb-2">{{ $item->fish }}</h3>
                 <p class="text-gray-700">
-                    Info: {{ $item->small_info }}
+                    <p class="font-medium">Mavzu:</p> {{ $item->small_info }}
                 </p>
 
                 <div class="flex space-x-8 mt-5">
@@ -69,47 +114,6 @@
         <!-- Continue to create more cards as per required -->
 
     </div>
-
-    @if (session('success'))
-        <div style="background: url('{{ asset('assets/images/bg-success.webp') }}') no-repeat center center; background-size: cover;"
-            id="notification-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
-            x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 10000)">
-            <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-                <div class="mt-3 text-center">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">
-                        Bildirishnoma!
-                    </h3>
-                    <div class="mt-2 px-1 py-3">
-                        <div id="alert-additional-content-1"
-                            class="p-4 mb-4 text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800"
-                            role="alert">
-                            <div class="flex items-center">
-                                <svg class="flex-shrink-0 w-4 h-4 me-2" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                    <path
-                                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                                </svg>
-                                <span class="sr-only">Info</span>
-                                <h3 class="text-lg font-medium">Murojatingiz qabul qilindi!</h3>
-                            </div>
-                            <div class="mt-2 mb-4 text-md">
-
-                                {{ session('success') }}
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="items-center px-4 py-3">
-                        <button id="close-modal"
-                            onclick="document.getElementById('notification-modal').style.display='none'"
-                            class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md w-5/12 shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">
-                            Yoping
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
 
 
     <script>

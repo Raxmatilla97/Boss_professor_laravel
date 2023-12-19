@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('moder_fish');
             $table->string('moder_slug_number')->nullable();  
             $table->string('moder_image')->nullable();  
-            $table->string('custom_ball')->nullable();  
+            $table->integer('custom_ball')->nullable();  
             $table->text('moder_small_info')->nullable();       
             $table->boolean('moder_status')->nullable(); 
             $table->foreignId('professor_id')->constrained('professors')->onDelete('cascade');

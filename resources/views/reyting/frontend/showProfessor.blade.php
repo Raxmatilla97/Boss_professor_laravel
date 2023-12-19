@@ -26,7 +26,7 @@
                                     <div>
                                         <span class="font-medium"></span> <span
                                             class=" text-lg font-medium me-2 px-2.5 py-0.5 rounded-full ">Umumiy ball:
-                                            102</span>
+                                            {{ $professor->custom_ball }}</span>
                                     </div>
                                 </div>
 
@@ -40,11 +40,11 @@
                             <dl class="divide-y divide-gray-100">
                                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                     <dt class="text-sm font-medium leading-6 text-gray-900">To'liq F.I.SH</dt>
-                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                    <dd class="mt-1 text-xl leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                                         {{ $professor->fish }}</dd>
                                 </div>
                                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                    <dt class="text-sm font-medium leading-6 text-gray-900">Umumiy to'plagan ball</dt>
+                                    <dt class="text-sm font-medium leading-6 text-gray-900">Umumiy to'plagan ballari</dt>
                                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                                         <span
                                             class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
