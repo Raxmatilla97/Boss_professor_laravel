@@ -33,6 +33,10 @@ Route::get('/malumot-joylash', function () {
     return view('reyting.frontend.malumot_joylash_uchun_kirish');
 })->name('malumotJoylash');
 
+Route::get('/biz-bilan-boglanish', function () {
+    return view('reyting.frontend.contact_us');
+})->name('bizBilanBoglanish');
+
 Route::post('/malumot-joylash-sahifasi', [IndexController::class, 'kirishUchunSlugQidirish'])->name('site.kirishUchunSlugQidirish');
 
 Route::post('/murojatni-yuborish', [IndexController::class, 'store'])->name('site.sendRequest');

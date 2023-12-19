@@ -39,12 +39,12 @@
                         <div class="mt-6 border-t border-gray-100">
                             <dl class="divide-y divide-gray-100">
                                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                    <dt class="text-sm font-medium leading-6 text-gray-900">To'liq F.I.SH</dt>
+                                    <dt class="text-md font-medium leading-6 text-gray-900">To'liq F.I.SH</dt>
                                     <dd class="mt-1 text-xl leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                                         {{ $professor->fish }}</dd>
                                 </div>
                                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                    <dt class="text-sm font-medium leading-6 text-gray-900">Umumiy to'plagan ballari</dt>
+                                    <dt class="text-md font-medium leading-6 text-gray-900">Umumiy to'plagan ballari</dt>
                                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                                         <span
                                             class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
@@ -53,7 +53,7 @@
                                     </dd>
                                 </div>
                                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                    <dt class="text-sm font-medium leading-6 text-gray-900">Ilmiy yo‘nalish nomi</dt>
+                                    <dt class="text-md font-medium leading-6 text-gray-900">Ilmiy yo‘nalish nomi</dt>
                                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                                         <blockquote class="text-xl italic font-semibold text-gray-900 dark:text-white">
                                             <svg class="w-8 h-8 text-gray-400 dark:text-gray-600 mb-4" aria-hidden="true"
@@ -145,7 +145,7 @@
                                             <img class="w-20 mr-8 h-20 rounded"
                                                 style="object-fit: cover; object-position: 50% 50%;"
                                                 src="/uploads/moderator_images/{{ $item->moder_image }}"
-                                                alt="Large avatar">
+                                                alt="{{$item->moder_fish}}">
 
                                             <p class="mb-2  text-gray-500 dark:text-gray-400 ">
                                             <p class="text-gray-500 text-xl mt-6 dark:text-gray-400">Moderator <b>
@@ -255,10 +255,7 @@
                                                                         @endif
                                                                     </div>
                                                                 </td>
-                                                                {{-- <td class="px-6 py-4">
-                                                                    <a href="#"
-                                                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Tahrirlash</a>
-                                                                </td> --}}
+                                                            
                                                             </tr>
                                                             <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0"
                                                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -276,7 +273,7 @@
                                                             class="p-5 border border-b-0 border-gray-200 dark:border-gray-700">
                                                             <p class="text-gray-500 dark:text-gray-400">
                                                             <blockquote
-                                                                class="p-4 my-4 border-s-4 text-sm border-gray-300 bg-gray-50 dark:border-gray-500 dark:bg-gray-800">
+                                                                class="p-4 my-4 border-s-4 text-md border-gray-300 bg-gray-50 dark:border-gray-500 dark:bg-gray-800">
                                                                 <b>Mavzu:</b> {{ $items->oper_small_info }}
                                                             </blockquote>
 
