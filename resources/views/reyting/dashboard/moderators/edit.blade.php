@@ -94,7 +94,7 @@
                         <div class="mb-5">
                             <label for="moder_fish" class="block text-gray-600">Moderator
                                 F.I.SH:</label>
-                            <input type="text" name="moder_fish" value="{{ old('moder_fish') }}" id="moder_fish"
+                            <input type="text" name="moder_fish" value="{{ old('moder_fish', $moderator->moder_fish) }}" id="moder_fish"
                                 class="border px-4 py-2 w-full" required>
                             @error('moder_fish')
                                 <span class="text-red-500">{{ $message }}</span>
@@ -123,8 +123,7 @@
                         </div>
 
                         <div class="mb-4 text-right">
-                            <button type="submit" class="bg-blue-500 text-white py-2 px-4">Moderator
-                                yaratish</button>
+                            <button type="submit" class="bg-blue-500 text-white py-2 px-4">Moderatorni tahrirlash</button>
                         </div>
                     </form>
                 </div>

@@ -136,9 +136,24 @@ class ModeratorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Moderator $moderator)
+    public function edit($slug_number)
     {
-        //
+         
+        $professor = Professor::find($slug_number);
+       
+
+        if ($professor) {   
+
+            $professor_slug = $professor->slug_number;
+
+        } else {
+
+            return redirect()->back()->with('error', "Professor topilmadi! Sahifani yangilab qayta urunib ko'ring.");
+        }
+
+        $professor_info = ['id' => $professor->id, 'slug' => $professor->slug_number];
+      
+        return view('reyting.dashboard.professor.frogments.edit.moderatorCreateForm', compact('professor_info'));
     }
 
     /**
