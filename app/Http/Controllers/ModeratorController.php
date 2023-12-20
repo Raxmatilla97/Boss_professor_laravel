@@ -139,21 +139,21 @@ class ModeratorController extends Controller
     public function edit($slug_number)
     {
          
-        $professor = Professor::find($slug_number);
-       
+        $moderator = Moderator::find($slug_number);
+   
 
-        if ($professor) {   
+        if ($moderator) {   
 
-            $professor_slug = $professor->slug_number;
+            $moderator_slug = $moderator->moder_slug_number;
 
         } else {
 
-            return redirect()->back()->with('error', "Professor topilmadi! Sahifani yangilab qayta urunib ko'ring.");
+            return redirect()->back()->with('error', "Moderator topilmadi! Sahifani yangilab qayta urunib ko'ring.");
         }
 
-        $professor_info = ['id' => $professor->id, 'slug' => $professor->slug_number];
+        
       
-        return view('reyting.dashboard.professor.frogments.edit.moderatorCreateForm', compact('professor_info'));
+        return view('reyting.dashboard.moderators.edit', compact('moderator'));
     }
 
     /**
@@ -161,7 +161,37 @@ class ModeratorController extends Controller
      */
     public function update(Request $request, Moderator $moderator)
     {
-        //
+        $validated = $this->validate($request, [
+            "moder_fish" => "required|string|min:5|max:100",
+            "moder_image" => "nullable|mimes:png,jpg,jpeg|max:3024",
+            "mdoer_status" => "boolean",
+            'moder_small_info' => 'nullable|string'
+        ], [
+            'moder_fish.required' => 'F.I.SH maydoni majburiy.',
+            'moder_fish.string' => 'F.I.SH  maydoni matn bo\'lishi kerak.',
+            'moder_fish.min' => 'F.I.SH maydoni kamida 5 belgi bo\'lishi kerak.',
+            'moder_fish.max' => 'F.I.SH maydoni maksimum 100 belgidan kam bo\'lishi kerak.',
+            'moder_image.required' => 'Rasm majburiy! rasm joylashingiz kerak.',
+            'moder_image.mimes' => 'Rasm png, jpg, jpeg turlaridan biri bo\'lishi kerak.',
+            'moder_image.max' => 'Rasm :max kilobaytdan katta bo\'lmasligi kerak.',            
+            'moder_small_info.string' => 'Moderator haqida ma\'lumot maydoni matn bo\'lishi kerak.',
+        ]);
+
+        if ($request->hasFile('moder_image')) {
+            $tempPath = $request->moder_image->path(); // Temp fayl joylashuvi
+            $fileName = time().'.'.$request->moder_image->extension();
+            $publicPath = public_path('uploads/moderator_images/'.$fileName); // Public fayl joylashuvi
+        
+            // Faylni temp papkadan public papkaga ko'chirish
+            move_uploaded_file($tempPath, $publicPath);
+    
+            // Yangi fayl nomini validated ma'lumotlarga qo'shish
+            $validated['moder_image'] = $fileName;
+        }
+
+        $moderator->update($validated);
+
+        return redirect()->route('professors.edit', $moderator->professor->slug_number) ->with('toaster', ['success', "Moderator ma'lumotlari o'zgartirildi"]);
     }
 
     /**
@@ -169,6 +199,18 @@ class ModeratorController extends Controller
      */
     public function destroy(Moderator $moderator)
     {
-        //
+        try {         
+    
+            // Modelni o'chirish
+            $moderator->delete();
+    
+            // Foydalanuvchiga xabar yuborish
+            return redirect()->route('professors.edit', $moderator->professor->slug_number)->with('toaster', ['success', "Moderator ma'lumotlari o'chirildi"]);
+
+        } catch (\Exception $e) {
+
+            // Agar xatolik yuz berib qolsa, foydalanuvchiga xabar yuborish
+            return redirect()->route('professors.edit', $moderator->professor->slug_number)->with('error', "Moderator topilmadi! Sahifani yangilab qayta urunib ko'ring.");
+        }
     }
 }

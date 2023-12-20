@@ -79,7 +79,7 @@
                                             </td>
 
                                             <td class="px-6 py-4">
-                                                <a href="#"
+                                                <a href="{{route('moderator.edit', ['moderator_id' => $item->id])}}"
                                                     class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Tahrirlash</a>
                                             </td>
                                         </tr>

@@ -76,7 +76,7 @@
                         </div>
 
 
-                        <div class="mb-4 text-right">
+                        <div class="mb-4 text-right">                          
                             <button type="submit"
                                 class="bg-blue-500 text-white py-2 px-4">Yangilash</button>
                         </div>
