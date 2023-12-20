@@ -15,13 +15,6 @@
                         </div>
                     @endif
 
-                    {{-- @if (session('message'))
-                <div class="alert alert-success">
-                    {{ session('message') }}
-                </div>
-            @endif --}}
-
-
                     <form action="{{ route('professors.update', ['professor' => $professor]) }}"
                         method="POST" enctype="multipart/form-data">
                         @csrf

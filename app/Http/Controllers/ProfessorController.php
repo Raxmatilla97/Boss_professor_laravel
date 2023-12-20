@@ -136,6 +136,9 @@ class ProfessorController extends Controller
             'small_info.string' => 'Professor haqida ma\'lumot maydoni matn bo\'lishi kerak.',
         ]);
 
+        $status = $validated['status'] ?? 0;
+        $validated['status'] =  $status;
+
         if ($request->hasFile('image')) {
             $tempPath = $request->image->path(); // Temp fayl joylashuvi
             $fileName = time().'.'.$request->image->extension();

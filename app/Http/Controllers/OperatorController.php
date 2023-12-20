@@ -120,9 +120,24 @@ class OperatorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Operator $operator)
+    public function edit($slug_number)
     {
-       
+         
+        $operator = Operator::find($slug_number);
+   
+
+        if ($operator) {   
+
+            $operator_slug = $operator->oper_slug_number;
+
+        } else {
+
+            return redirect()->back()->with('error', "Operator topilmadi! Sahifani yangilab qayta urunib ko'ring.");
+        }
+
+        
+      
+        return view('reyting.dashboard.operators.edit', compact('operator'));
     }
    
 
@@ -131,7 +146,44 @@ class OperatorController extends Controller
      */
     public function update(Request $request, Operator $operator)
     {
-        //
+     
+        $validated = $this->validate($request, [
+            "oper_fish" => "required|string|min:5|max:100",
+            "oper_image" => "nullable|mimes:png,jpg,jpeg|max:3024",
+            "oper_status" => "boolean",
+            'oper_small_info' => 'nullable|string'
+        ], [
+            'oper_fish.required' => 'F.I.SH maydoni majburiy.',
+            'oper_fish.string' => 'F.I.SH  maydoni matn bo\'lishi kerak.',
+            'oper_fish.min' => 'F.I.SH maydoni kamida 5 belgi bo\'lishi kerak.',
+            'oper_fish.max' => 'F.I.SH maydoni maksimum 100 belgidan kam bo\'lishi kerak.',
+            'oper_image.required' => 'Rasm majburiy! rasm joylashingiz kerak.',
+            'oper_image.mimes' => 'Rasm png, jpg, jpeg turlaridan biri bo\'lishi kerak.',
+            'oper_image.max' => 'Rasm :max kilobaytdan katta bo\'lmasligi kerak.',            
+            'oper_small_info.string' => 'Operator haqida ma\'lumot maydoni matn bo\'lishi kerak.',
+        ]);
+
+        $oper_status = $validated['oper_status'] ?? 0;
+        $validated['oper_status'] =  $oper_status;
+
+
+        if ($request->hasFile('oper_image')) {
+            $tempPath = $request->oper_image->path(); // Temp fayl joylashuvi
+            $fileName = time().'.'.$request->oper_image->extension();
+            $publicPath = public_path('uploads/operator_images/'.$fileName); // Public fayl joylashuvi
+        
+            // Faylni temp papkadan public papkaga ko'chirish
+            move_uploaded_file($tempPath, $publicPath);
+    
+            // Yangi fayl nomini validated ma'lumotlarga qo'shish
+            $validated['oper_image'] = $fileName;
+        }
+       
+        
+        $operator->update($validated);
+
+        return redirect()->route('professors.edit', $operator->moderator->professor->slug_number) ->with('toaster', ['success', "Operator ma'lumotlari o'zgartirildi"]);
+    
     }
 
     /**

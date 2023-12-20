@@ -164,7 +164,7 @@ class ModeratorController extends Controller
         $validated = $this->validate($request, [
             "moder_fish" => "required|string|min:5|max:100",
             "moder_image" => "nullable|mimes:png,jpg,jpeg|max:3024",
-            "mdoer_status" => "boolean",
+            "moder_status" => "boolean",
             'moder_small_info' => 'nullable|string'
         ], [
             'moder_fish.required' => 'F.I.SH maydoni majburiy.',
@@ -176,6 +176,9 @@ class ModeratorController extends Controller
             'moder_image.max' => 'Rasm :max kilobaytdan katta bo\'lmasligi kerak.',            
             'moder_small_info.string' => 'Moderator haqida ma\'lumot maydoni matn bo\'lishi kerak.',
         ]);
+        
+        $moder_status = $validated['moder_status'] ?? 0;
+        $validated['moder_status'] =  $moder_status;
 
         if ($request->hasFile('moder_image')) {
             $tempPath = $request->moder_image->path(); // Temp fayl joylashuvi
