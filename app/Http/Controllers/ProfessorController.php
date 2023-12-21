@@ -55,7 +55,7 @@ class ProfessorController extends Controller
     
         $tempPath = $request->image->path(); // Temp fayl joylashuvi
         $fileName = time().'.'.$request->image->extension();
-        $publicPath = public_path('uploads/'.$fileName); // Public fayl joylashuvi
+        $publicPath = public_path('uploads/professor_images/'.$fileName); // Public fayl joylashuvi
     
         // Faylni temp papkadan public papkaga ko'chirish
         move_uploaded_file($tempPath, $publicPath);
@@ -142,7 +142,7 @@ class ProfessorController extends Controller
         if ($request->hasFile('image')) {
             $tempPath = $request->image->path(); // Temp fayl joylashuvi
             $fileName = time().'.'.$request->image->extension();
-            $publicPath = public_path('uploads/'.$fileName); // Public fayl joylashuvi
+            $publicPath = public_path('uploads/professor_images/'.$fileName); // Public fayl joylashuvi
         
             // Faylni temp papkadan public papkaga ko'chirish
             move_uploaded_file($tempPath, $publicPath);

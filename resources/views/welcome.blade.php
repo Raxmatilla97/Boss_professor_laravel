@@ -47,7 +47,7 @@
             <!-- Sample Card -->
             <div class="bg-white p-5 rounded shadow-lg relative">
 
-                <img src="{{ '/uploads/' }}{{ $item->image }}" alt="{{ $item->fish }}"
+                <img src="{{ '/uploads/professor_images' }}/{{ $item->image }}" alt="{{ $item->fish }}"
                     class="w-full h-62 object-cover mb-4 rounded">
                 <span
                     class="absolute top-7 left-7 px-2 py-1 text-md font-semibold tracking-wider text-white uppercase bg-blue-600 rounded">Ball:

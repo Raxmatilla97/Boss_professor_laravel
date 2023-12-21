@@ -65,13 +65,13 @@
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <h1 class="text-2xl font-bold mb-6">Moderator ma'lumotlarini tahrirlash</h1>
+                    <h1 class="text-2xl font-bold mb-6">Operator ma'lumotlarini tahrirlash</h1>
                     <form action="{{ route('operator.update', ['operator' => $operator]) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
 
                         <div class="mb-4">
-                            <label for="oper_image" class="block text-gray-600">Moderator suratini yuklash:</label>
+                            <label for="oper_image" class="block text-gray-600">Operator suratini yuklash:</label>
                             <input type="file" name="oper_image" id="oper_image" value="{{ old('oper_image') }}"
                                 class="form-control @error('oper_image') is-invalid @enderror  accept="image/*"
                                 onchange="previewImage(event)">

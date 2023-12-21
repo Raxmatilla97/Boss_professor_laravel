@@ -21,11 +21,11 @@ class OperatorController extends Controller
      */
     public function create($request)
     {
-        
-        $professor = Professor::find($request);
-       
 
-        if ($professor) {   
+        $professor = Professor::find($request);
+
+
+        if ($professor) {
 
             $professor_slug = $professor->slug_number;
 
@@ -33,10 +33,10 @@ class OperatorController extends Controller
 
             return redirect()->back()->with('error', "Professor topilmadi! Sahifani yangilab qayta urunib ko'ring.");
         }
-        $professor_moderators = $professor->moderator()->orderBy('moder_fish', 'asc')->get();      
+        $professor_moderators = $professor->moderator()->orderBy('moder_fish', 'asc')->get();
         $professor_info = ['id' => $professor->id, 'slug' => $professor->slug_number];
-      
-        return view('reyting.dashboard.professor.frogments.edit.OperatorCreateForm', compact('professor_info', 'professor_moderators'));
+
+        return view('reyting.dashboard.professor.frogments.edit.OperatorCreateForm', compact('professor_info', 'professor_moderators', 'professor'));
     }
 
 
@@ -50,7 +50,7 @@ class OperatorController extends Controller
             "oper_image" => "required|mimes:png,jpg,jpeg|max:3024",
             "oper_status" => "boolean",
             "oper_small_info" => 'nullable|string'
-           
+
         ], [
             'oper_fish.required' => 'F.I.SH maydoni majburiy.',
             'oper_fish.string' => 'F.I.SH  maydoni matn bo\'lishi kerak.',
@@ -58,14 +58,14 @@ class OperatorController extends Controller
             'oper_fish.max' => 'F.I.SH maydoni maksimum 100 belgidan kam bo\'lishi kerak.',
             'oper_image.required' => 'Rasm majburiy! rasm joylashingiz kerak.',
             'oper_image.mimes' => 'Rasm png, jpg, jpeg turlaridan biri bo\'lishi kerak.',
-            'oper_image.max' => 'Rasm :max kilobaytdan katta bo\'lmasligi kerak.',            
+            'oper_image.max' => 'Rasm :max kilobaytdan katta bo\'lmasligi kerak.',
             'oper_small_info.string' => 'Professor haqida ma\'lumot maydoni matn bo\'lishi kerak.'
         ]);
-    
+
         $tempPath = $request->oper_image->path(); // Temp fayl joylashuvi
-        $fileName = time().'.'.$request->oper_image->extension();
-        $publicPath = public_path('uploads/operator_image/'.$fileName); // Public fayl joylashuvi
-    
+        $fileName = time() . '.' . $request->oper_image->extension();
+        $publicPath = public_path('uploads/operator_image/' . $fileName); // Public fayl joylashuvi
+
         // Faylni temp papkadan public papkaga ko'chirish
         move_uploaded_file($tempPath, $publicPath);
 
@@ -76,22 +76,22 @@ class OperatorController extends Controller
         $numbers = '0123456789';
 
         $random_string = substr(str_shuffle($lowercase_letters), 0, 4) .
-                        substr(str_shuffle($uppercase_letters), 0, 4) .
-                        substr(str_shuffle($numbers), 0, 5) .
-                        substr(str_shuffle($lowercase_letters.$uppercase_letters.$numbers), 0, 6);
-                        
-     
+            substr(str_shuffle($uppercase_letters), 0, 4) .
+            substr(str_shuffle($numbers), 0, 5) .
+            substr(str_shuffle($lowercase_letters . $uppercase_letters . $numbers), 0, 6);
+
+
         $slug_number = $random_string;
 
         // Moderator id olinganmi yoki yo'qmi tekshirish
-        
-        if($request->moderator_id == null or $request->moderator_id == ''){
+
+        if ($request->moderator_id == null or $request->moderator_id == '') {
             return redirect()->back()->with('error', "Moderator topilmadi! Sahifani yangilab qayta urunib ko'ring.");
         }
 
         // Professor id olinganligini tekshirish
 
-        if($request->professor_id == null or $request->professor_id == ''){
+        if ($request->professor_id == null or $request->professor_id == '') {
             return redirect()->back()->with('error', "Moderator topilmadi! Sahifani yangilab qayta urunib ko'ring.");
         }
 
@@ -105,8 +105,8 @@ class OperatorController extends Controller
             'oper_slug_number' => $slug_number,
             'moderator_id' => $request->moderator_id
         ]);
-    
-        return redirect()->route('professors.edit', $request->professor_id)->with('toaster', ['success', "(". $validated['oper_fish'] .") operator sifatida yaratildi!"]);
+
+        return redirect()->route('professors.edit', $request->professor_id)->with('toaster', ['success', "(" . $validated['oper_fish'] . ") operator sifatida yaratildi!"]);
     }
 
     /**
@@ -122,11 +122,11 @@ class OperatorController extends Controller
      */
     public function edit($slug_number)
     {
-         
-        $operator = Operator::find($slug_number);
-   
 
-        if ($operator) {   
+        $operator = Operator::find($slug_number);
+
+
+        if ($operator) {
 
             $operator_slug = $operator->oper_slug_number;
 
@@ -135,18 +135,18 @@ class OperatorController extends Controller
             return redirect()->back()->with('error', "Operator topilmadi! Sahifani yangilab qayta urunib ko'ring.");
         }
 
-        
-      
+
+
         return view('reyting.dashboard.operators.edit', compact('operator'));
     }
-   
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Operator $operator)
     {
-     
+
         $validated = $this->validate($request, [
             "oper_fish" => "required|string|min:5|max:100",
             "oper_image" => "nullable|mimes:png,jpg,jpeg|max:3024",
@@ -159,31 +159,31 @@ class OperatorController extends Controller
             'oper_fish.max' => 'F.I.SH maydoni maksimum 100 belgidan kam bo\'lishi kerak.',
             'oper_image.required' => 'Rasm majburiy! rasm joylashingiz kerak.',
             'oper_image.mimes' => 'Rasm png, jpg, jpeg turlaridan biri bo\'lishi kerak.',
-            'oper_image.max' => 'Rasm :max kilobaytdan katta bo\'lmasligi kerak.',            
+            'oper_image.max' => 'Rasm :max kilobaytdan katta bo\'lmasligi kerak.',
             'oper_small_info.string' => 'Operator haqida ma\'lumot maydoni matn bo\'lishi kerak.',
         ]);
 
         $oper_status = $validated['oper_status'] ?? 0;
-        $validated['oper_status'] =  $oper_status;
+        $validated['oper_status'] = $oper_status;
 
 
         if ($request->hasFile('oper_image')) {
             $tempPath = $request->oper_image->path(); // Temp fayl joylashuvi
-            $fileName = time().'.'.$request->oper_image->extension();
-            $publicPath = public_path('uploads/operator_images/'.$fileName); // Public fayl joylashuvi
-        
+            $fileName = time() . '.' . $request->oper_image->extension();
+            $publicPath = public_path('uploads/operator_images/' . $fileName); // Public fayl joylashuvi
+
             // Faylni temp papkadan public papkaga ko'chirish
             move_uploaded_file($tempPath, $publicPath);
-    
+
             // Yangi fayl nomini validated ma'lumotlarga qo'shish
             $validated['oper_image'] = $fileName;
         }
-       
-        
+
+
         $operator->update($validated);
 
-        return redirect()->route('professors.edit', $operator->moderator->professor->slug_number) ->with('toaster', ['success', "Operator ma'lumotlari o'zgartirildi"]);
-    
+        return redirect()->route('professors.edit', $operator->moderator->professor->slug_number)->with('toaster', ['success', "Operator ma'lumotlari o'zgartirildi"]);
+
     }
 
     /**

@@ -31,7 +31,7 @@
                                 </div>
 
                             </div>
-                            <img class="rounded w-36 h-36" src="/uploads/{{ $professor->image }}" alt="Extra large avatar">
+                            <img class="rounded w-36 h-36" src="{{'/uploads/professor_images'}}/{{ $professor->image }}" alt="Extra large avatar">
                         </div>
 
 
@@ -69,8 +69,24 @@
                             </dl>
                         </div>
                     </div>
-
-
+                  <hr class="mb-8 mt-3">
+                    <p class="text-gray-500 dark:text-gray-400">Professor tomonidan
+                        yuklangan fayllar va ularga qo'yilgan ballar:</p>
+                    <div class="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+                        <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            <ul role="list"
+                                class="divide-y divide-gray-100 rounded-md border border-gray-200">
+                                @if (count($professor->files) > 0)
+                                    @foreach ($professor->files as $files_or_urls)
+                                        @include('reyting.frontend.frogments.showProfessorFiles')
+                                    @endforeach
+                                @else
+                                <h1 class="text-center text-xl font-medium mb-4 mt-2 text-gray-400">Ma'lumotlar joylanmagan!</h1>
+                                    @include('reyting.frontend.frogments.skeletonTable')
+                                @endif
+                            </ul>
+                        </dd>
+                    </div>
 
                 </div>
             </div>

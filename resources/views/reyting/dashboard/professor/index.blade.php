@@ -71,7 +71,7 @@
                                         <td class="border px-4 py-2">{{ $item->id }}</td>
                                         <td class="border px-4 py-2">{{ $item->fish }}</td>
                                         <td class="border px-4 py-2 text-center">
-                                            <img style="width: 100px; border-radius: 50%" src="{{ url('/uploads') }}/{{ $item->image }}" alt="" class="d-block mx-auto rounded">
+                                            <img style="width: 100px; border-radius: 50%" src="{{ url('/uploads/professor_images') }}/{{ $item->image }}" alt="" class="d-block mx-auto rounded">
                                         </td>
                                         
                                         <td class="border px-4 py-2 text-center">

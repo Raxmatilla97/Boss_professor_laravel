@@ -43,7 +43,7 @@
                             @enderror
                         </div>
                         <img id="image-preview" style="width: 150px; margin: auto;"
-                            class="rounded-full" src="{{ url('/uploads') }}/{{ $professor->image }}"
+                            class="rounded-full" src="{{ url('/uploads/professor_images') }}/{{ $professor->image }}"
                             alt="Image Preview" style="display: none;">
                         <div class="mb-4">
                             <label class="relative inline-flex items-center cursor-pointer">

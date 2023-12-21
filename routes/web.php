@@ -52,17 +52,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
     Route::resource('professors', ProfessorController::class);
+
     Route::resource('moderator', ModeratorController::class);    
     Route::resource('moderator', ModeratorController::class)
-    ->except(['create', 'edit']); // Exclude 'create' and 'edit' since they may not follow the typical RESTful conventions
+    ->except(['create', 'edit']); // Resourceda 'create' va 'edit' methodlarini istisno qilish
     Route::get('/moderator/{professor_id}/create', [ModeratorController::class, 'create'])->name('moderator.create');
     Route::get('/moderator/{moderator_id}/edit', [ModeratorController::class, 'edit'])->name('moderator.edit');
 
 
     Route::resource('operator', OperatorController::class);
     Route::resource('operator', OperatorController::class)
-    ->except(['create', 'edit']); // Exclude 'create' and 'edit' since they may not follow the typical RESTful conventions
+    ->except(['create', 'edit']); // Resourceda 'create' va 'edit' methodlarini istisno qilish
     Route::get('/operator/{id}/create', [OperatorController::class, 'create'])->name('operator.create');
     Route::get('/operator/{operator_id}/edit', [OperatorController::class, 'edit'])->name('operator.edit');
 
