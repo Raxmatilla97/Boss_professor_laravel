@@ -105,90 +105,87 @@ class IndexController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($slug_number)
-    {
-        // Kerakli ma'lumotlarni tayyorlab olish
-        $professor = Professor::where('slug_number', $slug_number)->firstOrFail();
-        $professor_moder = $professor->moderator()->orderBy('created_at', 'desc')->get();
+    // public function show($slug_number)
+    // {
+    //     // Kerakli ma'lumotlarni tayyorlab olish
+    //     $professor = Professor::where('slug_number', $slug_number)->firstOrFail();
+    //     $professor_moder = $professor->moderator()->orderBy('created_at', 'desc')->get();
 
-        // Mavzularni ro'yxatini boshqa funksiyadan olish
-        $mavzular_turi = $this->mavzular();
+    //     // Mavzularni ro'yxatini boshqa funksiyadan olish
+    //     $mavzular_turi = $this->mavzular();
 
-        // Barcha ballarni yig'indisini Professorga uzatish
-        $professor_customBall = 0;
-        $files_ballar_professor = 0;
+    //     // Barcha ballarni yig'indisini Professorga uzatish
+    //     $professor_customBall = 0;
+    //     $files_ballar_professor = 0;
 
-        // Professor uchun fiayllar mavzusini oldindan biriktirish kodi
-        foreach ($professor->files as $files) {
-            if (array_key_exists($files->category_name, $mavzular_turi)) {
-                $files->category_name = $mavzular_turi[$files->category_name];
+    //     // Professor uchun fiayllar mavzusini oldindan biriktirish kodi
+    //     foreach ($professor->files as $files) {
+    //         if (array_key_exists($files->category_name, $mavzular_turi)) {
+    //             $files->category_name = $mavzular_turi[$files->category_name];
 
-                if ($files->is_active == 1 && $files->ariza_holati == "maqullandi") {
-                    $files_ballar_professor += $files->points;
-                }
+    //             if ($files->is_active == 1 && $files->ariza_holati == "maqullandi") {
+    //                 $files_ballar_professor += $files->points;
+    //             }
 
-            }
-        }
+    //         }
+    //     }
 
-        // Mavzular nomini oldindan Moderator va Operatorga o'zgartirish
-        foreach ($professor_moder as $moderator) {
+    //     // Mavzular nomini oldindan Moderator va Operatorga o'zgartirish
+    //     foreach ($professor_moder as $moderator) {
 
-            // Oldindan inseliatsiya qilish
-            $files_ballar_moderator = 0;
+    //         // Oldindan inseliatsiya qilish
+    //         $files_ballar_moderator = 0;
 
-            // Moderator uchun fiayllar mavzusini oldindan biriktirish kodi
-            foreach ($moderator->files as $files) {
-                if (array_key_exists($files->category_name, $mavzular_turi)) {
-                    $files->category_name = $mavzular_turi[$files->category_name];
+    //         // Moderator uchun fiayllar mavzusini oldindan biriktirish kodi
+    //         foreach ($moderator->files as $files) {
+    //             if (array_key_exists($files->category_name, $mavzular_turi)) {
+    //                 $files->category_name = $mavzular_turi[$files->category_name];
 
-                    if ($files->is_active == 1 && $files->ariza_holati == "maqullandi") {
-                        $files_ballar_moderator += $files->points;
-                    }
+    //                 if ($files->is_active == 1 && $files->ariza_holati == "maqullandi") {
+    //                     $files_ballar_moderator += $files->points;
+    //                 }
 
-                }
-            }
+    //             }
+    //         }
 
-            // Agarda Moderatorga ruchnoy ball belgilash lozim bo'lsa shu kodni aktivlashtiriladi!
-            // $ballar = $moderator->custom_ball + $files_ballar;
-            $moderator_points = $files_ballar_moderator; // Bu kod esa Izohga olinadi!
-
-
-            // Oldindan inseliatsiya qilish
-            $files_ballar_operator = 0;
-
-            // Operator uchun fiayllar mavzusini oldindan biriktirish kodi
-            foreach ($moderator->operator as $operator) {
-                foreach ($operator->files as $files) {
-                    if (array_key_exists($files->category_name, $mavzular_turi)) {
-                        $files->category_name = $mavzular_turi[$files->category_name];
-
-                        if ($files->is_active == 1 && $files->ariza_holati == "maqullandi") {
-                            $files_ballar_operator += $files->points;
-                        }
-
-                    }
-                    $operator->oper_custom_ball = $files_ballar_operator;
-                }
+    //         // Agarda Moderatorga ruchnoy ball belgilash lozim bo'lsa shu kodni aktivlashtiriladi!
+    //         // $ballar = $moderator->custom_ball + $files_ballar;
+    //         $moderator_points = $files_ballar_moderator; // Bu kod esa Izohga olinadi!
 
 
+    //         // Oldindan inseliatsiya qilish
+    //         $files_ballar_operator = 0;
 
-            }
+    //         // Operator uchun fiayllar mavzusini oldindan biriktirish kodi
+    //         foreach ($moderator->operator as $operator) {
+    //             foreach ($operator->files as $files) {
+    //                 if (array_key_exists($files->category_name, $mavzular_turi)) {
+    //                     $files->category_name = $mavzular_turi[$files->category_name];
 
-            // Operator uchun 
-            // $moderator->custom_ball = $files_ballar_operator + $moderator_points;
-            $moderator->custom_ball = $files_ballar_operator + $files_ballar_moderator;
-            $professor_customBall += $moderator->custom_ball;
+    //                     if ($files->is_active == 1 && $files->ariza_holati == "maqullandi") {
+    //                         $files_ballar_operator += $files->points;
+    //                     }
 
-        }
+    //                 }
+    //                 $operator->oper_custom_ball = $files_ballar_operator;
+    //             }
+    //         }
 
-        // Barcha ballarni yigindisini Professorga uzatish
-        $professor->custom_ball = $professor_customBall + $files_ballar_professor;
+    //         // Operator uchun 
+    //         // $moderator->custom_ball = $files_ballar_operator + $moderator_points;
+    //         $moderator->custom_ball = $files_ballar_operator + $files_ballar_moderator;
+    //         $professor_customBall += $moderator->custom_ball;
 
-        $professor->save();
-        // dd($professor->custom_ball);
+    //     }
 
-        return view('reyting.frontend.showProfessor', compact('professor', 'professor_moder'));
-    }
+    //     // Barcha ballarni yigindisini Professorga uzatish
+    //     $professor->custom_ball = $professor_customBall + $files_ballar_professor;
+
+    //     // $professor->save();
+    //     // dd($professor->custom_ball);
+
+    //     return view('reyting.frontend.showProfessor', compact('professor', 'professor_moder'));
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -301,5 +298,53 @@ class IndexController extends Controller
         ];
     }
 
+    public function show($slug_number)
+    {
+        $professor = Professor::with(['moderator.files', 'files', 'moderator.operator.files'])
+            ->where('slug_number', $slug_number)
+            ->firstOrFail();
 
+        $mavzular_turi = $this->mavzular();
+
+        // Professor va unga bog'liq moderatorlar uchun ballarni hisoblash
+        $professor->custom_ball = $this->calculatePointsForFiles($professor->files, $mavzular_turi);
+
+        $professor_moder = $professor->moderator()->orderBy('created_at', 'desc')->get();
+
+        foreach ($professor_moder as $moderator) {
+            $moderatorPoints = $this->calculatePointsForFiles($moderator->files, $mavzular_turi);
+
+            // Operatorlar uchun ballarni hisoblash va moderator ballariga qo'shish
+            foreach ($moderator->operator as $operator) {
+                $operatorPoints = $this->calculatePointsForFiles($operator->files, $mavzular_turi);
+                $moderatorPoints += $operatorPoints;
+                $operator->oper_custom_ball = $operatorPoints;
+            }
+
+            // Moderatorning umumiy ballarini professorning ballariga qo'shish
+            $professor->custom_ball += $moderatorPoints;
+            $moderator->custom_ball = $moderatorPoints;
+        }
+
+        return view('reyting.frontend.showProfessor', compact('professor', 'professor_moder'));
+    }
+
+
+    private function calculatePointsForFiles($files, $mavzular_turi)
+    {
+        $totalPoints = 0;
+
+        foreach ($files as $file) {
+            if (
+                array_key_exists($file->category_name, $mavzular_turi) &&
+                $file->is_active == 1 &&
+                $file->ariza_holati == "maqullandi"
+            ) {
+                $file->category_name = $mavzular_turi[$file->category_name];
+                $totalPoints += $file->points;
+            }
+        }
+
+        return $totalPoints;
+    }
 }

@@ -35,4 +35,8 @@ class Professor extends Model
     {
         return $this->hasMany(TemporaryFile::class, 'professor_id');
     }
+
+
+    
+
 }

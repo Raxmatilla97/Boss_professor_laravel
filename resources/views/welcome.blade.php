@@ -2,7 +2,7 @@
 @section('content')
     @if (session('success'))
         <div style="background: url('{{ asset('assets/images/bg-success.webp') }}') no-repeat center center; background-size: cover;"
-            id="notification-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+            id="notification-modal" class="fixed inset-0 z-1 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
             x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 10000)">
             <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
                 <div class="mt-3 text-center">
@@ -42,7 +42,7 @@
     @endif
 
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-8">
+    <div class="grid z-0 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-8">
         @foreach ($professors as $item)
             <!-- Sample Card -->
             <div class="bg-white p-5 rounded shadow-lg relative">
