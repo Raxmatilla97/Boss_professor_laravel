@@ -46,7 +46,11 @@
     </style>
 </head>
 <body class="font-sans bg-gray-200 bg-hero bg-no-repeat bg-cover bg-center bg-fixed" style="background-image: url({{ asset('assets/thumb__1_0_0_0_auto.jpg') }});">
-
+<!-- Preloader Konteyneri -->
+<div id="preloader" class="fixed inset-0 bg-white flex justify-center items-center" style="z-index: 1;">
+    <!-- Spinner -->
+    <div class="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+</div>
     @include('reyting.frontend.nav')
     @yield('content')  
    
@@ -54,5 +58,10 @@
   
     @stack('scripts')
 </body>
-
+<script>
+    window.onload = function() {
+        // Sahifa yuklanganda preloader'ni yashirish
+        document.getElementById('preloader').style.display = 'none';
+    };
+</script>
 </html>

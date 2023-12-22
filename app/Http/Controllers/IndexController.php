@@ -19,9 +19,26 @@ class IndexController extends Controller
      */
     public function index()
     {
+        $professors = Professor::with(['moderator.files', 'moderator.operator.files'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(8);
 
-        $professors = Professor::orderBy('created_at', 'desc')->paginate('8');
+        foreach ($professors as $professor) {
+            $professor->custom_ball = $this->calculatePointsForFiles($professor->files);
 
+            foreach ($professor->moderator as $moderator) {
+                $moderatorPoints = $this->calculatePointsForFiles($moderator->files);
+
+                foreach ($moderator->operator as $operator) {
+                    $operatorPoints = $this->calculatePointsForFiles($operator->files);
+                    $moderatorPoints += $operatorPoints;
+                    $operator->oper_custom_ball = $operatorPoints;
+                }
+
+                $professor->custom_ball += $moderatorPoints;
+                $moderator->custom_ball = $moderatorPoints;
+            }
+        }
 
         return view('welcome', compact('professors'));
     }
@@ -330,21 +347,24 @@ class IndexController extends Controller
     }
 
 
-    private function calculatePointsForFiles($files, $mavzular_turi)
+    private function calculatePointsForFiles($files, $mavzular_turi = [])
     {
         $totalPoints = 0;
 
         foreach ($files as $file) {
-            if (
-                array_key_exists($file->category_name, $mavzular_turi) &&
-                $file->is_active == 1 &&
-                $file->ariza_holati == "maqullandi"
-            ) {
-                $file->category_name = $mavzular_turi[$file->category_name];
+            if ($file->is_active == 1 && $file->ariza_holati == "maqullandi") {
+                // Agar mavzular turi mavjud bo'lsa, uni qo'llash
+                if (array_key_exists($file->category_name, $mavzular_turi)) {
+                    $file->category_name = $mavzular_turi[$file->category_name];
+                }
+
                 $totalPoints += $file->points;
             }
         }
 
         return $totalPoints;
     }
+
+
+
 }
