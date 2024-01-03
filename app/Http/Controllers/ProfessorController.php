@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\IndexController;
 use App\Models\Professor;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,14 @@ class ProfessorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+     public function index()
     {
+        
         $professors = Professor::paginate(25);
+
+        IndexController::calculatePointsProfessorsPoints($professors);
+
 
         return view('reyting.dashboard.professor.index', compact('professors'));
     }
@@ -103,10 +109,30 @@ class ProfessorController extends Controller
      */
     public function edit($slug_number)
     {       
+        $mavzular_turi = IndexController::Mavzular();
         $professor = Professor::where('slug_number', $slug_number)->firstOrFail();
         $professor_moder = $professor->moderator()->orderBy('created_at', 'desc')->paginate(12);
         $professor_moder_operators_create = $professor->moderator()->orderBy('moder_fish', 'asc')->paginate(12);
         $professor_operators_list = $professor->operators()->orderBy('created_at', 'desc')->paginate(50);
+
+         // Professor va unga bog'liq moderatorlar uchun ballarni hisoblash
+         $professor->custom_ball = IndexController::calculatePointsForFiles($professor->files, $mavzular_turi);      
+ 
+         foreach ($professor_moder as $moderator) {
+             $moderatorPoints = IndexController::calculatePointsForFiles($moderator->files, $mavzular_turi);
+ 
+             // Operatorlar uchun ballarni hisoblash va moderator ballariga qo'shish
+             foreach ($moderator->operator as $operator) {
+                 $operatorPoints = IndexController::calculatePointsForFiles($operator->files, $mavzular_turi);
+                 $moderatorPoints += $operatorPoints;
+                 $operator->oper_custom_ball = $operatorPoints;
+             }
+ 
+             // Moderatorning umumiy ballarini professorning ballariga qo'shish
+             $professor->custom_ball += $moderatorPoints;
+             $moderator->custom_ball = $moderatorPoints;
+         }
+ 
        
         return view('reyting.dashboard.professor.edit', compact('professor', 'professor_moder', 'professor_moder_operators_create', 'professor_operators_list'));
     }
