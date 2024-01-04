@@ -24,7 +24,7 @@ class IndexController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(8);
            
-        $this->calculatePointsProfessorsPoints($professors);
+        $this->calculateProfessorsPoints($professors);
 
         return view('welcome', compact('professors'));
     }
@@ -105,90 +105,7 @@ class IndexController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     */
-    // public function show($slug_number)
-    // {
-    //     // Kerakli ma'lumotlarni tayyorlab olish
-    //     $professor = Professor::where('slug_number', $slug_number)->firstOrFail();
-    //     $professor_moder = $professor->moderator()->orderBy('created_at', 'desc')->get();
-
-    //     // Mavzularni ro'yxatini boshqa funksiyadan olish
-    //     $mavzular_turi = $this->mavzular();
-
-    //     // Barcha ballarni yig'indisini Professorga uzatish
-    //     $professor_customBall = 0;
-    //     $files_ballar_professor = 0;
-
-    //     // Professor uchun fiayllar mavzusini oldindan biriktirish kodi
-    //     foreach ($professor->files as $files) {
-    //         if (array_key_exists($files->category_name, $mavzular_turi)) {
-    //             $files->category_name = $mavzular_turi[$files->category_name];
-
-    //             if ($files->is_active == 1 && $files->ariza_holati == "maqullandi") {
-    //                 $files_ballar_professor += $files->points;
-    //             }
-
-    //         }
-    //     }
-
-    //     // Mavzular nomini oldindan Moderator va Operatorga o'zgartirish
-    //     foreach ($professor_moder as $moderator) {
-
-    //         // Oldindan inseliatsiya qilish
-    //         $files_ballar_moderator = 0;
-
-    //         // Moderator uchun fiayllar mavzusini oldindan biriktirish kodi
-    //         foreach ($moderator->files as $files) {
-    //             if (array_key_exists($files->category_name, $mavzular_turi)) {
-    //                 $files->category_name = $mavzular_turi[$files->category_name];
-
-    //                 if ($files->is_active == 1 && $files->ariza_holati == "maqullandi") {
-    //                     $files_ballar_moderator += $files->points;
-    //                 }
-
-    //             }
-    //         }
-
-    //         // Agarda Moderatorga ruchnoy ball belgilash lozim bo'lsa shu kodni aktivlashtiriladi!
-    //         // $ballar = $moderator->custom_ball + $files_ballar;
-    //         $moderator_points = $files_ballar_moderator; // Bu kod esa Izohga olinadi!
-
-
-    //         // Oldindan inseliatsiya qilish
-    //         $files_ballar_operator = 0;
-
-    //         // Operator uchun fiayllar mavzusini oldindan biriktirish kodi
-    //         foreach ($moderator->operator as $operator) {
-    //             foreach ($operator->files as $files) {
-    //                 if (array_key_exists($files->category_name, $mavzular_turi)) {
-    //                     $files->category_name = $mavzular_turi[$files->category_name];
-
-    //                     if ($files->is_active == 1 && $files->ariza_holati == "maqullandi") {
-    //                         $files_ballar_operator += $files->points;
-    //                     }
-
-    //                 }
-    //                 $operator->oper_custom_ball = $files_ballar_operator;
-    //             }
-    //         }
-
-    //         // Operator uchun 
-    //         // $moderator->custom_ball = $files_ballar_operator + $moderator_points;
-    //         $moderator->custom_ball = $files_ballar_operator + $files_ballar_moderator;
-    //         $professor_customBall += $moderator->custom_ball;
-
-    //     }
-
-    //     // Barcha ballarni yigindisini Professorga uzatish
-    //     $professor->custom_ball = $professor_customBall + $files_ballar_professor;
-
-    //     // $professor->save();
-    //     // dd($professor->custom_ball);
-
-    //     return view('reyting.frontend.showProfessor', compact('professor', 'professor_moder'));
-    // }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -352,7 +269,7 @@ class IndexController extends Controller
     }
 
 
-public static function calculatePointsProfessorsPoints($professors){
+public static function calculateProfessorsPoints($professors){
 
     foreach ($professors as $professor) {
         $professor->custom_ball = self::calculatePointsForFiles($professor->files);
