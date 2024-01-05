@@ -121,17 +121,17 @@ class ProfessorController extends Controller
     }
 
     public static function calculateProfessorPoints($professor, $professor_moder){
-        $mavzular_turi = IndexController::Mavzular();
+     
         // Professor uchun ballarni hisoblash
-        $professor->custom_ball = IndexController::calculatePointsForFiles($professor->files, $mavzular_turi);
+        $professor->custom_ball = IndexController::calculatePointsForFiles($professor->files);
     
         // Moderatorlar uchun ballarni hisoblash
         foreach ($professor_moder as $moderator) {
-            $moderatorPoints = IndexController::calculatePointsForFiles($moderator->files, $mavzular_turi);
+            $moderatorPoints = IndexController::calculatePointsForFiles($moderator->files);
     
             // Operatorlar uchun ballarni hisoblash va moderator ballariga qo'shish
             foreach ($moderator->operator as $operator) {
-                $operatorPoints = IndexController::calculatePointsForFiles($operator->files, $mavzular_turi);
+                $operatorPoints = IndexController::calculatePointsForFiles($operator->files);
                 $moderatorPoints += $operatorPoints;
                 $operator->oper_custom_ball = $operatorPoints;
             }

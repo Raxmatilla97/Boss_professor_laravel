@@ -183,11 +183,45 @@ class IndexController extends Controller
             // Agar kod kiritilmagan bo'lsa, 404 xatolikni chiqaring yoki bosh sahifaga yo'naltiring
             return redirect()->back()->with('error', "Bunday kod mavjud emas!");
         }
+    }    
+
+    public function show($slug_number)
+    {
+        $professor = Professor::with(['moderator.files', 'files', 'moderator.operator.files'])
+            ->where('slug_number', $slug_number)
+            ->firstOrFail();
+
+      
+
+        // Professor va unga bog'liq moderatorlar uchun ballarni hisoblash
+        $professor->custom_ball = $this->calculatePointsForFiles($professor->files);
+
+        $professor_moder = $professor->moderator()->orderBy('created_at', 'desc')->get();
+
+        foreach ($professor_moder as $moderator) {
+            $moderatorPoints = $this->calculatePointsForFiles($moderator->files,);
+
+            // Operatorlar uchun ballarni hisoblash va moderator ballariga qo'shish
+            foreach ($moderator->operator as $operator) {
+                $operatorPoints = $this->calculatePointsForFiles($operator->FilesController);
+                $moderatorPoints += $operatorPoints;
+                $operator->oper_custom_ball = $operatorPoints;
+            }
+
+            // Moderatorning umumiy ballarini professorning ballariga qo'shish
+            $professor->custom_ball += $moderatorPoints;
+            $moderator->custom_ball = $moderatorPoints;
+        }
+
+        return view('reyting.frontend.showProfessor', compact('professor', 'professor_moder'));
     }
 
-    public static function mavzular()
+
+    public static function calculatePointsForFiles($files)
     {
-        return $mavzular_turi = [
+        $totalPoints = 0;
+
+        $mavzular_turi = [
             'world_top1000_phd_dsc' => "Dunyoning nufuzli 1000 taligiga kiruvchi OTMlarning PhD yoki DSc ilmiy darajasini olgan",
             'world_top1000_lectures' => "Dunyoning nufuzli 1000 taligiga kiruvchi OTMlarida o‘quv mashg‘ulotlari o‘tkazgan",
             'prof_title' => "Professor unvoniga ega",
@@ -216,44 +250,7 @@ class IndexController extends Controller
             'pres_scholarship' => "O‘zbekiston Respublikasi Prezidenti davlat stipendiyasi sovrindori bo‘lgan",
             'nat_comp_awards' => "Respublika olimpiadalarda va nufuzli tanlovlarda sovrinli o‘rinlarni qo‘lga kiritgan"
         ];
-    }
-
-    public function show($slug_number)
-    {
-        $professor = Professor::with(['moderator.files', 'files', 'moderator.operator.files'])
-            ->where('slug_number', $slug_number)
-            ->firstOrFail();
-
-        $mavzular_turi = $this->mavzular();
-
-        // Professor va unga bog'liq moderatorlar uchun ballarni hisoblash
-        $professor->custom_ball = $this->calculatePointsForFiles($professor->files, $mavzular_turi);
-
-        $professor_moder = $professor->moderator()->orderBy('created_at', 'desc')->get();
-
-        foreach ($professor_moder as $moderator) {
-            $moderatorPoints = $this->calculatePointsForFiles($moderator->files, $mavzular_turi);
-
-            // Operatorlar uchun ballarni hisoblash va moderator ballariga qo'shish
-            foreach ($moderator->operator as $operator) {
-                $operatorPoints = $this->calculatePointsForFiles($operator->files, $mavzular_turi);
-                $moderatorPoints += $operatorPoints;
-                $operator->oper_custom_ball = $operatorPoints;
-            }
-
-            // Moderatorning umumiy ballarini professorning ballariga qo'shish
-            $professor->custom_ball += $moderatorPoints;
-            $moderator->custom_ball = $moderatorPoints;
-        }
-
-        return view('reyting.frontend.showProfessor', compact('professor', 'professor_moder'));
-    }
-
-
-    public static function calculatePointsForFiles($files, $mavzular_turi = [])
-    {
-        $totalPoints = 0;
-
+        
         foreach ($files as $file) {
             if ($file->is_active == 1 && $file->ariza_holati == "maqullandi") {
                 // Agar mavzular turi mavjud bo'lsa, uni qo'llash
@@ -291,6 +288,23 @@ public static function calculateProfessorsPoints($professors){
     return $professors;
 }
 
+public static function calculateModeratorsPoints($moderators){   
+
+        foreach ($moderators as $moderator) {
+            $moderatorPoints = self::calculatePointsForFiles($moderator->files);
+
+            foreach ($moderator->operator as $operator) {
+                $operatorPoints = self::calculatePointsForFiles($operator->files);
+                $moderatorPoints += $operatorPoints;
+                $operator->oper_custom_ball = $operatorPoints;
+            }         
+
+            $moderator->custom_ball = $moderatorPoints;
+        }
+ 
+
+    return $moderators;
+}
 
 
 }

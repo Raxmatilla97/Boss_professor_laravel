@@ -19,12 +19,12 @@
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('professors.index')" :active="request()->routeIs('professors.index')">
-                        {{ __("Professorlar ro'yxati") }}
+                        {{ __("Kordinatorlar ro'yxati") }}
                     </x-nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('professors.index')" :active="request()->routeIs('professors.index')">
+                    <x-nav-link :href="route('moderator.list')" :active="request()->routeIs('moderator.list')">
                         {{ __("Moderatorlar ro'yxati") }}
                     </x-nav-link>
                 </div>

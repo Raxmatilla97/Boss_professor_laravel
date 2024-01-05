@@ -6,7 +6,7 @@ use App\Models\Moderator;
 use App\Models\Professor;
 use Illuminate\Http\Request;
 use App\Models\Files;
-
+use App\Http\Controllers\IndexController;
 class ModeratorController extends Controller
 {
     /**
@@ -215,5 +215,14 @@ class ModeratorController extends Controller
             // Agar xatolik yuz berib qolsa, foydalanuvchiga xabar yuborish
             return redirect()->route('professors.edit', $moderator->professor->slug_number)->with('error', "Moderator topilmadi! Sahifani yangilab qayta urunib ko'ring.");
         }
+    }
+
+    public function list(Moderator $moderator){
+
+        $moderators = $moderator->orderBy("created_at", 'desc')->paginate(10);
+
+        IndexController::calculateModeratorsPoints($moderators);
+        return view("reyting.dashboard.moderators.list", compact("moderators"));
+
     }
 }
