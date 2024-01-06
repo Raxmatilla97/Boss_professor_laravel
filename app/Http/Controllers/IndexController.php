@@ -194,16 +194,16 @@ class IndexController extends Controller
       
 
         // Professor va unga bog'liq moderatorlar uchun ballarni hisoblash
-        $professor->custom_ball = $this->calculatePointsForFiles($professor->files);
+        $professor->custom_ball = $this->calculatePointsForFiles($professor->files ?? []);
 
         $professor_moder = $professor->moderator()->orderBy('created_at', 'desc')->get();
 
         foreach ($professor_moder as $moderator) {
-            $moderatorPoints = $this->calculatePointsForFiles($moderator->files,);
+            $moderatorPoints = $this->calculatePointsForFiles($moderator->files ?? []);
 
             // Operatorlar uchun ballarni hisoblash va moderator ballariga qo'shish
             foreach ($moderator->operator as $operator) {
-                $operatorPoints = $this->calculatePointsForFiles($operator->FilesController);
+                $operatorPoints = $this->calculatePointsForFiles($operator->files ?? []);
                 $moderatorPoints += $operatorPoints;
                 $operator->oper_custom_ball = $operatorPoints;
             }
@@ -250,7 +250,7 @@ class IndexController extends Controller
             'pres_scholarship' => "O‘zbekiston Respublikasi Prezidenti davlat stipendiyasi sovrindori bo‘lgan",
             'nat_comp_awards' => "Respublika olimpiadalarda va nufuzli tanlovlarda sovrinli o‘rinlarni qo‘lga kiritgan"
         ];
-        
+       
         foreach ($files as $file) {
             if ($file->is_active == 1 && $file->ariza_holati == "maqullandi") {
                 // Agar mavzular turi mavjud bo'lsa, uni qo'llash
@@ -269,13 +269,13 @@ class IndexController extends Controller
 public static function calculateProfessorsPoints($professors){
 
     foreach ($professors as $professor) {
-        $professor->custom_ball = self::calculatePointsForFiles($professor->files);
+        $professor->custom_ball = self::calculatePointsForFiles($professor->files ?? []);
 
         foreach ($professor->moderator as $moderator) {
-            $moderatorPoints = self::calculatePointsForFiles($moderator->files);
+            $moderatorPoints = self::calculatePointsForFiles($moderator->files ?? []);
 
             foreach ($moderator->operator as $operator) {
-                $operatorPoints = self::calculatePointsForFiles($operator->files);
+                $operatorPoints = self::calculatePointsForFiles($operator->files ?? []);
                 $moderatorPoints += $operatorPoints;
                 $operator->oper_custom_ball = $operatorPoints;
             }
@@ -291,10 +291,10 @@ public static function calculateProfessorsPoints($professors){
 public static function calculateModeratorsPoints($moderators){   
 
         foreach ($moderators as $moderator) {
-            $moderatorPoints = self::calculatePointsForFiles($moderator->files);
+            $moderatorPoints = self::calculatePointsForFiles($moderator->files ?? []);
 
             foreach ($moderator->operator as $operator) {
-                $operatorPoints = self::calculatePointsForFiles($operator->files);
+                $operatorPoints = self::calculatePointsForFiles($operator->files ?? []);
                 $moderatorPoints += $operatorPoints;
                 $operator->oper_custom_ball = $operatorPoints;
             }         
