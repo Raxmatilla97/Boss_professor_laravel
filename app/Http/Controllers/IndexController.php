@@ -235,7 +235,7 @@ class IndexController extends Controller
             'citations_gscholar' => "«Google Scholar» bazasida iqtiboslarga ega",
             'papers_wos_scopus' => "«Web of Science», «Scopus» bazasiga kiritilgan jurnallarda chqarilgan maqolaga ega ",
             'papers_int_journal' => "Xalqaro jurnallarda (OAK ro‘yxatidagi)  chqarilgan ilmiy maqolaga ega ",
-            'papers_local_journal' => "Respublika ilmiy jurnallarida (OAK ro‘yxatidagi)  chqarilgan ilmiy maqolalar  ega ",
+            'papers_local_journal' => "Respublika ilmiy jurnallarida (OAK ro‘yxatidagi)  chqarilgan ilmiy maqolalar ega",
             'foreign_grants' => "Xorijiy ilmiy tadqiqot markazlari grantlari va xorijiy ilmiy fondlari mablag‘lariga (eng kamida 50 mln. so'm) ega (koordinator)",
             'industrial_funds' => "Sohalar buyurtmalari asosida o‘tkazilgan tadqiqotlardan olingan mablag‘larga (eng kamida 15 mln. so'm) ega (koordinator)",
             'state_grants' => "Davlat grantlari asosida o‘tkazilgan tadqiqotlardan olingan mablag‘larga ega (eng kamida 30 mln. so'm) (koordinator)",
@@ -252,12 +252,12 @@ class IndexController extends Controller
         ];
        
         foreach ($files as $file) {
-            if ($file->is_active == 1 && $file->ariza_holati == "maqullandi") {
-                // Agar mavzular turi mavjud bo'lsa, uni qo'llash
-                if (array_key_exists($file->category_name, $mavzular_turi)) {
-                    $file->category_name = $mavzular_turi[$file->category_name];
-                }
+             // Agar mavzular turi mavjud bo'lsa, uni qo'llash
+             if (array_key_exists($file->category_name, $mavzular_turi)) {
+                $file->category_name = $mavzular_turi[$file->category_name];
+            }
 
+            if ($file->is_active == 1 && $file->ariza_holati == "maqullandi") {               
                 $totalPoints += $file->points;
             }
         }
