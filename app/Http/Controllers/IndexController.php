@@ -307,4 +307,17 @@ public static function calculateModeratorsPoints($moderators){
 }
 
 
+public static function calculateOperatorsPoints($operators){  
+  
+        foreach ($operators as $operator) {
+            $operatorPoints = self::calculatePointsForFiles($operator->files ?? []);          
+            $operator->oper_custom_ball = $operatorPoints;      
+         }        
+
+
+
+    return $operators;
+}
+
+
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Operator;
 use App\Models\Professor;
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\IndexController;
 class OperatorController extends Controller
 {
     /**
@@ -193,4 +193,31 @@ class OperatorController extends Controller
     {
         //
     }
+    
+    public function list(Operator $operator, Request $request)
+    {
+        // Agar name parametri mavjud bo'lsa, shu nomga mos keladigan moderatorlarni qidirish
+        if ($request) {
+            $operators = $operator->where('oper_fish', 'like', '%' . $request->name . '%')
+                ->orderBy("created_at", 'desc')
+                ->paginate(30);               
+        } else {
+            // Agar name parametri mavjud bo'lmasa, barcha moderatorlarni tartib bilan olish
+            $operators = $operator->orderBy("created_at", 'desc')->paginate(30);
+        }
+        IndexController::calculateOperatorsPoints($operators);
+
+        // Natijani ko'rsatish uchun ko'rinishni qaytarish
+        return view('reyting.dashboard.operators.list', compact('operators'));
+    }
+
+
+
+
+
+
+
+
+
+
 }

@@ -68,7 +68,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/operator/{id}/create', [OperatorController::class, 'create'])->name('operator.create');
     Route::get('/operator/{operator_id}/edit', [OperatorController::class, 'edit'])->name('operator.edit');
 
-    Route::get('/moderatorlar-list', [ModeratorController::class, 'list'])->name('moderator.list');
+    Route::get('/moderatorlar-list/{name?}', [ModeratorController::class, 'list'])->name('moderator.list');
+    Route::get('/operatorlar-list/{name?}', [OperatorController::class, 'list'])->name('operator.list');
 
 
 

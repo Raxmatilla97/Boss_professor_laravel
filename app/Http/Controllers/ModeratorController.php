@@ -7,6 +7,7 @@ use App\Models\Professor;
 use Illuminate\Http\Request;
 use App\Models\Files;
 use App\Http\Controllers\IndexController;
+
 class ModeratorController extends Controller
 {
     /**
@@ -22,11 +23,11 @@ class ModeratorController extends Controller
      */
     public function create($request)
     {
-        
-        $professor = Professor::find($request);
-       
 
-        if ($professor) {   
+        $professor = Professor::find($request);
+
+
+        if ($professor) {
 
             $professor_slug = $professor->slug_number;
 
@@ -36,7 +37,7 @@ class ModeratorController extends Controller
         }
 
         $professor_info = ['id' => $professor->id, 'slug' => $professor->slug_number];
-      
+
         return view('reyting.dashboard.professor.frogments.edit.moderatorCreateForm', compact('professor_info'));
     }
 
@@ -52,24 +53,24 @@ class ModeratorController extends Controller
             "moder_small_info" => "nullable|string",
             "moder_status" => "boolean",
             'professor_id' => 'required|integer'
-           
+
         ], [
             'moder_fish.required' => 'F.I.SH maydoni majburiy.',
             'moder_fish.string' => 'F.I.SH  maydoni matn bo\'lishi kerak.',
             'moder_fish.min' => 'F.I.SH maydoni kamida 5 belgi bo\'lishi kerak.',
-            'moder_fish.max' => 'F.I.SH maydoni maksimum 100 belgidan kam bo\'lishi kerak.',          
+            'moder_fish.max' => 'F.I.SH maydoni maksimum 100 belgidan kam bo\'lishi kerak.',
             'small_info.string' => 'Moderator haqida ma\'lumot maydoni matn bo\'lishi kerak.',
-        ]);       
+        ]);
 
         // Bu yerdan faylni yuklash va DB ga saqlash bo'yicha kod yozilgan.
-    
+
         // $tempPath = $request->image->path();
         // $fileName = time().'.'.$request->image->extension();
         // $publicPath = public_path('moder-uploads/'.$fileName);
 
         // move_uploaded_file($tempPath, $publicPath);
 
-        
+
         // Files::create([
         //     'file_name' => $fileName,           
         //     'category_name' => $fileName,
@@ -78,10 +79,10 @@ class ModeratorController extends Controller
         // ]);
 
         // Professor sahifasiga qaytish uchun uni aniqlash kodi      
-        
+
         $professor = Professor::find($request->professor_id);
 
-        if ($professor) {   
+        if ($professor) {
 
             $professor_slug = $professor->slug_number;
 
@@ -92,9 +93,9 @@ class ModeratorController extends Controller
 
         // Suratni saytga yuklash kodi
         $tempPath = $request->moder_image->path(); // Temp fayl joylashuvi
-        $fileName = time().'.'.$request->moder_image->extension();
-        $publicPath = public_path('uploads/moderator_images/'.$fileName); // Public fayl joylashuvi
-    
+        $fileName = time() . '.' . $request->moder_image->extension();
+        $publicPath = public_path('uploads/moderator_images/' . $fileName); // Public fayl joylashuvi
+
         // Faylni temp papkadan public papkaga ko'chirish
         move_uploaded_file($tempPath, $publicPath);
 
@@ -105,10 +106,10 @@ class ModeratorController extends Controller
         $numbers = '0123456789';
 
         $random_string = substr(str_shuffle($lowercase_letters), 0, 4) .
-                        substr(str_shuffle($uppercase_letters), 0, 4) .
-                        substr(str_shuffle($numbers), 0, 4) .
-                        substr(str_shuffle($lowercase_letters.$uppercase_letters.$numbers), 0, 3);                        
-     
+            substr(str_shuffle($uppercase_letters), 0, 4) .
+            substr(str_shuffle($numbers), 0, 4) .
+            substr(str_shuffle($lowercase_letters . $uppercase_letters . $numbers), 0, 3);
+
         $slug_number = $random_string;
 
         // Professor modelini yaratish va ma'lumotlarni saqlash
@@ -120,8 +121,8 @@ class ModeratorController extends Controller
             'moder_small_info' => $validated['moder_small_info'],
             'professor_id' => $validated['professor_id']
         ]);
-    
-        return redirect()->to(route('professors.edit', $professor_slug) . '#moder')->with('toaster', ['success', "(". $request->moder_fish .") moderator sifatida yaratildi!"]);
+
+        return redirect()->to(route('professors.edit', $professor_slug) . '#moder')->with('toaster', ['success', "(" . $request->moder_fish . ") moderator sifatida yaratildi!"]);
 
     }
 
@@ -138,11 +139,11 @@ class ModeratorController extends Controller
      */
     public function edit($slug_number)
     {
-         
-        $moderator = Moderator::find($slug_number);
-   
 
-        if ($moderator) {   
+        $moderator = Moderator::find($slug_number);
+
+
+        if ($moderator) {
 
             $moderator_slug = $moderator->moder_slug_number;
 
@@ -151,8 +152,8 @@ class ModeratorController extends Controller
             return redirect()->back()->with('error', "Moderator topilmadi! Sahifani yangilab qayta urunib ko'ring.");
         }
 
-        
-      
+
+
         return view('reyting.dashboard.moderators.edit', compact('moderator'));
     }
 
@@ -173,28 +174,28 @@ class ModeratorController extends Controller
             'moder_fish.max' => 'F.I.SH maydoni maksimum 100 belgidan kam bo\'lishi kerak.',
             'moder_image.required' => 'Rasm majburiy! rasm joylashingiz kerak.',
             'moder_image.mimes' => 'Rasm png, jpg, jpeg turlaridan biri bo\'lishi kerak.',
-            'moder_image.max' => 'Rasm :max kilobaytdan katta bo\'lmasligi kerak.',            
+            'moder_image.max' => 'Rasm :max kilobaytdan katta bo\'lmasligi kerak.',
             'moder_small_info.string' => 'Moderator haqida ma\'lumot maydoni matn bo\'lishi kerak.',
         ]);
-        
+
         $moder_status = $validated['moder_status'] ?? 0;
-        $validated['moder_status'] =  $moder_status;
+        $validated['moder_status'] = $moder_status;
 
         if ($request->hasFile('moder_image')) {
             $tempPath = $request->moder_image->path(); // Temp fayl joylashuvi
-            $fileName = time().'.'.$request->moder_image->extension();
-            $publicPath = public_path('uploads/moderator_images/'.$fileName); // Public fayl joylashuvi
-        
+            $fileName = time() . '.' . $request->moder_image->extension();
+            $publicPath = public_path('uploads/moderator_images/' . $fileName); // Public fayl joylashuvi
+
             // Faylni temp papkadan public papkaga ko'chirish
             move_uploaded_file($tempPath, $publicPath);
-    
+
             // Yangi fayl nomini validated ma'lumotlarga qo'shish
             $validated['moder_image'] = $fileName;
         }
 
         $moderator->update($validated);
 
-        return redirect()->route('professors.edit', $moderator->professor->slug_number) ->with('toaster', ['success', "Moderator ma'lumotlari o'zgartirildi"]);
+        return redirect()->route('professors.edit', $moderator->professor->slug_number)->with('toaster', ['success', "Moderator ma'lumotlari o'zgartirildi"]);
     }
 
     /**
@@ -202,11 +203,11 @@ class ModeratorController extends Controller
      */
     public function destroy(Moderator $moderator)
     {
-        try {         
-    
+        try {
+
             // Modelni o'chirish
             $moderator->delete();
-    
+
             // Foydalanuvchiga xabar yuborish
             return redirect()->route('professors.edit', $moderator->professor->slug_number)->with('toaster', ['success', "Moderator ma'lumotlari o'chirildi"]);
 
@@ -217,12 +218,32 @@ class ModeratorController extends Controller
         }
     }
 
-    public function list(Moderator $moderator){
+    public function list(Moderator $moderator, Request $request)
+    {
+        // Agar name parametri mavjud bo'lsa, shu nomga mos keladigan moderatorlarni qidirish
+        if ($request) {
+            $moderators = $moderator->where('moder_fish', 'like', '%' . $request->name . '%')
+                ->orderBy("created_at", 'desc')
+                ->paginate(10);
+        } else {
+            // Agar name parametri mavjud bo'lmasa, barcha moderatorlarni tartib bilan olish
+            $moderators = $moderator->orderBy("created_at", 'desc')->paginate(10);
+        }
 
-        $moderators = $moderator->orderBy("created_at", 'desc')->paginate(10);
-
-        IndexController::calculateModeratorsPoints($moderators);
-        return view("reyting.dashboard.moderators.list", compact("moderators"));
-
+        // Natijani ko'rsatish uchun ko'rinishni qaytarish
+        return view('reyting.dashboard.moderators.list', compact('moderators'));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
