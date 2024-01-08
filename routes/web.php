@@ -69,7 +69,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/operator/{operator_id}/edit', [OperatorController::class, 'edit'])->name('operator.edit');
 
     Route::get('/moderatorlar-list/{name?}', [ModeratorController::class, 'list'])->name('moderator.list');
+    
     Route::get('/operatorlar-list/{name?}', [OperatorController::class, 'list'])->name('operator.list');
+
+    Route::get('/murojatlar-list/{name?}', [FilesController::class, 'list'])->name('murojatlar.list');
+
 
 
 

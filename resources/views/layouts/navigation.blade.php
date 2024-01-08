@@ -34,6 +34,11 @@
                         {{ __("Operatorlar ro'yxati") }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('murojatlar.list')" :active="request()->routeIs('murojatlar.list')">
+                        {{ __("Kelib tushgan murojaatlar") }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

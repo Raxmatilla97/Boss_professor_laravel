@@ -102,4 +102,24 @@ class FilesController extends Controller
     {
         //
     }
+
+    
+    public function list(Files $files, Request $request)
+    {
+        // Agar name parametri mavjud bo'lsa, shu nomga mos keladigan moderatorlarni qidirish
+        if ($request) {
+            $murojatlar = $files->where('filename', 'like', '%' . $request->name . '%')
+                ->orderBy("created_at", 'desc')
+                ->paginate(20);               
+        } else {
+            // Agar name parametri mavjud bo'lmasa, barcha moderatorlarni tartib bilan olish
+            $murojatlar = $files->orderBy("created_at", 'desc')->paginate(20);
+        }
+        IndexController::calculateOperatorsPoints($murojatlar);
+
+        // Natijani ko'rsatish uchun ko'rinishni qaytarish
+        return view('reyting.dashboard.murojatlar-list', compact('murojatlar'));
+    }
+
+
 }
