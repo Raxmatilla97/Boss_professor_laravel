@@ -19,7 +19,7 @@
                             d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
                     </svg>
                     <span class="sr-only">Info</span>
-                    <h3 class="text-lg font-medium">Kelib kordinatorlardan, moderatorlarda va operatorlardan kelib
+                    <h3 class="text-lg font-medium">Kordinatorlardan, moderatorlarda va operatorlardan kelib
                         tushgan murojaatlar.</h3>
                 </div>
                 <div class="mt-2 mb-4 text-sm">
@@ -41,7 +41,7 @@
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
                         <div class="p-6 text-gray-900 mb-8">
-                            <form class="mb-6" action="{{ route('moderator.list') }}" method="get">
+                            <form class="mb-6" action="{{ route('murojatlar.list') }}" method="get">
 
                                 <label for="default-search"
                                     class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Qidirish</label>
@@ -107,37 +107,46 @@
                                                 </td>
                                                 <th scope="row"
                                                     class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                                    <img class="w-10 h-10 rounded-full"
-                                                        src="{{ asset('/uploads/moderator_images/qudratbek.jpg') }}"
+                                                    <img class="w-10 h-10 rounded-full" src="{{ $item->surat }}"
                                                         alt="Jese image">
                                                     <div class="ps-3">
                                                         <div class="text-base font-semibold">{{ $item->name }}</div>
                                                         <div class="font-normal text-gray-500">
                                                             @if ($item->professor_id)
-                                                            Kordinator
+                                                                Kordinator
                                                             @elseif($item->moderator_id)
-                                                            Moderator
+                                                                Moderator
                                                             @else
-                                                            Operator  
+                                                                Operator
                                                             @endif
                                                         </div>
                                                     </div>
                                                 </th>
                                                 <td class="px-6 py-4">
-                                                    {{$item->category_name}}
+                                                    {{ $item->category_name }}
                                                 </td>
-                                              
+
                                                 <td class="px-6 py-4">
                                                     <div class="flex items-center">
-                                                        <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div>
-                                                        Online
+                                                        @if ($item->ariza_holati == 'maqullandi')
+                                                            <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2">
+                                                            </div>
+                                                            Maqullangan!
+                                                        @elseif($item->ariza_holati == 'kutulmoqda')
+                                                            <div class="h-2.5 w-2.5 rounded-full bg-indigo-500 me-2">
+                                                            </div>
+                                                            Ko'rib chiqish lozim!
+                                                        @else
+                                                            <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div>
+                                                            Rad etilgan
+                                                        @endif
                                                     </div>
                                                 </td>
                                                 <td class="px-6 py-4">
-                                                    {{$item->created_at}}
+                                                    {{ $item->created_at }}
                                                 </td>
                                                 <td class="px-6 py-4">
-                                                    <a href="#"
+                                                    <a href="{{route('murojatlar.show', $item->id)}}"
                                                         class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Ko'rish</a>
                                                 </td>
                                             </tr>

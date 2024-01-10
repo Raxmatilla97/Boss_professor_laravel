@@ -6,7 +6,7 @@ use App\Models\TemporaryFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Database\Eloquent\Builder;
 class TemporaryFileController extends Controller
 {
     /**
@@ -75,19 +75,60 @@ class TemporaryFileController extends Controller
     
     public function list(TemporaryFile $files, Request $request)
     {
-        $murojatlar = $files->when($request->filled('name'), function ($query) use ($request) {
-            return $query->where('filename', 'like', '%' . $request->name . '%');
-        })
-        ->orderBy("created_at", 'desc')
-        ->paginate(20);
+       
+          // Agar name parametri mavjud bo'lsa, shu nomga mos keladigan moderatorlarni qidirish
+          if ($request) {
+            $murojatlar = $files->when($request->filled('name'), function (Builder $query) use ($request) {
+                $name = '%' . $request->name . '%';
+                return $query->whereHas('filesProfessor', function (Builder $q) use ($name) {
+                            $q->where('fish', 'like', $name);
+                        })
+                        ->orWhereHas('filesModerator', function (Builder $q) use ($name) {
+                            $q->where('moder_fish', 'like', $name);
+                        })
+                        ->orWhereHas('filesOperator', function (Builder $q) use ($name) {
+                            $q->where('oper_fish', 'like', $name);
+                        });
+            })
+            ->orderBy("created_at", 'desc')
+            ->paginate(20);
+    
+        } else {
+            // Agar name parametri mavjud bo'lmasa, barcha moderatorlarni tartib bilan olish
+            $murojatlar = $files->orderBy("created_at", 'desc')->paginate(20);
+        }
+
        
         $murojatlar->getCollection()->each(function ($item) {
             // name xususiyatini belgilash
-            $item->name = optional($item->filesProfessor)->fish 
+            $item->name = optional($item->filesProfessor)->fish
                 ?? optional($item->filesModerator)->moder_fish 
                 ?? optional($item->filesOperator)->oper_fish 
-                ?? 'Default Name';
+                ?? 'F.I.SH aniqlanmadi!';
         });
+
+
+        $murojatlar->getCollection()->each(function ($item) {
+            // Surat manzilini belgilash
+            if ($item->professor_id && $item->filesProfessor && $item->filesProfessor->image ) {
+
+                $item->surat = '/uploads/professor_images/' . $item->filesProfessor->image;
+
+            } elseif ($item->moderator_id && $item->filesModerator && $item->filesModerator->image) {
+
+                $item->surat = '/uploads/moderator_images/' . $item->filesModerator->moder_image;
+
+            } elseif ($item->operator_id && $item->filesOperator && $item->filesOperator->image ) {
+
+                $item->surat = '/uploads/operator_images/' . $item->filesOperator->oper_image;
+
+            } else {
+
+                $item->surat = "https://cspu.uz/storage/app/media/2023/avgust/i.webp"; // Standart surat manzili
+            }
+        });
+        
+
 
         foreach ($murojatlar as $item) {
 
@@ -133,6 +174,22 @@ class TemporaryFileController extends Controller
         return view('reyting.dashboard.murojatlar-list', compact('murojatlar'));
     }
     
+    public function show(TemporaryFile $temporaryFile, $id_number)
+    {
+        $information = $temporaryFile->findOrFail($id_number);
     
-
+        // Surat manzilini belgilash
+        if ($information->professor_id && $information->filesProfessor && $information->filesProfessor->image) {
+            $information->surat = '/uploads/professor_images/' . $information->filesProfessor->image;
+        } elseif ($information->moderator_id && $information->filesModerator && $information->filesModerator->image) {
+            $information->surat = '/uploads/moderator_images/' . $information->filesModerator->moder_image;
+        } elseif ($information->operator_id && $information->filesOperator && $information->filesOperator->image) {
+            $information->surat = '/uploads/operator_images/' . $information->filesOperator->oper_image;
+        } else {
+            $information->surat = "https://cspu.uz/storage/app/media/2023/avgust/i.webp"; // Standart surat manzili
+        }
+    
+        return view('reyting.dashboard.murojatni-korish', compact('information'));
+    }
+    
 }

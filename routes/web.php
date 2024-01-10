@@ -73,6 +73,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/operatorlar-list/{name?}', [OperatorController::class, 'list'])->name('operator.list');
 
     Route::get('/murojatlar-list/{name?}', [TemporaryFileController::class, 'list'])->name('murojatlar.list');
+    Route::get('/murojatni-korish/{name?}', [TemporaryFileController::class, 'show'])->name('murojatlar.show');
 
 
 
