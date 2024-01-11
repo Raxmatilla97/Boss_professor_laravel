@@ -140,7 +140,7 @@ class IndexController extends Controller
             $moderator = Moderator::where('moder_slug_number', $request->code)->first();
             $operator = Operator::where('oper_slug_number', $request->code)->first();
 
-            $mavzular_turi = $this->mavzular();
+            $mavzular_turi = TemporaryFileController::mavzular([]);
 
 
             if ($professor) {
@@ -222,7 +222,8 @@ class IndexController extends Controller
         $totalPoints = 0;
         $mavzular_turi = []; // Boshlang'ich qiymat sifatida bo'sh massiv
 
-        TemporaryFileController::mavzular($mavzular_turi);
+       
+        $mavzular_turi = TemporaryFileController::mavzular([]);
        
         foreach ($files as $file) {
              // Agar mavzular turi mavjud bo'lsa, uni qo'llash

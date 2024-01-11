@@ -92,12 +92,12 @@ class TemporaryFileController extends Controller
                         $q->where('oper_fish', 'like', $name);
                     });
             })
-                ->orderBy("created_at", 'desc')
+                ->orderBy("created_at", 'asc')
                 ->paginate(20);
 
         } else {
             // Agar name parametri mavjud bo'lmasa, barcha moderatorlarni tartib bilan olish
-            $murojatlar = $files->orderBy("created_at", 'desc')->paginate(20);
+            $murojatlar = $files->orderBy("created_at", 'asc')->paginate(20);
         }
 
 
@@ -134,7 +134,7 @@ class TemporaryFileController extends Controller
 
         foreach ($murojatlar as $item) {
 
-           $this->mavzular($mavzular_turi);
+            $this->mavzular($mavzular_turi);
 
             // Agar mavzular turi mavjud bo'lsa, uni qo'llash
             if (array_key_exists($item->category_name, $mavzular_turi)) {
@@ -152,7 +152,7 @@ class TemporaryFileController extends Controller
     {
         // Yuborilgan faylni qidirish
         $information = $temporaryFile->findOrFail($id_number);
-        
+
         // Default surat buni o'zgartirsa bo'ladi
         $default_image = 'https://cspu.uz/storage/app/media/2023/avgust/i.webp';
 
@@ -160,10 +160,10 @@ class TemporaryFileController extends Controller
         if ($information->professor_id && $information->filesProfessor) {
 
             // Kordinator ballarini hisoblash
-            $professor = $information->filesProfessor;         
+            $professor = $information->filesProfessor;
             ProfessorController::calculateProfessorPoints($professor, $professor->moderator);
-            $information->custom_ball = $professor->custom_ball;            
-            
+            $information->custom_ball = $professor->custom_ball;
+
             // Kordinator ismini fish_infoga o'tqazish
             $information->fish_info = $professor->fish;
 
@@ -173,8 +173,7 @@ class TemporaryFileController extends Controller
                 : $default_image;
 
             // Kordinator mavzusini small_infoga o'tqazish
-            $information->small_info = $professor->small_info;
-
+            $information->small_info = $professor->small_info;          
 
         } elseif ($information->moderator_id && $information->filesModerator) {
 
@@ -197,11 +196,21 @@ class TemporaryFileController extends Controller
             $information->surat = "https://cspu.uz/storage/app/media/2023/avgust/i.webp"; // Standart surat manzili
         }
 
+          // mavzular metodi chaqirilmoqda va uning qaytarilgan qiymatlari saqlash
+          $mavzular_turi = TemporaryFileController::mavzular([]);
+
+          // $information->category_name qiymati mavjudligi va mavzular turi ichida mos kelishini tekshirish
+          if (isset($mavzular_turi[$information->category_name])) {
+              // Agar mos kelish topilsa, $information->category_name qiymatini yangilash
+              $information->category_name = $mavzular_turi[$information->category_name];
+
+          }
 
         return view('reyting.dashboard.murojatni-korish', compact('information'));
     }
 
-    public static function mavzular($mavzular_turi){
+    public static function mavzular($mavzular_turi)
+    {
         $mavzular_turi = [
             'world_top1000_phd_dsc' => "Dunyoning nufuzli 1000 taligiga kiruvchi OTMlarning PhD yoki DSc ilmiy darajasini olgan",
             'world_top1000_lectures' => "Dunyoning nufuzli 1000 taligiga kiruvchi OTMlarida o‘quv mashg‘ulotlari o‘tkazgan",
