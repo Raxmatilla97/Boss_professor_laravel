@@ -7,14 +7,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
+use App\Http\Controllers\ProfessorController;
+
 class TemporaryFileController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {      
-       
+    {
+
         $validator = Validator::make($request->all(), [
             'document' => 'required|mimes:png,pdf,doc,docx,zip,rar,jpeg,jpg|max:5048',
         ]);
@@ -33,10 +35,10 @@ class TemporaryFileController extends Controller
         if ($request->hasFile('document')) {
             $file = $request->file('document');
             $destinationPath = '/upload/files'; // Yuklash uchun yangi yo'l
-        
+
             $randomNumber = random_int(10000000000000000, 99999999999999999); // 10 xonali unikal raqam
             $filename = $randomNumber . '.' . $file->getClientOriginalExtension(); // Kengaytmani saqlab qolish bilan birga yangi fayl nomi 
-        
+
             $file->storeAs($destinationPath, $filename); // Faylni yangi yo'l va yangi nom bilan saqlash
 
             // if($request->position == "Professor"){
@@ -60,57 +62,57 @@ class TemporaryFileController extends Controller
             // }
 
             TemporaryFile::create([
-                        'folder' => $destinationPath,
-                        'filename' => $filename  
-                    ]);
-            
-          
-        
+                'folder' => $destinationPath,
+                'filename' => $filename
+            ]);
+
+
+
             return $filename; // Saqlangan faylni to'liq yo'li bilan qaytaring
         }
     }
 
 
-    
-    
+
+
     public function list(TemporaryFile $files, Request $request)
     {
-       
-          // Agar name parametri mavjud bo'lsa, shu nomga mos keladigan moderatorlarni qidirish
-          if ($request) {
+
+        // Agar name parametri mavjud bo'lsa, shu nomga mos keladigan moderatorlarni qidirish
+        if ($request) {
             $murojatlar = $files->when($request->filled('name'), function (Builder $query) use ($request) {
                 $name = '%' . $request->name . '%';
                 return $query->whereHas('filesProfessor', function (Builder $q) use ($name) {
-                            $q->where('fish', 'like', $name);
-                        })
-                        ->orWhereHas('filesModerator', function (Builder $q) use ($name) {
-                            $q->where('moder_fish', 'like', $name);
-                        })
-                        ->orWhereHas('filesOperator', function (Builder $q) use ($name) {
-                            $q->where('oper_fish', 'like', $name);
-                        });
+                    $q->where('fish', 'like', $name);
+                })
+                    ->orWhereHas('filesModerator', function (Builder $q) use ($name) {
+                        $q->where('moder_fish', 'like', $name);
+                    })
+                    ->orWhereHas('filesOperator', function (Builder $q) use ($name) {
+                        $q->where('oper_fish', 'like', $name);
+                    });
             })
-            ->orderBy("created_at", 'desc')
-            ->paginate(20);
-    
+                ->orderBy("created_at", 'desc')
+                ->paginate(20);
+
         } else {
             // Agar name parametri mavjud bo'lmasa, barcha moderatorlarni tartib bilan olish
             $murojatlar = $files->orderBy("created_at", 'desc')->paginate(20);
         }
 
-       
+
         $murojatlar->getCollection()->each(function ($item) {
             // name xususiyatini belgilash
             $item->name = optional($item->filesProfessor)->fish
-                ?? optional($item->filesModerator)->moder_fish 
-                ?? optional($item->filesOperator)->oper_fish 
+                ?? optional($item->filesModerator)->moder_fish
+                ?? optional($item->filesOperator)->oper_fish
                 ?? 'F.I.SH aniqlanmadi!';
         });
 
 
         $murojatlar->getCollection()->each(function ($item) {
             // Surat manzilini belgilash
-            if ($item->professor_id && $item->filesProfessor && $item->filesProfessor->image ) {
+            if ($item->professor_id && $item->filesProfessor && $item->filesProfessor->image) {
 
                 $item->surat = '/uploads/professor_images/' . $item->filesProfessor->image;
 
@@ -118,7 +120,7 @@ class TemporaryFileController extends Controller
 
                 $item->surat = '/uploads/moderator_images/' . $item->filesModerator->moder_image;
 
-            } elseif ($item->operator_id && $item->filesOperator && $item->filesOperator->image ) {
+            } elseif ($item->operator_id && $item->filesOperator && $item->filesOperator->image) {
 
                 $item->surat = '/uploads/operator_images/' . $item->filesOperator->oper_image;
 
@@ -127,69 +129,110 @@ class TemporaryFileController extends Controller
                 $item->surat = "https://cspu.uz/storage/app/media/2023/avgust/i.webp"; // Standart surat manzili
             }
         });
-        
 
+        $mavzular_turi = []; // Boshlang'ich qiymat sifatida bo'sh massiv
 
         foreach ($murojatlar as $item) {
 
-            $mavzular_turi = [
-                'world_top1000_phd_dsc' => "Dunyoning nufuzli 1000 taligiga kiruvchi OTMlarning PhD yoki DSc ilmiy darajasini olgan",
-                'world_top1000_lectures' => "Dunyoning nufuzli 1000 taligiga kiruvchi OTMlarida o‘quv mashg‘ulotlari o‘tkazgan",
-                'prof_title' => "Professor unvoniga ega",
-                'dsc' => "Fan doktori (DSc) ilmiy darajasiga ega",
-                'assoc_prof' => "Dotsent unvoniga ega",
-                'phd' => "Fan nomzodi (PhD) ilmiy darajasiga ega",
-                'h_index_wos' => "«Web of Science» bazasida h-indeksiga ega (indeksga ko'paytiriladi)",
-                'h_index_scopus' => "«Scopus» bazasida h-indeksiga ega  (indeksga ko'paytiriladi)",
-                'citations_wos' => "«Web of Science» bazasida mavjud bo‘lgan iqtiboslar ",
-                'citations_scopus' => "«Scopus» bazasida mavjud bo‘lgan iqtiboslar (iqtiboslar soniga ko'paytiriladi)",
-                'citations_gscholar' => "«Google Scholar» bazasida iqtiboslarga ega",
-                'papers_wos_scopus' => "«Web of Science», «Scopus» bazasiga kiritilgan jurnallarda chqarilgan maqolaga ega ",
-                'papers_int_journal' => "Xalqaro jurnallarda (OAK ro‘yxatidagi)  chqarilgan ilmiy maqolaga ega ",
-                'papers_local_journal' => "Respublika ilmiy jurnallarida (OAK ro‘yxatidagi)  chqarilgan ilmiy maqolalar ega",
-                'foreign_grants' => "Xorijiy ilmiy tadqiqot markazlari grantlari va xorijiy ilmiy fondlari mablag‘lariga (eng kamida 50 mln. so'm) ega (koordinator)",
-                'industrial_funds' => "Sohalar buyurtmalari asosida o‘tkazilgan tadqiqotlardan olingan mablag‘larga (eng kamida 15 mln. so'm) ega (koordinator)",
-                'state_grants' => "Davlat grantlari asosida o‘tkazilgan tadqiqotlardan olingan mablag‘larga ega (eng kamida 30 mln. so'm) (koordinator)",
-                'monographs' => "Nashr etilgan monografiyalarga ega ",
-                'patents' => "Intellektual mulk uchun olingan himoya hujjatlari (patentlar)ga ega ",
-                'ict_certifications' => "Axborot-kommunikatsiya texnologiyalariga oid dasturlar va elektron bazalari uchun olingan guvohnomalar, mualliflik huquqi bilan himoya qilinadigan turli materiallarga ega ",
-                'textbooks' => "Darsliklarga ega",
-                'guides' => "O‘quv qo‘llanmalarga ega",
-                'int_confs' => "Xalqaro konferensiya va seminarlarda, ilmiy yoki ta’lim loyihalarida (xorijiy, qo‘shma) ishtirok etgan ",
-                'foreign_lang_courses' => "Horijiy tilda o‘qitiladigan o‘quv kurs(fan)lariga ega ",
-                'int_comp_awards' => "Xalqaro olimpiadalarda va nufuzli tanlovlarda sovrinli o‘rinlarni qo‘lga kiritgan ",
-                'pres_scholarship' => "O‘zbekiston Respublikasi Prezidenti davlat stipendiyasi sovrindori bo‘lgan",
-                'nat_comp_awards' => "Respublika olimpiadalarda va nufuzli tanlovlarda sovrinli o‘rinlarni qo‘lga kiritgan"
-            ];
+           $this->mavzular($mavzular_turi);
 
-             // Agar mavzular turi mavjud bo'lsa, uni qo'llash
-             if (array_key_exists($item->category_name, $mavzular_turi)) {
+            // Agar mavzular turi mavjud bo'lsa, uni qo'llash
+            if (array_key_exists($item->category_name, $mavzular_turi)) {
                 $item->category_name = $mavzular_turi[$item->category_name];
             }
         }
-    
+
         IndexController::calculateOperatorsPoints($murojatlar);
-    
+
         // Natijani ko'rsatish uchun ko'rinishni qaytarish
         return view('reyting.dashboard.murojatlar-list', compact('murojatlar'));
     }
-    
+
     public function show(TemporaryFile $temporaryFile, $id_number)
     {
+        // Yuborilgan faylni qidirish
         $information = $temporaryFile->findOrFail($id_number);
-    
-        // Surat manzilini belgilash
-        if ($information->professor_id && $information->filesProfessor && $information->filesProfessor->image) {
-            $information->surat = '/uploads/professor_images/' . $information->filesProfessor->image;
-        } elseif ($information->moderator_id && $information->filesModerator && $information->filesModerator->image) {
-            $information->surat = '/uploads/moderator_images/' . $information->filesModerator->moder_image;
-        } elseif ($information->operator_id && $information->filesOperator && $information->filesOperator->image) {
-            $information->surat = '/uploads/operator_images/' . $information->filesOperator->oper_image;
+        
+        // Default surat buni o'zgartirsa bo'ladi
+        $default_image = 'https://cspu.uz/storage/app/media/2023/avgust/i.webp';
+
+        // Ismni belgilash manzilini belgilash
+        if ($information->professor_id && $information->filesProfessor) {
+
+            // Kordinator ballarini hisoblash
+            $professor = $information->filesProfessor;         
+            ProfessorController::calculateProfessorPoints($professor, $professor->moderator);
+            $information->custom_ball = $professor->custom_ball;            
+            
+            // Kordinator ismini fish_infoga o'tqazish
+            $information->fish_info = $professor->fish;
+
+            // Kordinator suratini surat ga o'tqazish
+            $information->surat = $professor->image
+                ? '/uploads/professor_images/' . $information->filesProfessor->image
+                : $default_image;
+
+            // Kordinator mavzusini small_infoga o'tqazish
+            $information->small_info = $professor->small_info;
+
+
+        } elseif ($information->moderator_id && $information->filesModerator) {
+
+            $information->fish_info = $information->filesModerator->moder_fish;
+
+            $information->surat = $information->filesModerator->moder_image
+                ? '/uploads/moderator_images/' . $information->filesModerator->moder_image
+                : $default_image;
+
+
+        } elseif ($information->operator_id && $information->filesOperator) {
+
+            $information->fish_info = $information->filesOperator->oper_fish;
+
+            $information->surat = $information->filesOperator->oper_image
+                ? '/uploads/operator_images/' . $information->filesOperator->oper_image
+                : $default_image;
+
         } else {
             $information->surat = "https://cspu.uz/storage/app/media/2023/avgust/i.webp"; // Standart surat manzili
         }
-    
+
+
         return view('reyting.dashboard.murojatni-korish', compact('information'));
     }
-    
+
+    public static function mavzular($mavzular_turi){
+        $mavzular_turi = [
+            'world_top1000_phd_dsc' => "Dunyoning nufuzli 1000 taligiga kiruvchi OTMlarning PhD yoki DSc ilmiy darajasini olgan",
+            'world_top1000_lectures' => "Dunyoning nufuzli 1000 taligiga kiruvchi OTMlarida o‘quv mashg‘ulotlari o‘tkazgan",
+            'prof_title' => "Professor unvoniga ega",
+            'dsc' => "Fan doktori (DSc) ilmiy darajasiga ega",
+            'assoc_prof' => "Dotsent unvoniga ega",
+            'phd' => "Fan nomzodi (PhD) ilmiy darajasiga ega",
+            'h_index_wos' => "«Web of Science» bazasida h-indeksiga ega (indeksga ko'paytiriladi)",
+            'h_index_scopus' => "«Scopus» bazasida h-indeksiga ega  (indeksga ko'paytiriladi)",
+            'citations_wos' => "«Web of Science» bazasida mavjud bo‘lgan iqtiboslar ",
+            'citations_scopus' => "«Scopus» bazasida mavjud bo‘lgan iqtiboslar (iqtiboslar soniga ko'paytiriladi)",
+            'citations_gscholar' => "«Google Scholar» bazasida iqtiboslarga ega",
+            'papers_wos_scopus' => "«Web of Science», «Scopus» bazasiga kiritilgan jurnallarda chqarilgan maqolaga ega ",
+            'papers_int_journal' => "Xalqaro jurnallarda (OAK ro‘yxatidagi)  chqarilgan ilmiy maqolaga ega ",
+            'papers_local_journal' => "Respublika ilmiy jurnallarida (OAK ro‘yxatidagi)  chqarilgan ilmiy maqolalar ega",
+            'foreign_grants' => "Xorijiy ilmiy tadqiqot markazlari grantlari va xorijiy ilmiy fondlari mablag‘lariga (eng kamida 50 mln. so'm) ega (koordinator)",
+            'industrial_funds' => "Sohalar buyurtmalari asosida o‘tkazilgan tadqiqotlardan olingan mablag‘larga (eng kamida 15 mln. so'm) ega (koordinator)",
+            'state_grants' => "Davlat grantlari asosida o‘tkazilgan tadqiqotlardan olingan mablag‘larga ega (eng kamida 30 mln. so'm) (koordinator)",
+            'monographs' => "Nashr etilgan monografiyalarga ega ",
+            'patents' => "Intellektual mulk uchun olingan himoya hujjatlari (patentlar)ga ega ",
+            'ict_certifications' => "Axborot-kommunikatsiya texnologiyalariga oid dasturlar va elektron bazalari uchun olingan guvohnomalar, mualliflik huquqi bilan himoya qilinadigan turli materiallarga ega ",
+            'textbooks' => "Darsliklarga ega",
+            'guides' => "O‘quv qo‘llanmalarga ega",
+            'int_confs' => "Xalqaro konferensiya va seminarlarda, ilmiy yoki ta’lim loyihalarida (xorijiy, qo‘shma) ishtirok etgan ",
+            'foreign_lang_courses' => "Horijiy tilda o‘qitiladigan o‘quv kurs(fan)lariga ega ",
+            'int_comp_awards' => "Xalqaro olimpiadalarda va nufuzli tanlovlarda sovrinli o‘rinlarni qo‘lga kiritgan ",
+            'pres_scholarship' => "O‘zbekiston Respublikasi Prezidenti davlat stipendiyasi sovrindori bo‘lgan",
+            'nat_comp_awards' => "Respublika olimpiadalarda va nufuzli tanlovlarda sovrinli o‘rinlarni qo‘lga kiritgan"
+        ];
+
+        return $mavzular_turi;
+    }
+
 }
