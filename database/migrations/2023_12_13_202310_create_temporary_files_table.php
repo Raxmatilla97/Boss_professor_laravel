@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('temporary_files', function (Blueprint $table) {
             $table->id();
-            $table->string('folder');
-            $table->string('filename');
+            $table->string('folder')->nullable();
+            $table->string('filename')->nullable();
             $table->string('category_name')->nullable();     
             $table->string('site_url')->nullable(); 
             $table->string('ariza_holati')->nullable(); 

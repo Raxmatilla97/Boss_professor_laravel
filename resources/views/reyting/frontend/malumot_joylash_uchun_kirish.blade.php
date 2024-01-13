@@ -24,9 +24,9 @@
                                     {{ session('error') }}
                                 </div>
                             @endif
-                            <form action="{{ route('site.kirishUchunSlugQidirish') }}" method="post">
+                            <form action="{{ route('site.kirishUchunSlugQidirish') }}" method="POST">
                                 @csrf
-                                @method('POST')
+                              
                                 <div class="mb-3 space-y-2 w-full text-xs">
                                     <label class=" font-semibold text-gray-600 py-2">Ma'lumot joylash uchun sizga berilgan
                                         kodni kiriting</label>

@@ -81,8 +81,15 @@
                         </div>
                     </div>
                     <hr class="mb-8 mt-3">
-                    <p class="text-gray-500 dark:text-gray-400">Professor tomonidan
-                        yuklangan fayllar va ularga qo'yilgan ballar:</p>
+                    <p class="text-gray-500 dark:text-gray-400">
+                        @if($information->professor_id)
+                            Kordinator
+                        @elseif($information->moderator_id)
+                            Moderator
+                        @else
+                            Operator
+                        @endif
+                         tomonidan yuklangan fayllar va ularga qo'yilgan ballar:</p>
                     <div class="px-4 py-6 ml-8 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0 ">
                         <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
 
@@ -103,16 +110,16 @@
                                 </li>
                                 <li class="mb-10 ms-6">
                                     <span
-                                        class="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+                                        class="absolute flex items-center justify-center w-8 h-8 bg-green-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
                                         <svg class="w-3.5 h-3.5 text-green-500 dark:text-gray-400" aria-hidden="true"
                                             xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
                                             <path
                                                 d="M18 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM6.5 3a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3.014 13.021l.157-.625A3.427 3.427 0 0 1 6.5 9.571a3.426 3.426 0 0 1 3.322 2.805l.159.622-6.967.023ZM16 12h-3a1 1 0 0 1 0-2h3a1 1 0 0 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Z" />
                                         </svg>
                                     </span>
-                                    <h3 class="font-medium leading-tight">Ma'lumotni ko'rish va tekshirib baxo qo'yish
+                                    <h3 class="font-medium leading-tight">Ma'lumotni ko'rish va tekshirish
                                     </h3>
-                                    <p class="text-sm">Step details here</p>
+                                    <p class="text-sm">Yuborilgan ma'lumotlarni tekshiring</p>
                                     <style>
                                         .top-bottom-shadow {
                                             box-shadow: 0 -10px 15px -3px rgba(0, 0, 0, 0.1), 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -139,16 +146,7 @@
                                                         class="text-lg text-gray-600">{{ $information->category_name }}</span>
                                                 </div>
                                             </div>
-                                            <!-- Description -->
-                                            <div class="mt-4 flex">
-                                                <div class="label-box">
-                                                    <i class="fas fa-align-left text-green-500"></i>
-                                                    <span class="ml-2 text-lg font-medium">Tavsif:</span>
-                                                </div>
-                                                <div>
-                                                    <p class="text-lg text-gray-600">description</p>
-                                                </div>
-                                            </div>
+                                         
                                             <!-- URL Site -->
                                             <div class="mt-4 flex">
                                                 <div class="label-box">
@@ -161,7 +159,7 @@
                                                             class="text-lg text-blue-500">{{ $information->site_url }}</a>
                                                     @else
                                                         <span
-                                                            class="bg-pink-100 text-pink-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-pink-900 dark:text-pink-300">Sayt
+                                                            class="bg-pink-100 text-indigo-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-pink-900 dark:text-pink-300">Sayt
                                                             manzili yozilmagan!</span>
                                                     @endif
 
@@ -184,11 +182,11 @@
                                                         <div class="mb-4">
                                                             <h2 class="text-gray-700 text-lg font-bold mb-2">Yuklangan
                                                                 fayl nomi:</h2>
-                                                            <p class="text-gray-600 text-sm">
+                                                         
                                                                 @if (isset($information->filename))
                                                                 @if (in_array($extension, $allowedExtensions))
-                                                                    @if (strlen($filename) > 10)
-                                                                        {{ substr($filename, 0, 10) . '...' }}
+                                                                    @if (strlen($filename) > 60)
+                                                                        {{ substr($filename, 0, 60) . '...' }}
                                                                     @else
                                                                         {{ $filename }}
                                                                     @endif
@@ -205,25 +203,24 @@
                                                                     {{ $information->filename }}
                                                                 @endif
                                                             @else
-                                                                {{ strlen($information->site_url) > 15 ? substr(str_replace(['www.', 'http://', 'https://'], '', $information->site_url), 0, 15) . '...' : $information->site_url }}
+                                                                {{ strlen($information->site_url) > 60 ? substr(str_replace(['www.', 'http://', 'https://'], '', $information->site_url), 0, 60) . '...' : $information->site_url }}
                                                                 <span
                                                                     class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">WEB</span>
                                                                 @endif
 
-                                                            </p>
+                                                         
                                                         </div>
 
                                                         <div class="mb-6">
-                                                            <h2 class="text-gray-700 text-lg font-bold mb-2">Created
-                                                                At:</h2>
-                                                            <p class="text-gray-600 text-sm">2024-01-11</p>
+                                                            <h2 class="text-gray-700 text-lg font-bold mb-2">Murojaat yaratilgan vaqt:</h2>
+                                                            <p class="text-gray-600 text-sm">{{ $information->created_at}}</p>
                                                         </div>
 
                                                         <div class="flex items-center justify-between">
-                                                            <a href="download-link.png"
+                                                            <a href="/storage/upload/files/{{$information->filename}}"
                                                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                                                 download>
-                                                                Download
+                                                                Yuklab olish
                                                             </a>
                                                         </div>
                                                     </div>

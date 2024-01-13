@@ -177,7 +177,7 @@ class TemporaryFileController extends Controller
                 : $default_image;
 
             // Kordinator mavzusini small_infoga o'tqazish
-            $information->small_info = $professor->small_info;
+            $information->small_info = $information->filesProfessor->small_info;
 
         } elseif ($information->moderator_id && $information->filesModerator) {
 
@@ -187,6 +187,8 @@ class TemporaryFileController extends Controller
                 ? '/uploads/moderator_images/' . $information->filesModerator->moder_image
                 : $default_image;
 
+            // Moderator mavzusini small_infoga o'tqazish
+            $information->small_info = $information->filesModerator->moder_small_info;
 
         } elseif ($information->operator_id && $information->filesOperator) {
 
@@ -195,6 +197,9 @@ class TemporaryFileController extends Controller
             $information->surat = $information->filesOperator->oper_image
                 ? '/uploads/operator_images/' . $information->filesOperator->oper_image
                 : $default_image;
+
+            // Operator mavzusini small_infoga o'tqazish
+            $information->small_info = $information->filesOperator->oper_small_info;
 
         } else {
             $information->surat = "https://cspu.uz/storage/app/media/2023/avgust/i.webp"; // Standart surat manzili
