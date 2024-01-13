@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class TemporaryFile extends Model
 {
     use HasFactory;
-    protected $fillable = ['folder', 'filename', 'category_name', 'points', 'is_active', 'professor_id', 'moderator_id', 'operator_id', 'site_url'];
+    protected $fillable = ['folder', 'filename', 'category_name', 'points', 'is_active', 'professor_id', 'moderator_id', 'operator_id', 'site_url', 'ariza_holati', 'arizaga_javob'];
 
     public function filesProfessor() {
         return $this->belongsTo(Professor::class, 'professor_id');

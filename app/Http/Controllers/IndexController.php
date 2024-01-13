@@ -74,8 +74,8 @@ class IndexController extends Controller
                 'site_url' => $validated['site_url'],
                 $variableName => $validated['user_id'],
                 'ariza_holati' => "kutulmoqda",
-                'filename' => "Yuklanmagan!",
-                'folder' => "null"
+                'filename' => null,
+                'folder' => null
             ]);
 
             return redirect()->route('site.index')->with('success', $infogramma);

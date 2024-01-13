@@ -92,12 +92,12 @@ class TemporaryFileController extends Controller
                         $q->where('oper_fish', 'like', $name);
                     });
             })
-                ->orderBy("created_at", 'asc')
+                ->orderBy("created_at", 'desc')
                 ->paginate(20);
 
         } else {
             // Agar name parametri mavjud bo'lmasa, barcha moderatorlarni tartib bilan olish
-            $murojatlar = $files->orderBy("created_at", 'asc')->paginate(20);
+            $murojatlar = $files->orderBy("created_at", 'desc')->paginate(20);
         }
 
 
@@ -130,16 +130,18 @@ class TemporaryFileController extends Controller
             }
         });
 
-        $mavzular_turi = []; // Boshlang'ich qiymat sifatida bo'sh massiv
-
+        // Mavzularni chiqazish   
         foreach ($murojatlar as $item) {
+            // mavzular metodi chaqirilmoqda va uning qaytarilgan qiymatlari saqlash
+            $mavzular_turi = TemporaryFileController::mavzular([]);
 
-            $this->mavzular($mavzular_turi);
-
-            // Agar mavzular turi mavjud bo'lsa, uni qo'llash
-            if (array_key_exists($item->category_name, $mavzular_turi)) {
+            // $information->category_name qiymati mavjudligi va mavzular turi ichida mos kelishini tekshirish
+            if (isset($mavzular_turi[$item->category_name])) {
+                // Agar mos kelish topilsa, $information->category_name qiymatini yangilash
                 $item->category_name = $mavzular_turi[$item->category_name];
+
             }
+
         }
 
         IndexController::calculateOperatorsPoints($murojatlar);
@@ -147,6 +149,8 @@ class TemporaryFileController extends Controller
         // Natijani ko'rsatish uchun ko'rinishni qaytarish
         return view('reyting.dashboard.murojatlar-list', compact('murojatlar'));
     }
+
+
 
     public function show(TemporaryFile $temporaryFile, $id_number)
     {
@@ -173,7 +177,7 @@ class TemporaryFileController extends Controller
                 : $default_image;
 
             // Kordinator mavzusini small_infoga o'tqazish
-            $information->small_info = $professor->small_info;          
+            $information->small_info = $professor->small_info;
 
         } elseif ($information->moderator_id && $information->filesModerator) {
 
@@ -196,15 +200,15 @@ class TemporaryFileController extends Controller
             $information->surat = "https://cspu.uz/storage/app/media/2023/avgust/i.webp"; // Standart surat manzili
         }
 
-          // mavzular metodi chaqirilmoqda va uning qaytarilgan qiymatlari saqlash
-          $mavzular_turi = TemporaryFileController::mavzular([]);
+        // mavzular metodi chaqirilmoqda va uning qaytarilgan qiymatlari saqlash
+        $mavzular_turi = TemporaryFileController::mavzular([]);
 
-          // $information->category_name qiymati mavjudligi va mavzular turi ichida mos kelishini tekshirish
-          if (isset($mavzular_turi[$information->category_name])) {
-              // Agar mos kelish topilsa, $information->category_name qiymatini yangilash
-              $information->category_name = $mavzular_turi[$information->category_name];
+        // $information->category_name qiymati mavjudligi va mavzular turi ichida mos kelishini tekshirish
+        if (isset($mavzular_turi[$information->category_name])) {
+            // Agar mos kelish topilsa, $information->category_name qiymatini yangilash
+            $information->category_name = $mavzular_turi[$information->category_name];
 
-          }
+        }
 
         return view('reyting.dashboard.murojatni-korish', compact('information'));
     }

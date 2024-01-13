@@ -49,20 +49,18 @@
                                                     №{{ $loop->iteration }}
                                                 </div>
                                             </td>
-                                            <th scope="row"
-                                                class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                                <img class="w-10 h-10 rounded-full"
-                                                    src="https://cspi.uz/storage/app/media/2023/avgust/i.webp"
-                                                    alt="Jese image">
-                                                <div class="ps-3">
+                                            <th scope="row" class="flex items-center px-6 py-4 whitespace-nowrap dark:text-white text-gray-900">
+                                                <img class="w-10 h-10 rounded-full mr-3" src="/uploads/moderator_images/{{$item->moder_image}}" alt="Jese image">
+                                                <div>
                                                     <div class="text-base font-semibold">
                                                         {{ substr($item->moder_fish, 0, strpos($item->moder_fish, ' ', strpos($item->moder_fish, ' ') + 1)) }}
                                                     </div>
-                                                    <div class="font-normal text-gray-500">
+                                                    <div class="text-sm text-gray-500">
                                                         {{ str_pad(substr($item->moder_slug_number, 0, -3), strlen($item->moder_slug_number), '*', STR_PAD_RIGHT) }}
                                                     </div>
                                                 </div>
                                             </th>
+                                            
                                             <td class="px-6 py-4">
                                                 Umumiy ball: {{ $item->custom_ball}}
                                             </td>
