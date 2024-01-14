@@ -11,31 +11,46 @@
                 </svg>
             </div>
             <div>
-                <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">3.4k</h5>
-                <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Leads generated per week</p>
+                <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">{{$totalCount}} ta
+                    murojaat</h5>
+                <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Bir hafta davomidagi statistika</p>
             </div>
         </div>
         <div>
+            @if ($percentageChange >= 10)
             <span
                 class="bg-green-100 text-green-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-green-900 dark:text-green-300">
                 <svg class="w-2.5 h-2.5 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                     viewBox="0 0 10 14">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M5 13V1m0 0L1 5m4-4 4 4" />
-                </svg>
-                42.5%
+                </svg>    
+
+                {{ "+" . round($percentageChange, 2) . "%" }}
             </span>
+                @else
+                <span
+                class="bg-green-100 text-red-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-green-900 dark:text-green-300">
+                <svg class="w-2.5 h-2.5 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1v12m0 0 4-4m-4 4L1 9"></path>
+                </svg>
+                               
+                {{"-" . round($percentageChange, 2) . "%" }}
+            </span>
+              
+                @endif
+           
         </div>
     </div>
 
     <div class="grid grid-cols-2">
         <dl class="flex items-center">
-            <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">Money spent:</dt>
-            <dd class="text-gray-900 text-sm dark:text-white font-semibold">$3,232</dd>
+            <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">Maqullangan:</dt>
+            <dd class="text-gray-900 text-sm dark:text-white font-semibold">{{$percentageMaqullangan}}%</dd>
         </dl>
         <dl class="flex items-center justify-end">
-            <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">Conversion rate:</dt>
-            <dd class="text-gray-900 text-sm dark:text-white font-semibold">1.2%</dd>
+            <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">Rad etilgan:</dt>
+            <dd class="text-gray-900 text-sm dark:text-white font-semibold">{{$percentageRadEtilgan}}%</dd>
         </dl>
     </div>
 
@@ -60,31 +75,34 @@
 <script>
     window.dailyCountsMaqullangan = @json($dailyCountsMaqullangan);
     window.dailyCountsRadEtilgan = @json($dailyCountsRadEtilgan);
-
-    const dailyCountsMaqullangan = window.dailyCountsMaqullangan;
-    const dailyCountsRadEtilgan = window.dailyCountsRadEtilgan;
-
-    // Obyektning qiymatlarini arrayga aylantirish
-    const maqullanganData = Object.values(dailyCountsMaqullangan);
-    const radEtilganData = Object.values(dailyCountsRadEtilgan);
    
 </script>
 
 <script>
     // ApexCharts options and config
     window.addEventListener("load", function() {
+        const maqullanganSeriesData = Object.entries(window.dailyCountsMaqullangan).map(([day, count]) => {
+    return { x: day, y: parseInt(count) };
+    });
+
+    const radEtilganSeriesData = Object.entries(window.dailyCountsRadEtilgan).map(([day, count]) => {
+        return { x: day, y: parseInt(count) };
+    });
+        console.log(maqullanganSeriesData);
+   console.log(radEtilganSeriesData);
+
       const options = {
             colors: ["#1A56DB", "#FDBA8C"],
             series: [
               {
                 name: "Maqullanganlar",
-                color: "#1A56DB",
-                data: maqullanganData,
+                color: "#0E9F6E",
+                data: maqullanganSeriesData,
               },
               {
                 name: "Rad etildi",
-                color: "#FDBA8C",
-                data: radEtilganData,
+                color: "#D61F69",
+                data: radEtilganSeriesData,
               },
             ],
             chart: {
@@ -110,6 +128,11 @@
               style: {
                 fontFamily: "Inter, sans-serif",
               },
+              y: {
+            formatter: function (value) {
+                return parseInt(value);
+            }
+        }
             },
             states: {
               hover: {
@@ -157,6 +180,11 @@
             },
             yaxis: {
               show: false,
+              labels: {
+            formatter: function (value) {
+                return parseInt(value);
+            }
+        }
             },
             fill: {
               opacity: 1,

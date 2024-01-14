@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __("Statistika sahifasi") }}
         </h2>
     </x-slot>
 
@@ -17,8 +17,11 @@
                     </div>
                     <div class="mx-2">
                         @include('reyting.dashboard.frogments.uchunchi-chart')
-                    </div>
+                    </div>                   
 
+                </div>
+                <div class="mx-2 w-full">
+                    @include('reyting.dashboard.frogments.tortinchi-chart')
                 </div>
             </div>
         </div>
