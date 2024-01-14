@@ -7,6 +7,7 @@ use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\FilesController;
 use App\Http\Controllers\TemporaryFileController;
+use App\Http\Controllers\DashboardController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -25,9 +26,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [IndexController::class, 'index'])->name('site.index');
 Route::get('/show/{slug_number?}', [IndexController::class, 'show'])->name('show.index');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/malumot-joylash', function () {
     return view('reyting.frontend.malumot_joylash_uchun_kirish');
@@ -76,6 +77,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/murojatni-korish/{name?}', [TemporaryFileController::class, 'show'])->name('murojatlar.show');
 
     Route::post('/murojatni-tasdiqlash', [TemporaryFileController::class, 'murojatniTasdiqlash'])->name('murojatlar.murojatniTasdiqlash');
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 
 
 
