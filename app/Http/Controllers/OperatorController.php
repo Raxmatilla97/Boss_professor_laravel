@@ -212,6 +212,16 @@ class OperatorController extends Controller
     }
 
 
+    public static function calculateOperatorPoints($operator){
+      
+        $operatorPoints = IndexController::calculatePointsForFiles($operator->files ?? []);      
+            
+        $operator->custom_ball = $operatorPoints;   
+
+        return  $operator->custom_ball;
+    }
+
+
 
 
 

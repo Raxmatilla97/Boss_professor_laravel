@@ -234,16 +234,29 @@ class ModeratorController extends Controller
         return view('reyting.dashboard.moderators.list', compact('moderators'));
     }
 
+    public static function calculateModeratorPoints($moderator){
 
+        $moderatorPoints = IndexController::calculatePointsForFiles($moderator->files ?? []);
+        
+        foreach ($moderator->operator as $operator) {
+            $operatorPoints = IndexController::calculatePointsForFiles($operator->files ?? []);
+            $moderatorPoints += $operatorPoints;          
+        }         
 
-
-
-
-
-
-
-
-
-
-
+            return $moderator->custom_ball = $moderatorPoints;
+        }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

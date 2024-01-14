@@ -181,6 +181,11 @@ class TemporaryFileController extends Controller
 
         } elseif ($information->moderator_id && $information->filesModerator) {
 
+             // Moderator ballarini hisoblash
+             $moderator = $information->filesModerator;
+             ModeratorController::calculateModeratorPoints($moderator);
+             $information->custom_ball = $moderator->custom_ball;
+
             $information->fish_info = $information->filesModerator->moder_fish;
 
             $information->surat = $information->filesModerator->moder_image
@@ -192,6 +197,11 @@ class TemporaryFileController extends Controller
 
         } elseif ($information->operator_id && $information->filesOperator) {
 
+             // Operator ballarini hisoblash
+             $operator = $information->filesOperator;
+             OperatorController::calculateOperatorPoints($operator);
+             $information->custom_ball = $operator->custom_ball;
+          
             $information->fish_info = $information->filesOperator->oper_fish;
 
             $information->surat = $information->filesOperator->oper_image
@@ -251,6 +261,46 @@ class TemporaryFileController extends Controller
         ];
 
         return $mavzular_turi;
+    }
+
+    public function murojatniTasdiqlash(Request $request)
+    {
+        $model = TemporaryFile::findOrFail($request->id); // Modelni topish
+
+        // Validatsiya qoidalari
+        $validator = Validator::make($request->all(), [
+            'murojaat_holati' => 'required|string|max:255',
+            'murojaat_bali' => 'nullable|numeric',
+            'murojaat_izohi' => 'nullable|string'
+        ], [
+            'murojaat_holati.required' => 'Murojaat holatini kiritish majburiy.',
+            'murojaat_holati.string' => 'Murojaat holati matn ko\'rinishida bo\'lishi kerak.',
+            'murojaat_holati.max' => 'Murojaat holati eng ko\'pi bilan 255 belgidan iborat bo\'lishi kerak.',
+            'murojaat_bali.numeric' => 'Murojaat bali raqam bo\'lishi kerak.',
+            'murojaat_izohi.string' => 'Murojaat izohi matn ko\'rinishida bo\'lishi kerak.'
+        ]);
+
+        // Agar murojaat_holati "maqullandi" ga teng bo'lsa, murojaat_bali majburiy bo'ladi
+        $validator->sometimes('murojaat_bali', 'required|numeric', function ($input) {
+            return $input->murojaat_holati == 'maqullandi';
+        }, [
+            'murojaat_bali.required' => 'Murojaat holati "maqullandi" bo\'lganida, murojaat bali kiritish majburiy.'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        // Ma'lumotlarni yangilash      
+        $model->ariza_holati = $request->murojaat_holati;
+        $model->points = $request->murojaat_bali;
+        $model->arizaga_javob = $request->murojaat_izohi;
+        $model->save();
+
+        // Bajarilganidan so'ng, foydalanuvchini kerakli sahifaga yo'naltiring
+        return redirect()->back()->with('success', 'Ma\'lumot muvaffaqiyatli saqlandi');
     }
 
 }

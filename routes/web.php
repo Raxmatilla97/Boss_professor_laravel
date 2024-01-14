@@ -75,6 +75,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/murojatlar-list/{name?}', [TemporaryFileController::class, 'list'])->name('murojatlar.list');
     Route::get('/murojatni-korish/{name?}', [TemporaryFileController::class, 'show'])->name('murojatlar.show');
 
+    Route::post('/murojatni-tasdiqlash', [TemporaryFileController::class, 'murojatniTasdiqlash'])->name('murojatlar.murojatniTasdiqlash');
 
 
 
