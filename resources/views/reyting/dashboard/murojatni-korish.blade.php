@@ -252,8 +252,8 @@
                                     </li>
                                     <li class="mb-10 ms-6">
                                         <span
-                                            class="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-                                            <svg class="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                            class="absolute flex items-center justify-center w-8 h-8 @if($information->ariza_holati == "maqullandi") bg-green-100 @else bg-gray-100 @endif  rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+                                            <svg class="w-3.5 h-3.5 @if($information->ariza_holati == "maqullandi") text-green-500  @else text-gray-500  @endif dark:text-gray-400" aria-hidden="true"
                                                 xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                                 viewBox="0 0 18 20">
                                                 <path
@@ -375,8 +375,8 @@
                                     </li>
                                     <li class="ms-6">
                                         <span
-                                            class="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-                                            <svg class="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                            class="absolute flex items-center justify-center w-8 h-8 @if($information->ariza_holati == "maqullandi") bg-green-100 @else bg-gray-100 @endif  rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+                                            <svg class="w-3.5 h-3.5 @if($information->ariza_holati == "maqullandi") text-green-500 @else text-gray-500 @endif  dark:text-gray-400" aria-hidden="true"
                                                 xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                                 viewBox="0 0 18 20">
                                                 <path
