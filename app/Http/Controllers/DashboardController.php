@@ -89,7 +89,19 @@ class DashboardController extends Controller
         } else {
             $percentageChange = 100; // Agar o'tgan haftada murojaatlar bo'lmagan bo'lsa
         }
-     
+
+
+        // Professorlarni umumiy pointlarini hisoblash va linyali chartda foydalanish kodi
+
+        $professors = Professor::where('status', 1)->get();
+        $professors = IndexController::calculateProfessorsPoints($professors);
+        $chartData = $this->prepareChartData($professors);
+
+       
+        $pointsData = response()->json($chartData);
+        $jsonContent = $pointsData->getContent(); // Bu yerda JSON formatidagi ma'lumotlarni olamiz// Laravel-da JSON javobini yaratish
+
+        // dd($jsonContent);
 
 
         return view(
@@ -104,8 +116,28 @@ class DashboardController extends Controller
                 'percentageMaqullangan',
                 'percentageRadEtilgan',
                 'totalCount',
-                'percentageChange'
+                'percentageChange',
+                'jsonContent',
+                'chartData'
             )
         );
+    }
+
+    private function prepareChartData($professors)
+    {
+        $chartData = [];
+        foreach ($professors as $professor) {
+            $chartData[] = [
+                'name' => $professor->fish,
+                'data' => [$professor->custom_ball], // Bu yerda faqat bitta qiymat bor, siz oylik ma'lumotlarni qanday hisoblashingizga bog'liq
+                'color' => $this->generateRandomColor()
+            ];
+        }
+        return $chartData;
+    }
+
+    private function generateRandomColor()
+    {
+        return sprintf('#%06X', mt_rand(0, 0xFFFFFF));
     }
 }

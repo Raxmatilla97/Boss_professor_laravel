@@ -35,7 +35,7 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1v12m0 0 4-4m-4 4L1 9"></path>
                 </svg>
                                
-                {{"-" . round($percentageChange, 2) . "%" }}
+                {{ round($percentageChange, 2) . "%" }}
             </span>
               
                 @endif

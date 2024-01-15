@@ -29,15 +29,25 @@
       </div>
     </div>
   </div>
+
+<script>
+var jsonDataArray = JSON.parse(`{!! json_encode($chartData) !!}`);
+
+console.log(jsonDataArray); 
+  </script>
   
   <script>
+
+
+// console.log({"name":"Xodjamqulov Umid Negmatovich","data":[34],"color":"#744C6C"},{"name":"Fayziyev Raxmatilla Xanshor o\'g\'li","data":[12],"color":"#1C6E23"})
+
     // ApexCharts options and config
     window.addEventListener("load", function() {
       let options = {
         // set the labels option to true to show the labels on the X and Y axis
         xaxis: {
           show: true,
-          categories: ['01 Yanvar', '01 Fevral', '01 Mart', '01 Aprel', '01 May', '01 Iyun', '01 Iyul', '01 Avgust', '01  Sentiyabr ', '01 Oktiyabr', '01 Noyabr', '01 Dekabr'],
+          categories: ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun', 'Iyul', 'Avgust', 'Sentiyabr ', 'Oktiyabr', 'Noyabr', 'Dekabr'],
           labels: {
             show: true,
             style: {
@@ -61,22 +71,11 @@
               cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
             },
             formatter: function (value) {
-              return '$' + value;
+              return '' + value;
             }
           }
         },
-        series: [
-          {
-            name: "Developer Edition",
-            data: [150, 141, 145, 152, 135, 125],
-            color: "#1A56DB",
-          },
-          {
-            name: "Designer Edition",
-            data: [43, 13, 65, 12, 42, 73],
-            color: "#7E3BF2",
-          },
-        ],
+        series: jsonDataArray,
         chart: {
           sparkline: {
             enabled: false
