@@ -111,7 +111,7 @@
             //   width: "400px",
               fontFamily: "Inter, sans-serif",
               toolbar: {
-                show: false,
+                show: true,
               },
             },
             plotOptions: {

@@ -1,13 +1,13 @@
 
-<div class="w-full bg-white rounded-lg shadow dark:bg-gray-800">
+<div class="w-full px-12 bg-white rounded-lg shadow dark:bg-gray-800">
     <div class="flex justify-between p-4 md:p-6 pb-0 md:pb-0">
       <div>
-        <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">$12,423</h5>
-        <p class="text-base font-normal text-gray-500 dark:text-gray-400">Sales this week</p>
+        <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-2">{{$engKopBalliKordinator->fish}} - Umumiy {{$engKopBalliKordinator->custom_ball}} ball</h5>
+        <p class="text-base font-normal text-gray-500 dark:text-gray-400">Eng ko'p reyting balini to'plagan kordinator</p>
       </div>
       <div
         class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
-        23%
+        {{$umumiyPointlargaQarabOsish}}
         <svg class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4"/>
         </svg>
@@ -21,7 +21,7 @@
         <a
           href="#"
           class="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2">
-          Sales Report
+        To'liq ko'rish (Sahifa hali mavjud emas!)
           <svg class="w-2.5 h-2.5 ms-1.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
           </svg>
@@ -32,8 +32,22 @@
 
 <script>
 var jsonDataArray = JSON.parse(`{!! json_encode($chartData) !!}`);
+// Oylarni matn shaklida
+var months = ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun', 'Iyul', 'Avgust', 'Sentiyabr', 'Oktiyabr', 'Noyabr', 'Dekabr'];
 
-console.log(jsonDataArray); 
+jsonDataArray.forEach(professor => {
+  var monthlyData = [];
+  months.forEach(month => {
+    // Oy nomini yil-oy formatiga o'girish
+    var yearMonth = "2024-" + (months.indexOf(month) + 1).toString().padStart(2, '0');
+    if (professor.data.hasOwnProperty(yearMonth)) {
+      monthlyData.push(professor.data[yearMonth]);
+    } else {
+      monthlyData.push(null); // Ma'lumot mavjud bo'lmasa, null qo'yiladi
+    }
+  });
+  professor.data = monthlyData;
+});
   </script>
   
   <script>
@@ -88,15 +102,20 @@ console.log(jsonDataArray);
             enabled: false,
           },
           toolbar: {
-            show: false,
+            show: true,
           },
         },
         tooltip: {
-          enabled: true,
-          x: {
-            show: false,
-          },
-        },
+      enabled: true,
+      x: {
+        show: false,
+      },
+      y: {
+        formatter: function(value) {
+          return value === null ? "Bu oy uchun hali ma'lumot yo'q!" : value;
+        }
+      }
+    },
         fill: {
           type: "gradient",
           gradient: {
@@ -118,6 +137,9 @@ console.log(jsonDataArray);
         grid: {
           show: false,
         },
+        markers: {
+  size: [4, 7]
+}
       }
   
       if (document.getElementById("labels-chart") && typeof ApexCharts !== 'undefined') {
