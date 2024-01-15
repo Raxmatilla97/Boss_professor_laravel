@@ -61,8 +61,14 @@ class DashboardController extends Controller
         $countRadEtilgan = $haftaMurojaatlari->where('ariza_holati', 'rad_etildi')->count();
         $totalCount = $haftaMurojaatlari->count();
 
-        $percentageMaqullangan = ($countMaqullangan / $totalCount) * 100;
-        $percentageRadEtilgan = ($countRadEtilgan / $totalCount) * 100;
+        if ($totalCount > 0) {
+            $percentageMaqullangan = ($countMaqullangan / $totalCount) * 100;
+            $percentageRadEtilgan = ($countRadEtilgan / $totalCount) * 100;
+        } else {
+            // $totalCount nol bo'lsa, foizlarni 0 deb belgilash mumkin
+            $percentageMaqullangan = 0;
+            $percentageRadEtilgan = 0;
+        }
 
         // Murojaatlarni bir haftada qancha % ga ko'paygan yoki kamayganini hisoblash
 
