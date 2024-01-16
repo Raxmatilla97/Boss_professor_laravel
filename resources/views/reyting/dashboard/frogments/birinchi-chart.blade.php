@@ -2,8 +2,8 @@
 
     <div class="flex justify-between mb-3">
         <div class="flex justify-center items-center">
-            <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1">Foydalanuvchilar ko'lami2</h5>
-            <svg data-popover-target="chart-info" data-popover-placement="bottom"
+            <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1">Foydalanuvchilar ko'lami</h5>
+            {{-- <svg data-popover-target="chart-info" data-popover-placement="bottom"
                 class="w-3.5 h-3.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer ms-1"
                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path
@@ -28,7 +28,7 @@
                         </svg></a>
                 </div>
                 <div data-popper-arrow></div>
-            </div>
+            </div> --}}
         </div>
         <div>
          

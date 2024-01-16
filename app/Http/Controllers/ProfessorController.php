@@ -56,7 +56,7 @@ class ProfessorController extends Controller
             'image.required' => 'Rasm majburiy! rasm joylashingiz kerak.',
             'image.mimes' => 'Rasm png, jpg, jpeg turlaridan biri bo\'lishi kerak.',
             'image.max' => 'Rasm :max kilobaytdan katta bo\'lmasligi kerak.',            
-            'small_info.string' => 'Professor haqida ma\'lumot maydoni matn bo\'lishi kerak.',
+            'small_info.string' => 'Kordinator haqida ma\'lumot maydoni matn bo\'lishi kerak.',
         ]);
     
         $tempPath = $request->image->path(); // Temp fayl joylashuvi
@@ -88,7 +88,7 @@ class ProfessorController extends Controller
             'slug_number' => $slug_number
         ]);
     
-        return redirect()->route('professors.edit', $professor->slug_number)->with('toaster', ['success', "Yangi professor yaratildi!"]);
+        return redirect()->route('professors.edit', $professor->slug_number)->with('toaster', ['success', "Yangi kordinator yaratildi!"]);
     }
     /**
      * Display the specified resource.
@@ -112,7 +112,10 @@ class ProfessorController extends Controller
         $professor = Professor::where('slug_number', $slug_number)->firstOrFail();
         $professor_moder = $professor->moderator()->orderBy('created_at', 'desc')->paginate(12);
         $professor_moder_operators_create = $professor->moderator()->orderBy('moder_fish', 'asc')->paginate(12);
+        
+        // Operatorlar ro'yxati va ballarini hisoblash
         $professor_operators_list = $professor->operators()->orderBy('created_at', 'desc')->get();       
+        $professor_operators_list = IndexController::calculateOperatorsPoints($professor_operators_list);
 
         $this->calculateProfessorPoints($professor, $professor_moder);
  
@@ -165,7 +168,7 @@ class ProfessorController extends Controller
             'image.required' => 'Rasm majburiy! rasm joylashingiz kerak.',
             'image.mimes' => 'Rasm png, jpg, jpeg turlaridan biri bo\'lishi kerak.',
             'image.max' => 'Rasm :max kilobaytdan katta bo\'lmasligi kerak.',            
-            'small_info.string' => 'Professor haqida ma\'lumot maydoni matn bo\'lishi kerak.',
+            'small_info.string' => 'Kordinator haqida ma\'lumot maydoni matn bo\'lishi kerak.',
         ]);
 
         $status = $validated['status'] ?? 0;
@@ -185,7 +188,7 @@ class ProfessorController extends Controller
 
         $professor->update($validated);
 
-        return back()->with('toaster', ['success', "Professor ma'lumotlari o'zgartirildi"]);
+        return back()->with('toaster', ['success', "Kordinator ma'lumotlari o'zgartirildi"]);
     }
 
     /**
@@ -199,6 +202,6 @@ class ProfessorController extends Controller
         $professor = Professor::where('slug_number', $slug_number)->firstOrFail();
         $professor->delete();
 
-        return back()->with('toaster', ['success', "Professor o'chirildi!"]);
+        return back()->with('toaster', ['success', "Kordinator o'chirildi!"]);
     }
 }

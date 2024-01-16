@@ -60,23 +60,7 @@ class ModeratorController extends Controller
             'moder_fish.min' => 'F.I.SH maydoni kamida 5 belgi bo\'lishi kerak.',
             'moder_fish.max' => 'F.I.SH maydoni maksimum 100 belgidan kam bo\'lishi kerak.',
             'small_info.string' => 'Moderator haqida ma\'lumot maydoni matn bo\'lishi kerak.',
-        ]);
-
-        // Bu yerdan faylni yuklash va DB ga saqlash bo'yicha kod yozilgan.
-
-        // $tempPath = $request->image->path();
-        // $fileName = time().'.'.$request->image->extension();
-        // $publicPath = public_path('moder-uploads/'.$fileName);
-
-        // move_uploaded_file($tempPath, $publicPath);
-
-
-        // Files::create([
-        //     'file_name' => $fileName,           
-        //     'category_name' => $fileName,
-        //     'points' => $fileName,
-        //     'is_active' => $fileName,
-        // ]);
+        ]);      
 
         // Professor sahifasiga qaytish uchun uni aniqlash kodi      
 
@@ -90,24 +74,33 @@ class ModeratorController extends Controller
 
             return redirect()->back()->with('error', "Professor topilmadi! Sahifani yangilab qayta urunib ko'ring.");
         }
+   
+        // Foydalanuvchi tomonidan rasm yuborilganligini tekshirish
+        if ($request->hasFile('moder_image') && $request->file('moder_image')->isValid()) {
+            // Foydalanuvchi tomonidan yuborilgan rasmni saqlash
+            $tempPath = $request->moder_image->path();
+            $fileName = time() . '.' . $request->moder_image->extension();
+            $publicPath = public_path('uploads/moderator_images/' . $fileName);
 
-        // Suratni saytga yuklash kodi
-        $tempPath = $request->moder_image->path(); // Temp fayl joylashuvi
-        $fileName = time() . '.' . $request->moder_image->extension();
-        $publicPath = public_path('uploads/moderator_images/' . $fileName); // Public fayl joylashuvi
+            // Rasmni public papkaga ko'chirish
+            move_uploaded_file($tempPath, $publicPath);
 
-        // Faylni temp papkadan public papkaga ko'chirish
-        move_uploaded_file($tempPath, $publicPath);
+            // Saqlangan rasmdan foydalanish
+            $imagePath = 'uploads/moderator_images/' . $fileName;
+        } else {
+            // Agar foydalanuvchi tomonidan rasm yuborilmagan bo'lsa, default rasmdan foydalanish
+            $fileName = 'default.webp'; // Bu yerda default rasmning yo'lini ko'rsating
+        }
 
-        // Slug uchun generatsiya kodi
+        // Slug uchun generatsiya ko    di
 
         $lowercase_letters = 'abcdefghijklmnopqrstuvwxyz';
         $uppercase_letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $numbers = '0123456789';
 
-        $random_string = substr(str_shuffle($lowercase_letters), 0, 4) .
-            substr(str_shuffle($uppercase_letters), 0, 4) .
-            substr(str_shuffle($numbers), 0, 4) .
+        $random_string = substr(str_shuffle($lowercase_letters), 0, 3) .
+            substr(str_shuffle($uppercase_letters), 0, 3) .
+            substr(str_shuffle($numbers), 0, 3) .
             substr(str_shuffle($lowercase_letters . $uppercase_letters . $numbers), 0, 3);
 
         $slug_number = $random_string;
@@ -164,7 +157,7 @@ class ModeratorController extends Controller
     {
         $validated = $this->validate($request, [
             "moder_fish" => "required|string|min:5|max:100",
-            "moder_image" => "nullable|mimes:png,jpg,jpeg|max:3024",
+            "moder_image" => "nullable|mimes:png,jpg,jpeg,webp|max:3024",
             "moder_status" => "boolean",
             'moder_small_info' => 'nullable|string'
         ], [
@@ -185,13 +178,21 @@ class ModeratorController extends Controller
             $tempPath = $request->moder_image->path(); // Temp fayl joylashuvi
             $fileName = time() . '.' . $request->moder_image->extension();
             $publicPath = public_path('uploads/moderator_images/' . $fileName); // Public fayl joylashuvi
-
+        
             // Faylni temp papkadan public papkaga ko'chirish
             move_uploaded_file($tempPath, $publicPath);
-
+        
             // Yangi fayl nomini validated ma'lumotlarga qo'shish
             $validated['moder_image'] = $fileName;
+        } else {
+            // Foydalanuvchi rasm yubormagan taqdirda, default rasmni belgilash
+            $defaultImageName = 'default.webp'; // Bu yerda sizning default rasmingizning nomini kiriting
+            $validated['moder_image'] = $defaultImageName;
         }
+
+          
+
+        
 
         $moderator->update($validated);
 

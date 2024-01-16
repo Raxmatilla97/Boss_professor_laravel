@@ -101,7 +101,7 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option selected>Tanlang...</option>
                             @foreach ($professor_moderators as $item)
-                                <option value="{{ $item->id }}">{{ $item->moder_fish }}</option>
+                                <option value="{{ $item->id }}" {{ old('moderator_id') == $item->id ? 'selected' : '' }}>{{ $item->moder_fish }}</option>
                             @endforeach
 
                         </select>

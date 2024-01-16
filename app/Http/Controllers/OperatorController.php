@@ -47,7 +47,7 @@ class OperatorController extends Controller
     {
         $validated = $this->validate($request, [
             "oper_fish" => "required|string|min:5|max:100",
-            "oper_image" => "required|mimes:png,jpg,jpeg|max:3024",
+            "oper_image" => "nullable|mimes:png,jpg,jpeg,webp|max:3024",
             "oper_status" => "boolean",
             "oper_small_info" => 'nullable|string'
 
@@ -62,12 +62,23 @@ class OperatorController extends Controller
             'oper_small_info.string' => 'Professor haqida ma\'lumot maydoni matn bo\'lishi kerak.'
         ]);
 
-        $tempPath = $request->oper_image->path(); // Temp fayl joylashuvi
-        $fileName = time() . '.' . $request->oper_image->extension();
-        $publicPath = public_path('uploads/operator_image/' . $fileName); // Public fayl joylashuvi
 
-        // Faylni temp papkadan public papkaga ko'chirish
-        move_uploaded_file($tempPath, $publicPath);
+        if ($request->hasFile('oper_image') && $request->file('oper_image')->isValid()) {
+            // Foydalanuvchi tomonidan yuborilgan rasmni qabul qilish va uni serverga saqlash
+            $tempPath = $request->oper_image->path(); // Temp fayl joylashuvi
+            $fileName = time() . '.' . $request->oper_image->extension();
+            $publicPath = public_path('uploads/operator_image/' . $fileName); // Public fayl joylashuvi
+        
+            // Faylni temp papkadan public papkaga ko'chirish
+            move_uploaded_file($tempPath, $publicPath);
+        } else {
+            // Foydalanuvchi rasm yubormagan taqdirda, default rasmni belgilash
+            $fileName = 'default.webp'; // Bu yerda sizning default rasmingizning nomini kiriting
+            // E'tibor bering, default rasm oldindan sizning public papkangizda bo'lishi kerak
+        }
+        
+
+        
 
         // Slug uchun generatsiya kodi
 
@@ -75,10 +86,10 @@ class OperatorController extends Controller
         $uppercase_letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $numbers = '0123456789';
 
-        $random_string = substr(str_shuffle($lowercase_letters), 0, 4) .
-            substr(str_shuffle($uppercase_letters), 0, 4) .
-            substr(str_shuffle($numbers), 0, 5) .
-            substr(str_shuffle($lowercase_letters . $uppercase_letters . $numbers), 0, 6);
+        $random_string = substr(str_shuffle($lowercase_letters), 0, 3) .
+            substr(str_shuffle($uppercase_letters), 0, 3) .
+            substr(str_shuffle($numbers), 0, 4) .
+            substr(str_shuffle($lowercase_letters . $uppercase_letters . $numbers), 0, 4);
 
 
         $slug_number = $random_string;

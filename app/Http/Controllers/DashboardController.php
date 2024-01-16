@@ -122,7 +122,7 @@ class DashboardController extends Controller
 
         // Eng ko'p ball to'plagan Kordinatorni aniqlash
         $moderatorData2 = IndexController::calculateModeratorsPoints($moderators);
-        $engKopBalliKordinator2 = $moderatorData2->sortByDesc('custom_ball')->first();
+        $engKopBalliModerator = $moderatorData2->sortByDesc('custom_ball')->first();
 
         // Umumiy professorlar pointlarini bir oy davomida o'sgan yoki o'smaganini aniqlash
         $umumiyPointlargaQarabOsish2 = ModeratorChartController::calculatePercentageChange2($moderators);
@@ -162,7 +162,7 @@ class DashboardController extends Controller
                 'umumiyPointlargaQarabOsish',
                 'engKopBalliKordinator',
                 'umumiyPointlargaQarabOsish2',
-                'engKopBalliKordinator2',
+                'engKopBalliModerator',
                 'operatorData3',
                 'engKopBalliOperator3',
                 'umumiyPointlargaQarabOsish3',

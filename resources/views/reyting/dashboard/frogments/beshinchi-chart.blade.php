@@ -2,7 +2,7 @@
     <div class="flex justify-between p-4 md:p-6 pb-0 md:pb-0">
         <div>
             <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-2">
-                {{$engKopBalliKordinator2->moder_fish}} - Umumiy {{$engKopBalliKordinator2->custom_ball}} ball</h5>
+                {{$engKopBalliModerator->moder_fish}} - Umumiy {{$engKopBalliModerator->custom_ball}} ball</h5>
             <p class="text-base font-normal text-gray-500 dark:text-gray-400">Eng ko'p reyting balini to'plagan
                 Moderator</p>
         </div>
@@ -117,16 +117,16 @@ console.log(filteredData);
           },
         },
         tooltip: {
-      enabled: true,
-      x: {
-        show: false,
-      },
-      y: {
-        formatter: function(value) {
-          return value === null ? "Bu oy uchun hali ma'lumot yo'q!" : value;
+        enabled: true,
+          x: {
+            show: false,
+          },
+          y: {
+            formatter: function(value) {
+              return value === null ? "Bu oy uchun hali ma'lumot yo'q!" : value;
+            }
         }
-      }
-    },
+      },
         fill: {
           type: "gradient",
           gradient: {
