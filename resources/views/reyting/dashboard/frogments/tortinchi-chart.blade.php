@@ -3,7 +3,7 @@
     <div>
       <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-2">{{$engKopBalliKordinator->fish}} -
         Umumiy {{$engKopBalliKordinator->custom_ball}} ball</h5>
-      <p class="text-base font-normal text-gray-500 dark:text-gray-400">Eng ko'p reyting balini to'plagan kordinator</p>
+      <p class="text-base font-normal text-gray-500 dark:text-gray-400">Eng ko'p reyting balini to'plagan Kordinator</p>
     </div>
     <div class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
       {{$umumiyPointlargaQarabOsish}}

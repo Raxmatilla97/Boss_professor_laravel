@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\chart\KordinatorChartController;
+use App\Http\Controllers\chart\ModeratorChartController;
+use App\Http\Controllers\chart\OperatorChartController;
 use Illuminate\Http\Request;
 
 use App\Models\Operator;
@@ -90,29 +93,56 @@ class DashboardController extends Controller
             $percentageChange = 100; // Agar o'tgan haftada murojaatlar bo'lmagan bo'lsa
         }
 
+        // ------------------------------------------------------------------------------
+        // -------------------------PROFESSORLAR CHART-----------------------------------
+        // ------------------------------------------------------------------------------
 
         // Professorlarni umumiy pointlarini hisoblash va linyali chartda foydalanish kodi
-
         $professors = Professor::where('status', 1)->get();
 
         // Oddiy professorlarni pointini xisoblash logikasi
         $professorsChart = IndexController::calculateProfessorsPoints($professors);
 
         // Chartni line datasini xisoblash logikasi
-        $chartData = $this->prepareChartData($professorsChart);
-
-        //  dd($jsonContent);
+        $chartData = KordinatorChartController::prepareChartData($professorsChart);
 
         // Umumiy professorlar pointlarini bir oy davomida o'sgan yoki o'smaganini aniqlash
-        $umumiyPointlargaQarabOsish = $this->calculatePercentageChange($professors);
+        $umumiyPointlargaQarabOsish = KordinatorChartController::calculatePercentageChange($professors);
 
         // Eng ko'p ball to'plagan Kordinatorni aniqlash
-        $engKopBalliKordinator =  $professorsChart->sortByDesc('custom_ball')->first();
+        $engKopBalliKordinator = $professorsChart->sortByDesc('custom_ball')->first();
 
-        // Moderatorlar chartini statistikasini hisoblaydigan logika
+        // ------------------------------------------------------------------------------
+        // -------------------------MODERATORLAR CHART-----------------------------------
+        // ------------------------------------------------------------------------------
+
+        // Moderatorlar chartini statistikasini hisoblaydigan logikasi
         $moderators = Moderator::all();
-        $chartData2 = $this->prepareChartData2($moderators);
-        // dd($chartData2);
+        $chartData2 = ModeratorChartController::prepareChartData2($moderators);
+
+        // Eng ko'p ball to'plagan Kordinatorni aniqlash
+        $moderatorData2 = IndexController::calculateModeratorsPoints($moderators);
+        $engKopBalliKordinator2 = $moderatorData2->sortByDesc('custom_ball')->first();
+
+        // Umumiy professorlar pointlarini bir oy davomida o'sgan yoki o'smaganini aniqlash
+        $umumiyPointlargaQarabOsish2 = ModeratorChartController::calculatePercentageChange2($moderators);
+
+        // ------------------------------------------------------------------------------
+        // --------------------------OPERATORLAR CHART-----------------------------------
+        // ------------------------------------------------------------------------------
+
+         // Operator chartini statistikasini hisoblaydigan logikasi
+         $operators = Operator::all();
+         $chartDataOperator = OperatorChartController::prepareChartData3($operators);
+
+        // Eng ko'p ball to'plagan Kordinatorni aniqlash
+        $operatorData3 = IndexController::calculateOperatorsPoints($operators);
+        $engKopBalliOperator3 = $operatorData3->sortByDesc('custom_ball')->first();
+
+        // Umumiy professorlar pointlarini bir oy davomida o'sgan yoki o'smaganini aniqlash
+        $umumiyPointlargaQarabOsish3 = OperatorChartController::calculatePercentageChange($operators);
+
+        // ------------------------------------------------------------------------------
 
         return view(
             'dashboard',
@@ -130,253 +160,19 @@ class DashboardController extends Controller
                 'chartData',
                 'chartData2',
                 'umumiyPointlargaQarabOsish',
-                'engKopBalliKordinator'
+                'engKopBalliKordinator',
+                'umumiyPointlargaQarabOsish2',
+                'engKopBalliKordinator2',
+                'operatorData3',
+                'engKopBalliOperator3',
+                'umumiyPointlargaQarabOsish3',
+                'chartDataOperator'
             )
 
         );
     }
-    // ----------------------------------------------------------------
-    //  -------------DASHBOARD CHART LINE LOGIKA BOSHLANDI-------------
-    // Chardagi kordinatorlarni color line ni aniqlab beradigan top-10 color
-    // ----------------------------------------------------------------
-    // ----------------------------------------------------------------
-    private $lineChartColors = [
-        '#3498DB', // Yorqin ko'k
-        '#E74C3C', // Qizil
-        '#2ECC71', // Yashil
-        '#F1C40F', // Sariq
-        '#9B59B6', // Binafsha
-        '#1ABC9C', // Firuzabarg
-        '#34495E', // Tungi ko'k
-        '#D35400', // To'q sariq
-        '#7D3C98', // Tuna binafsha
-        '#C0392B' // To'q qizil
-    ];
-
-    // Kordinatorlar uchun dashboarddagi line chart datasini xisoblab beradigan logika
-    private function prepareChartData($professors)
-    {
-        $chartData = [];
-        $index = 0;
-        foreach ($professors as $professor) {
-            $professorData = [$professor]; // Professor ro'yxatini yaratish
-            $monthlyPoints = $this->calculateMonthlyPoints($professorData); // Har bir professor uchun oylik ballarni hisoblash
 
 
-            $chartData[] = [
-                'name' => $professor->fish,
-                'data' => $monthlyPoints[0]->monthly_points, // Bu yerda professorning oylik ballari
-                'color' => $this->lineChartColors[$index % count($this->lineChartColors)]
-            ];
-            $index++;
-        }
-        return $chartData;
-    }
-
-    // Professor uchun ham Moderatorlar va Operatorlar pointlarini hisoblash va qo'shish logikasi
-    public static function calculateMonthlyPoints($professors)
-    {
-        foreach ($professors as $professor) {
-            $professorMonthlyPoints = self::calculateMonthlyPointsForFiles($professor->files ?? []);
-
-            foreach ($professor->moderator as $moderator) {
-                $moderatorMonthlyPoints = self::calculateMonthlyPointsForFiles($moderator->files ?? []);
-
-                foreach ($moderator->operator as $operator) {
-                    $operatorMonthlyPoints = self::calculateMonthlyPointsForFiles($operator->files ?? []);
-                    foreach ($operatorMonthlyPoints as $month => $points) {
-                        $moderatorMonthlyPoints[$month] = ($moderatorMonthlyPoints[$month] ?? 0) + $points;
-                    }
-                }
-
-                foreach ($moderatorMonthlyPoints as $month => $points) {
-                    $professorMonthlyPoints[$month] = ($professorMonthlyPoints[$month] ?? 0) + $points;
-                }
-            }
-
-            $professor->monthly_points = $professorMonthlyPoints;
-        }
-
-        return $professors;
-    }
-
-    // Yuborilgan murojaatlar created_at qarab umumiy oylik pointlarni hisoblash
-    private static function calculateMonthlyPointsForFiles($files)
-    {
-        $monthlyPoints = [];
-        foreach ($files as $file) {
-            if ($file->is_active == 1 && $file->ariza_holati == "maqullandi") {
-                $month = $file->created_at->format('Y-m');
-                if (!isset($monthlyPoints[$month])) {
-                    $monthlyPoints[$month] = 0;
-                }
-                $monthlyPoints[$month] += $file->points;
-            }
-        }
-        return $monthlyPoints;
-    }
-
-
-    // Bir oyda professorlar pointlarini qo'shilganligiga qarab o'sish yoki pasayish bo'lganini aniqlash logikasi
-    function calculatePercentageChange($professors)
-    {
-
-        $currentMonth = now()->format('Y-m');
-        $previousMonth = now()->subMonth()->format('Y-m');
-
-        $currentMonthPoints = 0;
-        $previousMonthPoints = 0;
-
-        foreach ($professors as $professor) {
-            foreach ($professor->files as $point) {
-                if ($point->created_at->format('Y-m') == $currentMonth) {
-                    $currentMonthPoints += $point->value;
-                }
-                if ($point->created_at->format('Y-m') == $previousMonth) {
-                    $previousMonthPoints += $point->value;
-                }
-            }
-        }
-
-        // Foizdagi o'zgarishni hisoblash
-        if ($previousMonthPoints > 0) {
-            $percentageChange = (($currentMonthPoints - $previousMonthPoints) / $previousMonthPoints) * 100;
-        } else if ($currentMonthPoints > 0) {
-            $percentageChange = 100; // Agar o'tgan oyda hech qanday ochko bo'lmasa
-        } else {
-            $percentageChange = 0; // Agar ikkala oyda ham ochko bo'lmasa
-        }
-
-        return $percentageChange >= 0 ? "+" . round($percentageChange, 2) . "%" : round($percentageChange, 2) . "%";
-    }
-
-    // ----------------------------------------------------------------
-    // -------------DASHBOARD CHART LINE LOGIKA TUGADI-----------------
-    // ----------------------------------------------------------------
-
-
-     // ----------------------------------------------------------------
-    //  -------------DASHBOARD CHART LINE2 LOGIKA BOSHLANDI-------------
-    // Chardagi kordinatorlarni color line ni aniqlab beradigan top-10 color
-    // ----------------------------------------------------------------
-    // ----------------------------------------------------------------
-    private $lineChartColors2 = [
-        '#3498DB', // Yorqin ko'k
-        '#E74C3C', // Qizil
-        '#2ECC71', // Yashil
-        '#F1C40F', // Sariq
-        '#9B59B6', // Binafsha
-        '#1ABC9C', // Firuzabarg
-        '#34495E', // Tungi ko'k
-        '#D35400', // To'q sariq
-        '#7D3C98', // Tuna binafsha
-        '#C0392B' // To'q qizil
-    ];
-
-    // Kordinatorlar uchun dashboarddagi line chart datasini xisoblab beradigan logika
-    private function prepareChartData2($moderators)
-    {
-        $chartData2 = [];
-        $index = 0;
-        foreach ($moderators as $moderator) {
-            $moderatorData = [$moderator]; // Professor ro'yxatini yaratish
-            $monthlyPoints = $this->calculateMonthlyPoints2($moderatorData); // Har bir professor uchun oylik ballarni hisoblash
-
-
-            $chartData2[] = [
-                'name' => $moderator->moder_fish,
-                'data' => $monthlyPoints[0]->monthly_points, // Bu yerda professorning oylik ballari
-                'color' => $this->lineChartColors2[$index % count($this->lineChartColors2)]
-            ];
-            $index++;
-        }
-        return $chartData2;
-    }
-
-    // Professor uchun ham Moderatorlar va Operatorlar pointlarini hisoblash va qo'shish logikasi
-    public static function calculateMonthlyPoints2($moderators)
-    {
-        
-      
-            foreach ($moderators as $moderator) {
-                
-                $moderatorMonthlyPoints = self::calculateMonthlyPointsForFiles2($moderator->files ?? []);              
-
-                foreach ($moderator->operator as $operator) {
-                   
-                    $operatorMonthlyPoints = self::calculateMonthlyPointsForFiles2($operator->files ?? []);
-                  
-                    foreach ($operatorMonthlyPoints as $month => $points) {
-                        $moderatorMonthlyPoints[$month] = ($moderatorMonthlyPoints[$month] ?? 0) + $points;
-                        
-                    }
-
-                }
-               
-              
-                $moderator->monthly_points = $moderatorMonthlyPoints;
-               
-            }
-
-           
-       
-        return $moderators;
-    }
-
-    // Yuborilgan murojaatlar created_at qarab umumiy oylik pointlarni hisoblash
-    private static function calculateMonthlyPointsForFiles2($files)
-    {
-       
-        $monthlyPoints = [];
-        foreach ($files as $file) {
-            if ($file->is_active == 1 && $file->ariza_holati == "maqullandi") {
-                $month = $file->created_at->format('Y-m');
-                if (!isset($monthlyPoints[$month])) {
-                    $monthlyPoints[$month] = 0;
-                }
-                $monthlyPoints[$month] += $file->points;
-            }
-        }
-        return $monthlyPoints;
-    }
-
-
-    // Bir oyda professorlar pointlarini qo'shilganligiga qarab o'sish yoki pasayish bo'lganini aniqlash logikasi
-    function calculatePercentageChange2($professors)
-    {
-
-        $currentMonth = now()->format('Y-m');
-        $previousMonth = now()->subMonth()->format('Y-m');
-
-        $currentMonthPoints = 0;
-        $previousMonthPoints = 0;
-
-        foreach ($professors as $professor) {
-            foreach ($professor->files as $point) {
-                if ($point->created_at->format('Y-m') == $currentMonth) {
-                    $currentMonthPoints += $point->value;
-                }
-                if ($point->created_at->format('Y-m') == $previousMonth) {
-                    $previousMonthPoints += $point->value;
-                }
-            }
-        }
-
-        // Foizdagi o'zgarishni hisoblash
-        if ($previousMonthPoints > 0) {
-            $percentageChange = (($currentMonthPoints - $previousMonthPoints) / $previousMonthPoints) * 100;
-        } else if ($currentMonthPoints > 0) {
-            $percentageChange = 100; // Agar o'tgan oyda hech qanday ochko bo'lmasa
-        } else {
-            $percentageChange = 0; // Agar ikkala oyda ham ochko bo'lmasa
-        }
-
-        return $percentageChange >= 0 ? "+" . round($percentageChange, 2) . "%" : round($percentageChange, 2) . "%";
-    }
-
-    // ----------------------------------------------------------------
-    // -------------DASHBOARD CHART LINE LOGIKA TUGADI-----------------
-    // ----------------------------------------------------------------
 
 
 }

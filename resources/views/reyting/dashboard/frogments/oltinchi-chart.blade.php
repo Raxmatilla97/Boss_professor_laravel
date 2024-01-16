@@ -2,13 +2,13 @@
     <div class="flex justify-between p-4 md:p-6 pb-0 md:pb-0">
         <div>
             <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-2">
-                {{$engKopBalliKordinator2->moder_fish}} - Umumiy {{$engKopBalliKordinator2->custom_ball}} ball</h5>
+                {{$engKopBalliOperator3->oper_fish}} - Umumiy {{$engKopBalliOperator3->oper_custom_ball}} ball</h5>
             <p class="text-base font-normal text-gray-500 dark:text-gray-400">Eng ko'p reyting balini to'plagan
-                Moderator</p>
+                Operator</p>
         </div>
         <div
             class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
-            {{$umumiyPointlargaQarabOsish2}}
+            {{$umumiyPointlargaQarabOsish3}}
             <svg class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                 viewBox="0 0 10 14">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -16,7 +16,7 @@
             </svg>
         </div>
     </div>
-    <div id="labels-chart5" class="px-2.5"></div>
+    <div id="labels-chart6" class="px-2.5"></div>
     <div
         class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between mt-5 p-4 md:p-6 pt-0 md:pt-0">
         <div class="flex justify-between items-center pt-5">
@@ -37,29 +37,29 @@
 
 <script>
    // var jsonDataArray2 = JSON.parse(`{!! json_encode($chartData2) !!}`);
-   var jsonDataArray2 = {!! json_encode($chartData2) !!};
+   var jsonDataArray3 = {!! json_encode($chartDataOperator) !!};
+ 
+var months3 = ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun', 'Iyul', 'Avgust', 'Sentiyabr', 'Oktiyabr', 'Noyabr', 'Dekabr'];
 
-var months = ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun', 'Iyul', 'Avgust', 'Sentiyabr', 'Oktiyabr', 'Noyabr', 'Dekabr'];
-
-var filteredData = jsonDataArray2.filter(moderator => {
-  var monthlyData2 = [];
+var filteredData3 = jsonDataArray3.filter(operator => {
+  var monthlyData3 = [];
   var hasData = false;
 
-  months.forEach(month => {
-    var yearMonth2 = "2024-" + (months.indexOf(month) + 1).toString().padStart(2, '0');
-    var dataValue = moderator.data[yearMonth2] || null;
-    monthlyData2.push(dataValue);
+  months3.forEach(month => {
+    var yearMonth3 = "2024-" + (months3.indexOf(month) + 1).toString().padStart(2, '0');
+    var dataValue = operator.data[yearMonth3] || null;
+    monthlyData3.push(dataValue);
 
     if (dataValue !== null) {
       hasData = true;
     }
   });
 
-  moderator.data = monthlyData2;
+  operator.data = monthlyData3;
   return hasData;
 });
 
-console.log(filteredData);
+console.log(filteredData3);
 
 </script>
 
@@ -100,7 +100,7 @@ console.log(filteredData);
             }
           }
         },
-        series: filteredData,
+        series: filteredData3,
         chart: {
           sparkline: {
             enabled: false
@@ -153,8 +153,8 @@ console.log(filteredData);
         }
       }
   
-      if (document.getElementById("labels-chart5") && typeof ApexCharts !== 'undefined') {
-        const chart = new ApexCharts(document.getElementById("labels-chart5"), options);
+      if (document.getElementById("labels-chart6") && typeof ApexCharts !== 'undefined') {
+        const chart = new ApexCharts(document.getElementById("labels-chart6"), options);
         chart.render();
       }
     });
