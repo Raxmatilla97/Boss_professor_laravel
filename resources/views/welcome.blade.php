@@ -129,14 +129,14 @@
                         <div class="md:flex">
                             <!-- Navigation tabs -->
                             <ul class="flex-column space-y space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0"
-                                style="min-width: 350px;">
+                                style="">
                                 <!-- Loop through moderators to create tabs -->
                                 @foreach ($item->moderator as $moderator)
                                     <!-- Tab link -->
                                     <li>
                                         <a href="#" onclick="openCity(event, 'Moderator{{ $moderator->id }}')"
                                             id="defaultOpen"
-                                            class="tablinks inline-flex items-center pl-4 pr-4 py-3 text-white bg-blue-700 rounded-lg active w-full dark:bg-blue-600"
+                                            class="tablinks inline-flex items-center px-4 py-3 text-white bg-blue-700 rounded-lg active w-full dark:bg-blue-600"
                                             aria-current="page">
                                             <svg class="w-4 h-4 me-2 text-white" aria-hidden="true"
                                                 xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
