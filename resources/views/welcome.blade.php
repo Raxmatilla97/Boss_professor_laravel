@@ -78,6 +78,8 @@
                             gap: 10px;
                             /* Elementlar orasidagi masofa */
                         }
+
+                       
                     }
 
                     /* Mobil qurilmalar uchun (masalan, 600px dan kichikroq ekranlar uchun) */
@@ -87,6 +89,9 @@
                             /* Ekran o'lchamiga mos */
                             min-width: 0;
                             /* Min-width o'chirilgan */
+
+                            max-width: 95%;
+                            max-height: 95%;
                         }
 
                         .close-button {
@@ -101,6 +106,7 @@
                             /* Ekran o'lchamiga mos, biroz kengroq */
                             min-width: 0;
                             /* Min-width o'chirilgan */
+                           
                         }
                     }
 
