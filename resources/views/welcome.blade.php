@@ -49,24 +49,37 @@
             <div class="bg-white p-5 rounded shadow-lg relative">
 
                 <img src="{{ '/uploads/professor_images' }}/{{ $item->image }}" alt="{{ $item->fish }}"
-                    class="w-full h-62 object-cover mb-4 rounded">
-                <span
-                    class="absolute top-7 left-7 px-2 py-1 text-md font-semibold tracking-wider text-white uppercase bg-blue-600 rounded">Ball:
-                    {{ $item->custom_ball }}</span>
-                <h3 class="text-2xl font-bold mb-2">{{ $item->fish }}</h3>
-                <p class="text-gray-700">
-                <p class="font-medium">Mavzu:</p> {{ $item->small_info }}
-                </p>
-
-                <div class="space-x-8 mt-5 flex justify-between">
-                    <button onclick="toggleModal({{ $item->id }})"
-                        class="bg-blue-500 text-white px-4 py-2 rounded">Moderatorlar
-                        ro'yxati</button>
-                    <a href="{{ route('show.index', $item->slug_number) }}"
-                        class="bg-green-500 text-center text-white px-4 py-2 rounded">To'liq ko'rish</a>
-                </div>
-
+                class="w-full h-auto object-cover mb-4 rounded">
+            <span
+                class="absolute top-6 left-6 px-2 py-1 text-md font-semibold text-white uppercase bg-blue-600 rounded">
+                Ball: {{ $item->custom_ball }}
+            </span>
+            <h3 class="text-xl md:text-2xl font-bold mb-2">{{ $item->fish }}</h3>
+            <p class="text-gray-700 text-sm md:text-base">
+                <span class="font-medium">Mavzu:</span> {{ $item->small_info }}
+            </p>
+            <div class="flex flex-col space-y-2 mt-5 justify-between sm:flex-row sm:space-y-0 sm:space-x-4 md:text-sm lg:text-base">
+                <button onclick="toggleModal({{ $item->id }})"
+                    class="bg-blue-500 text-white px-4 py-2 rounded w-full md:px-3 md:py-1 lg:px-4 lg:py-2">Moderatorlar ro'yxati</button>
+                <a href="{{ route('show.index', $item->slug_number) }}"
+                    class="bg-green-500 text-center text-white px-4 py-2 rounded w-full md:px-3 md:py-1 lg:px-4 lg:py-2">To'liq ko'rish</a>
+            </div>
+            
+            
                 <style>
+                    @media only screen and (max-width: 768px) {
+                        .space-x-8.mt-5.flex {
+                            flex-direction: column;
+                            /* Elementlarni ustma-ust joylashtirish */
+                            justify-content: center;
+                            /* Vertikal yo'nalishda markazlash */
+                            align-items: center;
+                            /* Gorizontal yo'nalishda markazlash */
+                            gap: 10px;
+                            /* Elementlar orasidagi masofa */
+                        }
+                    }
+
                     /* Mobil qurilmalar uchun (masalan, 600px dan kichikroq ekranlar uchun) */
                     @media only screen and (max-width: 600px) {
                         .modal {
@@ -100,6 +113,8 @@
                             /* Min-width saqlanib qolgan */
                             min-height: 650px;
                         }
+
+
                     }
                 </style>
 
@@ -275,23 +290,23 @@
 
 
     <script>
-       function openCity(evt, moderatorId) {
-    // Barcha tabcontentlarni yashirish
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("moderator-content");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
+        function openCity(evt, moderatorId) {
+            // Barcha tabcontentlarni yashirish
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("moderator-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
 
-    // Barcha tablinklarni o'chirish
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
+            // Barcha tablinklarni o'chirish
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
 
-    // Tanlangan tabcontentni va tablinkni ko'rsatish
-    document.getElementById(moderatorId).style.display = "block";
-    evt.currentTarget.className += " active";
-}
+            // Tanlangan tabcontentni va tablinkni ko'rsatish
+            document.getElementById(moderatorId).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
     </script>
 @endsection
