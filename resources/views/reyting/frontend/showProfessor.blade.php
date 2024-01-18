@@ -115,11 +115,10 @@
                                                     №{{ $loop->iteration }}
                                                 </div>
                                             </td>
-                                            <th scope="row"
-                                                class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                                <img class="w-10 h-10 rounded-full"
-                                                    src="https://cspi.uz/storage/app/media/2023/avgust/i.webp"
-                                                    alt="Jese image">
+                                            <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                                                <img class="hidden sm:block w-10 h-10 rounded-full"
+                                                     src="https://cspi.uz/storage/app/media/2023/avgust/i.webp"
+                                                     alt="Jese image">
                                                 <div class="ps-3">
                                                     <div class="text-base font-semibold">
                                                         {{ substr($item->moder_fish, 0, strpos($item->moder_fish, ' ', strpos($item->moder_fish, ' ') + 1)) }}
@@ -129,6 +128,7 @@
                                                     </div>
                                                 </div>
                                             </th>
+                                            
                                             <td class="px-6 py-4">
                                                 Umumiy ball: {{ $item->custom_ball}}
                                             </td>
