@@ -82,17 +82,18 @@
                     </div>
                     <hr class="mb-8 mt-3">
                     <p class="text-gray-500 dark:text-gray-400">
-                        @if($information->professor_id)
-                        Kordinator
+                        @if ($information->professor_id)
+                            Kordinator
                         @elseif($information->moderator_id)
-                        Moderator
+                            Moderator
                         @else
-                        Operator
+                            Operator
                         @endif
-                        tomonidan yuklangan fayllar va ularga qo'yilgan ballar:</p>
-                    <form action="{{route('murojatlar.murojatniTasdiqlash')}}" method="POST">
+                        tomonidan yuklangan fayllar va ularga qo'yilgan ballar:
+                    </p>
+                    <form action="{{ route('murojatlar.murojatniTasdiqlash') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="id" value="{{$information->id}}">
+                        <input type="hidden" name="id" value="{{ $information->id }}">
                         <div class="px-4 py-6 ml-8 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0 ">
                             <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
 
@@ -148,9 +149,8 @@
                                                         <span class="ml-2 text-lg font-medium">Yo'nalish:</span>
                                                     </div>
                                                     <div>
-                                                        <span class="text-lg text-gray-600">{{
-                                                            $information->category_name
-                                                            }}</span>
+                                                        <span
+                                                            class="text-lg text-gray-600">{{ $information->category_name }}</span>
                                                     </div>
                                                 </div>
 
@@ -162,13 +162,12 @@
                                                     </div>
                                                     <div>
                                                         @if ($information->site_url)
-                                                        <a href="{{ $information->site_url }}"
-                                                            class="text-lg text-blue-500">{{ $information->site_url
-                                                            }}</a>
+                                                            <a href="{{ $information->site_url }}"
+                                                                class="text-lg text-blue-500">{{ $information->site_url }}</a>
                                                         @else
-                                                        <span
-                                                            class="bg-pink-100 text-indigo-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-pink-900 dark:text-pink-300">Sayt
-                                                            manzili yozilmagan!</span>
+                                                            <span
+                                                                class="bg-pink-100 text-indigo-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-pink-900 dark:text-pink-300">Sayt
+                                                                manzili yozilmagan!</span>
                                                         @endif
 
                                                     </div>
@@ -181,9 +180,9 @@
                                                     </div>
 
                                                     @php
-                                                    $filename = pathinfo($information->filename, PATHINFO_FILENAME);
-                                                    $extension = pathinfo($information->filename, PATHINFO_EXTENSION);
-                                                    $allowedExtensions = ['zip', 'doc', 'docx', 'pdf'];
+                                                        $filename = pathinfo($information->filename, PATHINFO_FILENAME);
+                                                        $extension = pathinfo($information->filename, PATHINFO_EXTENSION);
+                                                        $allowedExtensions = ['zip', 'doc', 'docx', 'pdf'];
                                                     @endphp
                                                     <div class="container mx-auto p-4">
                                                         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -193,33 +192,30 @@
                                                                     fayl nomi:</h2>
 
                                                                 @if (isset($information->filename))
-                                                                @if (in_array($extension, $allowedExtensions))
-                                                                @if (strlen($filename) > 60)
-                                                                {{ substr($filename, 0, 60) . '...' }}
-                                                                @else
-                                                                {{ $filename }}
-                                                                @endif
+                                                                    @if (in_array($extension, $allowedExtensions))
+                                                                        @if (strlen($filename) > 60)
+                                                                            {{ substr($filename, 0, 60) . '...' }}
+                                                                        @else
+                                                                            {{ $filename }}
+                                                                        @endif
 
-                                                                @if (isset($information->site_url))
-                                                                <span
-                                                                    class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">{{
-                                                                    '' . strtoupper($extension) }}
-                                                                    + WEB </span>
+                                                                        @if (isset($information->site_url))
+                                                                            <span
+                                                                                class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">{{ '' . strtoupper($extension) }}
+                                                                                + WEB </span>
+                                                                        @else
+                                                                            <span
+                                                                                class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">{{ '' . strtoupper($extension) }}</span>
+                                                                        @endif
+                                                                    @else
+                                                                        {{ $information->filename }}
+                                                                    @endif
                                                                 @else
-                                                                <span
-                                                                    class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">{{
-                                                                    '' . strtoupper($extension) }}</span>
-                                                                @endif
-                                                                @else
-                                                                {{ $information->filename }}
-                                                                @endif
-                                                                @else
-                                                                {{ strlen($information->site_url) > 60 ?
-                                                                substr(str_replace(['www.', 'http://', 'https://'], '',
-                                                                $information->site_url), 0, 60) . '...' :
-                                                                $information->site_url }}
-                                                                <span
-                                                                    class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">WEB</span>
+                                                                    {{ strlen($information->site_url) > 60
+                                                                        ? substr(str_replace(['www.', 'http://', 'https://'], '', $information->site_url), 0, 60) . '...'
+                                                                        : $information->site_url }}
+                                                                    <span
+                                                                        class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">WEB</span>
                                                                 @endif
 
 
@@ -229,12 +225,12 @@
                                                                 <h2 class="text-gray-700 text-lg font-bold mb-2">
                                                                     Murojaat
                                                                     yaratilgan vaqt:</h2>
-                                                                <p class="text-gray-600 text-sm">{{
-                                                                    $information->created_at}}</p>
+                                                                <p class="text-gray-600 text-sm">
+                                                                    {{ $information->created_at }}</p>
                                                             </div>
 
                                                             <div class="flex items-center justify-between">
-                                                                <a href="/storage/upload/files/{{$information->filename}}"
+                                                                <a href="/storage/upload/files/{{ $information->filename }}"
                                                                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                                                     download>
                                                                     Yuklab olish
@@ -252,10 +248,10 @@
                                     </li>
                                     <li class="mb-10 ms-6">
                                         <span
-                                            class="absolute flex items-center justify-center w-8 h-8 @if($information->ariza_holati == "maqullandi") bg-green-100 @else bg-gray-100 @endif  rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-                                            <svg class="w-3.5 h-3.5 @if($information->ariza_holati == "maqullandi") text-green-500  @else text-gray-500  @endif dark:text-gray-400" aria-hidden="true"
-                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                viewBox="0 0 18 20">
+                                            class="absolute flex items-center justify-center w-8 h-8 @if ($information->ariza_holati == 'maqullandi') bg-green-100 @else bg-gray-100 @endif  rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+                                            <svg class="w-3.5 h-3.5 @if ($information->ariza_holati == 'maqullandi') text-green-500  @else text-gray-500 @endif dark:text-gray-400"
+                                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                fill="currentColor" viewBox="0 0 18 20">
                                                 <path
                                                     d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z" />
                                             </svg>
@@ -269,28 +265,38 @@
                                             class="max-w-5xl mt-6 mx-auto bg-white rounded-xl top-bottom-shadow overflow-hidden">
                                             <div class="p-6">
                                                 @if ($errors->any())
-                                                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                                                    <strong class="font-bold">Xatolar mavjud!</strong>
-                                                    <span class="block sm:inline">
-                                                        Iltimos, quyidagi xatolarni to'g'rilang:
-                                                    </span>
-                                                    <ul class="list-disc pl-5 mt-3">
-                                                        @foreach ($errors->all() as $error)
-                                                            <li>{{ $error }}</li>
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
-                                            @endif
-                                            @if (session('success'))
-                                            <div class="fixed top-3 right-3 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                                                <strong class="font-bold">Muvaffaqiyat!</strong>
-                                                <span class="block sm:inline">{{ session('success') }}</span>
-                                                <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-                                                    <svg class="fill-current h-6 w-6 text-green-500" role="button" onclick="this.parentElement.parentElement.remove();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Yopish</title><path d="M14.348 14.859l-4.708-4.708 4.708-4.708a1 1 0 0 0-1.414-1.414l-4.708 4.708-4.708-4.708a1 1 0 1 0-1.414 1.414l4.708 4.708-4.708 4.708a1 1 0 1 0 1.414 1.414l-4.708-4.708 4.708 4.708a1 1 0 0 0 1.414-1.414z"/></svg>
-                                                </span>
-                                            </div>
-                                        @endif
-                                                                                    
+                                                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                                                        role="alert">
+                                                        <strong class="font-bold">Xatolar mavjud!</strong>
+                                                        <span class="block sm:inline">
+                                                            Iltimos, quyidagi xatolarni to'g'rilang:
+                                                        </span>
+                                                        <ul class="list-disc pl-5 mt-3">
+                                                            @foreach ($errors->all() as $error)
+                                                                <li>{{ $error }}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                @endif
+                                                @if (session('success'))
+                                                    <div class="fixed top-3 right-3 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+                                                        role="alert">
+                                                        <strong class="font-bold">Muvaffaqiyat!</strong>
+                                                        <span class="block sm:inline">{{ session('success') }}</span>
+                                                        <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+                                                            <svg class="fill-current h-6 w-6 text-green-500"
+                                                                role="button"
+                                                                onclick="this.parentElement.parentElement.remove();"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                viewBox="0 0 20 20">
+                                                                <title>Yopish</title>
+                                                                <path
+                                                                    d="M14.348 14.859l-4.708-4.708 4.708-4.708a1 1 0 0 0-1.414-1.414l-4.708 4.708-4.708-4.708a1 1 0 1 0-1.414 1.414l4.708 4.708-4.708 4.708a1 1 0 1 0 1.414 1.414l-4.708-4.708 4.708 4.708a1 1 0 0 0 1.414-1.414z" />
+                                                            </svg>
+                                                        </span>
+                                                    </div>
+                                                @endif
+
                                                 <!-- Category Item -->
                                                 <div class="mt-4 flex mb-4">
                                                     <div class="label-box" style="width: 300px;">
@@ -303,14 +309,17 @@
                                                             holatini tanlang</label>
                                                         <select id="countries" name="murojaat_holati"
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                            <option value="kutulmoqda" {{ $information->ariza_holati ==
-                                                                'kutulmoqda' ? 'selected' : '' }}>Ariza hali ko'rib
+                                                            <option value="kutulmoqda"
+                                                                {{ $information->ariza_holati == 'kutulmoqda' ? 'selected' : '' }}>
+                                                                Ariza hali ko'rib
                                                                 chiqilmagan!</option>
-                                                            <option value="maqullandi" {{ $information->ariza_holati ==
-                                                                'maqullandi' ? 'selected' : '' }}>Ariza maqullandi!
+                                                            <option value="maqullandi"
+                                                                {{ $information->ariza_holati == 'maqullandi' ? 'selected' : '' }}>
+                                                                Ariza maqullandi!
                                                             </option>
-                                                            <option value="rad_etildi" {{ $information->ariza_holati ==
-                                                                'rad_etildi' ? 'selected' : '' }}>Ariza rad etildi!
+                                                            <option value="rad_etildi"
+                                                                {{ $information->ariza_holati == 'rad_etildi' ? 'selected' : '' }}>
+                                                                Ariza rad etildi!
                                                             </option>
                                                         </select>
                                                     </div>
@@ -339,7 +348,9 @@
                                                                 </svg>
                                                             </div>
 
-                                                            <input type="text" id="simple-search" value="{{old('points', $information->points)}}" name="murojaat_bali"
+                                                            <input type="text" id="simple-search"
+                                                                value="{{ old('points', $information->points) }}"
+                                                                name="murojaat_bali"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                                 placeholder="0-100" required>
                                                             <script>
@@ -365,7 +376,7 @@
                                                             maqullanmagan bo'lsa nima uchunligini yozing.</label>
                                                         <textarea id="message" rows="4" name="murojaat_izohi"
                                                             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                            placeholder="Assalomu alaykum, sizning ....">{{old('arizaga_javob', $information->arizaga_javob)}}</textarea>
+                                                            placeholder="Assalomu alaykum, sizning ....">{{ old('arizaga_javob', $information->arizaga_javob) }}</textarea>
 
                                                     </div>
 
@@ -375,10 +386,10 @@
                                     </li>
                                     <li class="ms-6">
                                         <span
-                                            class="absolute flex items-center justify-center w-8 h-8 @if($information->ariza_holati == "maqullandi") bg-green-100 @else bg-gray-100 @endif  rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-                                            <svg class="w-3.5 h-3.5 @if($information->ariza_holati == "maqullandi") text-green-500 @else text-gray-500 @endif  dark:text-gray-400" aria-hidden="true"
-                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                viewBox="0 0 18 20">
+                                            class="absolute flex items-center justify-center w-8 h-8 @if ($information->ariza_holati == 'maqullandi') bg-green-100 @else bg-gray-100 @endif  rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+                                            <svg class="w-3.5 h-3.5 @if ($information->ariza_holati == 'maqullandi') text-green-500 @else text-gray-500 @endif  dark:text-gray-400"
+                                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                fill="currentColor" viewBox="0 0 18 20">
                                                 <path
                                                     d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2ZM7 2h4v3H7V2Zm5.7 8.289-3.975 3.857a1 1 0 0 1-1.393 0L5.3 12.182a1.002 1.002 0 1 1 1.4-1.436l1.328 1.289 3.28-3.181a1 1 0 1 1 1.392 1.435Z" />
                                             </svg>

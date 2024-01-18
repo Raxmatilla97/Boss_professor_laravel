@@ -76,8 +76,16 @@
                                                 </td>
                                                 <th scope="row "
                                                     class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-
+                                                    <div style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%;">
+                                                        @if ($items->oper_image)
+                                                        <img style="width: 100%; height: 100%; object-fit: cover;" src="{{'/uploads/operator_image'}}/{{$items->oper_image}}" alt="Jese image">
+                                                        @else                                
+                                                        <img style="width: 100%; height: 100%; object-fit: cover;" src="https://cspi.uz/storage/app/media/2023/avgust/i.webp" alt="Jese image">
+                                                        @endif
+                                                       
+                                                    </div>
                                                     <div class="ps-3" style="min-width: 500px">
+                                                        
                                                         <div class="text-base font-semibold">
                                                             {{ $items->oper_fish }}
                                                         </div>
@@ -130,6 +138,12 @@
 
 
                                             </p>
+
+                                            <div class="flex justify-end">
+                                                <span class="bg-indigo-100 text-indigo-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
+                                                   Operator ID raqami: <b>{{$items->oper_slug_number}}</b>
+                                                </span>
+                                            </div>
 
                                             <div class="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
                                                 <dd

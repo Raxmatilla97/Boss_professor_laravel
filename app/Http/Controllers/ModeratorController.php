@@ -231,6 +231,9 @@ class ModeratorController extends Controller
             $moderators = $moderator->orderBy("created_at", 'desc')->paginate(10);
         }
 
+        // Moderator ballarini hisoblash
+        $moderators = IndexController::calculateModeratorsPoints($moderators);
+
         // Natijani ko'rsatish uchun ko'rinishni qaytarish
         return view('reyting.dashboard.moderators.list', compact('moderators'));
     }

@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 @section('content')
-    @if (session('success'))   
+    @if (session('success'))
         <div style="background: url('{{ asset('assets/images/bg-success.webp') }}') no-repeat center center; background-size: cover; z-index: 1;"
             id="notification-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
             x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 10000)">
@@ -39,8 +39,6 @@
                 </div>
             </div>
         </div>
-        
-        
     @endif
 
 
@@ -48,7 +46,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-8">
         @foreach ($professors as $item)
             <!-- Sample Card -->
-            <div class="bg-white p-5 rounded shadow-lg relative" style="z-index: 0;">
+            <div class="bg-white p-5 rounded shadow-lg relative">
 
                 <img src="{{ '/uploads/professor_images' }}/{{ $item->image }}" alt="{{ $item->fish }}"
                     class="w-full h-62 object-cover mb-4 rounded">
@@ -60,7 +58,7 @@
                 <p class="font-medium">Mavzu:</p> {{ $item->small_info }}
                 </p>
 
-                <div class="flex space-x-8 mt-5">
+                <div class="space-x-8 mt-5 flex justify-between">
                     <button onclick="toggleModal({{ $item->id }})"
                         class="bg-blue-500 text-white px-4 py-2 rounded">Moderatorlar
                         ro'yxati</button>
@@ -68,9 +66,45 @@
                         class="bg-green-500 text-center text-white px-4 py-2 rounded">To'liq ko'rish</a>
                 </div>
 
+                <style>
+                    /* Mobil qurilmalar uchun (masalan, 600px dan kichikroq ekranlar uchun) */
+                    @media only screen and (max-width: 600px) {
+                        .modal {
+                            width: 100%;
+                            /* Ekran o'lchamiga mos */
+                            min-width: 0;
+                            /* Min-width o'chirilgan */
+                        }
 
-                <div class="overlay" id="overlay{{ $item->id }}">
-                    <div class="modal" style="min-width: 1200px; ">
+                        .close-button {
+                            overflow: hidden;
+                        }
+                    }
+
+                    /* Tablet qurilmalar uchun (masalan, 600px dan 1024px gacha) */
+                    @media only screen and (min-width: 601px) and (max-width: 1024px) {
+                        .modal {
+                            width: 80%;
+                            /* Ekran o'lchamiga mos, biroz kengroq */
+                            min-width: 0;
+                            /* Min-width o'chirilgan */
+                        }
+                    }
+
+                    /* Desktop qurilmalar uchun (1025px dan yuqori) */
+                    @media only screen and (min-width: 1025px) {
+                        .modal {
+                            width: 900px;
+                            /* Sizning hozirgi o'lchamingiz */
+                            min-width: 1200px;
+                            /* Min-width saqlanib qolgan */
+                            min-height: 650px;
+                        }
+                    }
+                </style>
+
+                <div class="overlay" id="overlay{{ $item->id }}" data-id="{{ $item->id }}">
+                    <div class="modal" style="z-index: 1000;">
                         <div class="md:flex">
                             <!-- Navigation tabs -->
                             <ul class="flex-column space-y space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0"
@@ -97,18 +131,17 @@
                             <!-- Content for each tab -->
                             @foreach ($item->moderator as $moderator)
                                 <div id="Moderator{{ $moderator->id }}"
-                                    class="tabcontent p-6 bg-gray-50 text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg mx-auto"
-                                    style="display: block; width: 900px;">
+                                    class="moderator-content p-6 bg-gray-50 text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg mx-auto"
+                                    style="display: none;">
                                     <div class="flex justify-center pb-8">
                                         @if ($moderator->moder_image)
                                             <img style="width: 300px; height: 300px; object-fit: cover; object-position: 50% 50%;"
-                                                class="mr-8 rounded"
+                                                class="rounded"
                                                 src="/uploads/moderator_images/{{ $moderator->moder_image }}"
                                                 alt="{{ $moderator->moder_fish }}">
                                         @else
                                             <img style="width: 300px; height: 300px; object-fit: cover; object-position: 50% 50%;"
-                                                class="mr-8 rounded"
-                                                src="https://cspi.uz/storage/app/media/2023/avgust/i.webp"
+                                                class="rounded" src="https://cspi.uz/storage/app/media/2023/avgust/i.webp"
                                                 alt="{{ $moderator->moder_fish }}">
                                         @endif
 
@@ -117,18 +150,55 @@
                                     <h3 class="text-xl text-center font-bold text-gray-900 dark:text-white mb-2">
                                         {{ $moderator->moder_fish }}</h3>
 
-                                        <blockquote class="p-4 my-4 border-s-4 border-gray-300 bg-gray-50 dark:border-gray-500 dark:bg-gray-800">
-                                            <p class="text-lg italic font-medium leading-relaxed text-gray-900 dark:text-white">"{{ $moderator->moder_small_info }}"</p>
-                                        </blockquote>
-                                   
+                                    <blockquote
+                                        class="p-4 my-4 border-s-4 border-gray-300 bg-gray-50 dark:border-gray-500 dark:bg-gray-800">
+                                        <p class="text-lg italic font-medium leading-relaxed text-gray-900 dark:text-white">
+                                            "{{ $moderator->moder_small_info }}"</p>
+                                    </blockquote>
+
                                 </div>
                             @endforeach
-                        </div>
 
-                        <!-- Close button -->
-                        <button onclick="closeModal({{ $item->id }})"
-                            class="bg-red-500 text-white px-4 py-2 mt-4 rounded">Yopish</button>
+                        </div>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                // Birinchi moderator-contentni topish va ko'rsatish
+                                var firstContent = document.querySelector('#overlay{{ $item->id }} .moderator-content');
+                                if (firstContent) {
+                                    firstContent.style.display = 'block';
+                                }
+                            });
+                        </script>
+
+
+
+                        {{-- <div>
+                            <!-- Close button -->
+                            <button onclick="closeModal({{ $item->id }})"
+                                class="bg-red-500 text-white px-4 py-2 mt-4 rounded close-button">Yopish</button>
+                        </div> --}}
                     </div>
+
+
+                    <style>
+                        .modal {
+                            position: relative;
+                            /* Modal oynani pozitsiyalash uchun asos */
+                        }
+
+                        .close-button {
+                            position: absolute;
+                            /* Tugmani modal oynaga nisbatan joylashtiradi */
+                            bottom: 10px;
+                            /* Yuqoridan masofa */
+                            right: 10px;
+                            /* O'ngdan masofa */
+                            z-index: 1001;
+                            /* Tugma boshqa elementlardan yuqorida bo'ladi */
+                        }
+                    </style>
+
+
                 </div>
 
 
@@ -138,7 +208,27 @@
         <!-- Continue to create more cards as per required -->
 
     </div>
+    <script>
+        // Hujjat yuklanganda, har bir overlay uchun event listener qo'shish
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.overlay').forEach(function(overlay) {
+                overlay.addEventListener('click', function(event) {
+                    // Agar bosilgan element overlay bo'lsa, modalni yopish
+                    if (event.target === overlay) {
+                        closeModal(overlay.getAttribute('data-id'));
+                    }
+                });
+            });
+        });
 
+        // Modalni yopish funksiyasi
+        function closeModal(itemId) {
+            var modal = document.getElementById('overlay' + itemId);
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
 
     <script>
         function openCity(evt, cityName) {
@@ -185,21 +275,23 @@
 
 
     <script>
-        function openCity(evt, cityName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
+       function openCity(evt, moderatorId) {
+    // Barcha tabcontentlarni yashirish
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("moderator-content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
 
-        // Get the element with id="defaultOpen" and click on it
-        document.getElementById("defaultOpen").click();
+    // Barcha tablinklarni o'chirish
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Tanlangan tabcontentni va tablinkni ko'rsatish
+    document.getElementById(moderatorId).style.display = "block";
+    evt.currentTarget.className += " active";
+}
     </script>
 @endsection

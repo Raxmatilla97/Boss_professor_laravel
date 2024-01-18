@@ -139,6 +139,12 @@
                                                     class="text-xl italic font-medium leading-relaxed text-gray-900 dark:text-white">
                                                     Mavzu: "{{ $item->moder_small_info }}"</p>
                                             </blockquote>
+                                            <div class="flex justify-end">
+                                                <span class="bg-indigo-100 text-indigo-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
+                                                   Moderator ID raqami: <b>{{$item->moder_slug_number}}</b>
+                                                </span>
+                                            </div>
+                                           
     
                                             <p class="text-gray-500 dark:text-gray-400">Moderator tomonidan
                                                 yuklangan fayllar va ularga qo'yilgan ballar:</p>
@@ -257,7 +263,12 @@
                                                                     class="p-4 my-4 border-s-4 text-md border-gray-300 bg-gray-50 dark:border-gray-500 dark:bg-gray-800">
                                                                     <b>Mavzu:</b> {{ $items->oper_small_info }}
                                                                 </blockquote>
-    
+
+                                                                <div class="flex justify-end">
+                                                                    <span class="bg-indigo-100 text-indigo-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">
+                                                                       Operator ID raqami: <b>{{$items->oper_slug_number}}</b>
+                                                                    </span>
+                                                                </div>
     
                                                                 </p>
     
