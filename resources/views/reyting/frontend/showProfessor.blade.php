@@ -31,7 +31,7 @@
                                 </div>
 
                             </div>
-                            <img class="rounded w-36 h-36" src="{{'/uploads/professor_images'}}/{{ $professor->image }}" alt="Extra large avatar">
+                            <img class="rounded w-4/5 sm:w-2/4 md:w-1/3 lg:w-1/6" src="{{'/uploads/professor_images'}}/{{ $professor->image }}" alt="Extra large avatar">
                         </div>
 
 
@@ -72,7 +72,7 @@
                   <hr class="mb-8 mt-3">
                     <p class="text-gray-500 dark:text-gray-400">Professor tomonidan
                         yuklangan fayllar va ularga qo'yilgan ballar:</p>
-                    <div class="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+                    <div class="px-0 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
                         <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                             <ul role="list"
                                 class="divide-y divide-gray-100 rounded-md border border-gray-200">
@@ -95,9 +95,9 @@
 
     <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-            <div class="p-6 bg-white border-b border-gray-200">
+            <div class="py-6 px-1 bg-white border-b border-gray-200">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900 mb-8">
+                    <div class="py-6 px-2 text-gray-900 mb-8">
 
                         <div id="accordion-color" data-accordion="collapse"
                             data-active-classes="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white">
