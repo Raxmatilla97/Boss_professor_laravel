@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
 
-              <div class="p-6 text-gray-900 grid  md:grid-cols-2 lg:grid-cols-3 gap-4 ">
+              <div class="p-6 text-gray-900 grid  md:grid-cols-3 lg:grid-cols-3 gap-4 ">
                 <div class="mx-2">
                     @include('reyting.dashboard.frogments.birinchi-chart')
                 </div>
