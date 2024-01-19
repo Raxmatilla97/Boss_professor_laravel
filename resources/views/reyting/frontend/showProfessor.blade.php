@@ -1,5 +1,33 @@
 @extends('layouts.frontend')
 @section('content')
+
+    <style>
+        @media only screen and (max-width: 768px) {}
+
+        /* Mobil qurilmalar uchun (masalan, 600px dan kichikroq ekranlar uchun) */
+        @media only screen and (max-width: 600px) {
+            .image_moder {
+                margin-top: 20px;
+            }
+
+            .operator_name {
+                max-width: 200px;
+            }
+        }
+
+        /* Tablet qurilmalar uchun (masalan, 600px dan 1024px gacha) */
+        @media only screen and (min-width: 601px) and (max-width: 1024px) {}
+
+        /* Desktop qurilmalar uchun (1025px dan yuqori) */
+        @media only screen and (min-width: 1025px) {
+
+            .operator_name {
+                width: 370px;
+            }
+
+        }
+    </style>
+
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -31,7 +59,8 @@
                                 </div>
 
                             </div>
-                            <img class="rounded w-4/5 sm:w-2/4 md:w-1/3 lg:w-1/6" src="{{'/uploads/professor_images'}}/{{ $professor->image }}" alt="Extra large avatar">
+                            <img class="rounded w-4/5 sm:w-2/4 md:w-1/3 lg:w-1/6"
+                                src="{{ '/uploads/professor_images' }}/{{ $professor->image }}" alt="Extra large avatar">
                         </div>
 
 
@@ -69,19 +98,19 @@
                             </dl>
                         </div>
                     </div>
-                  <hr class="mb-8 mt-3">
+                    <hr class="mb-8 mt-3">
                     <p class="text-gray-500 dark:text-gray-400">Professor tomonidan
                         yuklangan fayllar va ularga qo'yilgan ballar:</p>
                     <div class="px-0 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
                         <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                            <ul role="list"
-                                class="divide-y divide-gray-100 rounded-md border border-gray-200">
+                            <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
                                 @if (count($professor->files) > 0)
                                     @foreach ($professor->files as $files_or_urls)
                                         @include('reyting.frontend.frogments.showProfessorFiles')
                                     @endforeach
                                 @else
-                                <h1 class="text-center text-xl font-medium mb-4 mt-2 text-gray-400">Ma'lumotlar joylanmagan!</h1>
+                                    <h1 class="text-center text-xl font-medium mb-4 mt-2 text-gray-400">Ma'lumotlar
+                                        joylanmagan!</h1>
                                     @include('reyting.frontend.frogments.skeletonTable')
                                 @endif
                             </ul>
@@ -115,22 +144,32 @@
                                                     №{{ $loop->iteration }}
                                                 </div>
                                             </td>
-                                            <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                                <img class="hidden sm:block w-10 h-10 rounded-full"
-                                                     src="https://cspi.uz/storage/app/media/2023/avgust/i.webp"
-                                                     alt="Jese image">
-                                                <div class="ps-3">
+                                            <th scope="row"
+                                                class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                                               
+
+                                                @if ($item->moder_image)
+                                                    <img class="hidden sm:block w-10 h-10 rounded-full"
+                                                        src="/uploads/moderator_images/{{ $item->moder_image }}"
+                                                        alt="Jese image">
+                                                @else
+                                                    <img class="hidden sm:block w-10 h-10 rounded-full"
+                                                        src="https://cspi.uz/storage/app/media/2023/avgust/i.webp"
+                                                        alt="Jese image">
+                                                @endif
+                                                <div class="ps-3" style="    width: 400px;">
                                                     <div class="text-base font-semibold">
-                                                        {{ substr($item->moder_fish, 0, strpos($item->moder_fish, ' ', strpos($item->moder_fish, ' ') + 1)) }}
+                                                        {{-- {{ substr($item->moder_fish, 0, strpos($item->moder_fish, ' ', strpos($item->moder_fish, ' ') + 1)) }} --}}
+                                                        {{ $item->moder_fish }}
                                                     </div>
                                                     <div class="font-normal text-gray-500">
                                                         {{ str_pad(substr($item->moder_slug_number, 0, -3), strlen($item->moder_slug_number), '*', STR_PAD_RIGHT) }}
                                                     </div>
                                                 </div>
                                             </th>
-                                            
+
                                             <td class="px-6 py-4">
-                                                Umumiy ball: {{ $item->custom_ball}}
+                                                Umumiy ball: {{ $item->custom_ball }}
                                             </td>
                                             <td class="px-6 py-4">
                                                 <div class="flex items-center">
@@ -156,12 +195,12 @@
                                 <div id="accordion-color-body-{{ $item->id }}" class="hidden"
                                     aria-labelledby="accordion-color-heading-{{ $item->id }}">
                                     <div
-                                        class="p-5 border border-b-1 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+                                        class="py-5 px-2 border border-b-1 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
                                         <div class="flex justify-center">
-                                            <img class="w-20 mr-8 h-20 rounded"
+                                            <img class="w-20 mr-8 h-20 rounded image_moder"
                                                 style="object-fit: cover; object-position: 50% 50%;"
                                                 src="/uploads/moderator_images/{{ $item->moder_image }}"
-                                                alt="{{$item->moder_fish}}">
+                                                alt="{{ $item->moder_fish }}">
 
                                             <p class="mb-2  text-gray-500 dark:text-gray-400 ">
                                             <p class="text-gray-500 text-xl mt-6 dark:text-gray-400">Moderator <b>
@@ -180,7 +219,7 @@
 
                                         <p class="text-gray-500 dark:text-gray-400">Moderator tomonidan
                                             yuklangan fayllar va ularga qo'yilgan ballar:</p>
-                                        <div class="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+                                        <div class="px-1 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
                                             <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                                 <ul role="list"
                                                     class="divide-y divide-gray-100 rounded-md border border-gray-200">
@@ -189,7 +228,9 @@
                                                             @include('reyting.frontend.frogments.showProfessorFiles')
                                                         @endforeach
                                                     @else
-                                                    <h1 class="text-center text-xl font-medium mb-4 mt-2 text-gray-400">Ma'lumotlar joylanmagan!</h1>
+                                                        <h1
+                                                            class="text-center text-xl font-medium mb-4 mt-2 text-gray-400">
+                                                            Ma'lumotlar joylanmagan!</h1>
                                                         @include('reyting.frontend.frogments.skeletonTable')
                                                     @endif
                                                 </ul>
@@ -238,14 +279,14 @@
                                                             <tr
                                                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                                                 <td class="w-4 p-4">
-                                                                    <div class="flex items-center">
+                                                                    <div class="flex  items-center">
                                                                         №{{ $loop->iteration }}
                                                                     </div>
                                                                 </td>
-                                                                <th scope="row "
+                                                                <th scope="row"
                                                                     class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
 
-                                                                    <div class="ps-3" style="min-width: 500px">
+                                                                    <div class="ps-3 operator_name">
                                                                         <div class="text-base font-semibold">
                                                                             {{ $items->oper_fish }}
                                                                         </div>
@@ -256,7 +297,7 @@
                                                                     </div>
                                                                 </th>
                                                                 <td class="px-6 py-4">
-                                                                    Ball: {{$items->oper_custom_ball}}
+                                                                    Ball: {{ $items->oper_custom_ball }}
                                                                 </td>
                                                                 <td class="px-6 py-4">
                                                                     <div class="flex items-center">
@@ -271,7 +312,7 @@
                                                                         @endif
                                                                     </div>
                                                                 </td>
-                                                            
+
                                                             </tr>
                                                             <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0"
                                                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -307,7 +348,9 @@
                                                                                 @include('reyting.frontend.frogments.showProfessorFiles')
                                                                             @endforeach
                                                                         @else
-                                                                        <h1 class="text-center text-xl font-medium mb-4 mt-2 text-gray-400">Ma'lumotlar joylanmagan!</h1>
+                                                                            <h1
+                                                                                class="text-center text-xl font-medium mb-4 mt-2 text-gray-400">
+                                                                                Ma'lumotlar joylanmagan!</h1>
                                                                             @include('reyting.frontend.frogments.skeletonTable')
                                                                         @endif
 
@@ -324,6 +367,26 @@
                                                 @endforeach
 
 
+                                            </div>
+                                            <div
+                                                class="absolute px-4 -translate-x-1/2 bg-white left-1/2 dark:bg-gray-900 flex">
+                                                <svg class="w-4 h-4 text-gray-700 dark:text-gray-300" aria-hidden="true"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                    viewBox="0 0 18 14">
+                                                    <path
+                                                        d="M6 0H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3H2a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Zm10 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3h-1a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Z" />
+
+                                                </svg>
+
+                                                <p class="ml-2 mr-2"> MODERATORLAR </p>
+
+                                                <svg class="w-4 h-4 text-gray-700 dark:text-gray-300" aria-hidden="true"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                    viewBox="0 0 18 14">
+                                                    <path
+                                                        d="M6 0H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3H2a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Zm10 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3h-1a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Z" />
+
+                                                </svg>
                                             </div>
                                             <!-- End: Nested accordion -->
                                         </div>
