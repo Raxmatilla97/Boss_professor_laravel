@@ -8,18 +8,18 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 flex justify-center">
-                    <div class="mx-2">
-                        @include('reyting.dashboard.frogments.birinchi-chart')
-                    </div>
-                    <div class="mx-2">
-                        @include('reyting.dashboard.frogments.ikkinchi-chart')
-                    </div>
-                    <div class="mx-2">
-                        @include('reyting.dashboard.frogments.uchunchi-chart')
-                    </div>                   
-
+              <div class="p-6 text-gray-900 flex flex-col sm:flex-row justify-center">
+                <div class="mx-2 mb-2 sm:mb-0">
+                    @include('reyting.dashboard.frogments.birinchi-chart')
                 </div>
+                <div class="mx-2 mb-2 sm:mb-0">
+                    @include('reyting.dashboard.frogments.ikkinchi-chart')
+                </div>
+                <div class="mx-2">
+                    @include('reyting.dashboard.frogments.uchunchi-chart')
+                </div>                   
+            </div>
+            
                 <div class="mx-5 my-3 ">
                     <div id="alert-additional-content-1" class="p-4 mb-4 text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert">
                         <div class="flex items-center">

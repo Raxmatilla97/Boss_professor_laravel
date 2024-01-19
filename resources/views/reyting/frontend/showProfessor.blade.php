@@ -99,8 +99,9 @@
                         </div>
                     </div>
                     <hr class="mb-8 mt-3">
-                    <p class="text-gray-500 dark:text-gray-400">Professor tomonidan
-                        yuklangan fayllar va ularga qo'yilgan ballar:</p>
+                    <p class="text-gray-500 dark:text-gray-400">
+                        <span class="bg-gray-100 text-gray-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300"> Professor tomonidan yuklangan fayllar va ularga qo'yilgan ballar:</span>
+                    </p>
                     <div class="px-0 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
                         <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                             <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
