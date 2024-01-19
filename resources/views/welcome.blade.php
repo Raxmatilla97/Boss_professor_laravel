@@ -148,12 +148,30 @@
                                     </li>
                                 @endforeach
                             </ul>
-
+                            <style>
+                                /* Tablet uchun max-width: 768px gacha bo'lgan ekranlar uchun qoidalar */
+                                @media (max-width: 768px) {
+                                  .moderator-content {
+                                    max-width: 100%; /* Kenglik ekran kengligini to'ldiradi */
+                                    min-width: 0; /* Min-width ni bekor qiladi */
+                                    width: auto; /* Avtomatik kenglikni belgilaydi */
+                                  }
+                                }
+                              
+                                /* Mobil qurilmalar uchun max-width: 480px gacha bo'lgan ekranlar uchun qoidalar */
+                                @media (max-width: 480px) {
+                                  .moderator-content {
+                                    max-width: 100%;
+                                    min-width: 0;
+                                    width: auto;
+                                  }
+                                }
+                              </style>  
                             <!-- Content for each tab -->
                             @foreach ($item->moderator as $moderator)
                                 <div id="Moderator{{ $moderator->id }}"
                                     class="moderator-content p-6 bg-gray-50 text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg mx-auto"
-                                    style="display: none;">
+                                    style="display: none; max-width: 790px; min-width: 790px;">
                                     <div class="flex justify-center pb-8">
                                         @if ($moderator->moder_image)
                                             <img style="width: 300px; height: 300px; object-fit: cover; object-position: 50% 50%;"
