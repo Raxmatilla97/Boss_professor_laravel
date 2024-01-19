@@ -157,7 +157,7 @@
                                                         src="https://cspi.uz/storage/app/media/2023/avgust/i.webp"
                                                         alt="Jese image">
                                                 @endif
-                                                <div class="ps-3" style="    width: 400px;">
+                                                <div class="ps-3" style="width: 400px;">
                                                     <div class="text-base font-semibold">
                                                         {{-- {{ substr($item->moder_fish, 0, strpos($item->moder_fish, ' ', strpos($item->moder_fish, ' ') + 1)) }} --}}
                                                         {{ $item->moder_fish }}
@@ -169,18 +169,21 @@
                                             </th>
 
                                             <td class="px-6 py-4">
-                                                Umumiy ball: {{ $item->custom_ball }}
+                                                Umumiy Ball: {{ $item->custom_ball }}
                                             </td>
                                             <td class="px-6 py-4">
                                                 <div class="flex items-center">
                                                     @if ($item->moder_status == 1)
                                                         <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2">
-                                                        </div> Aktiv!
+                                                        </div> 
+                                                        <p class="hidden sm:block">Aktiv!</p>
                                                     @else
                                                         <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2">
-                                                        </div> Aktiv emas!
+                                                        </div> 
+                                                        <p class="hidden sm:block">Aktiv emas!</p>
                                                     @endif
                                                 </div>
+                                                
                                             </td>
                                         </tr>
                                         <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
@@ -299,16 +302,16 @@
                                                                 <td class="px-6 py-4">
                                                                     Ball: {{ $items->oper_custom_ball }}
                                                                 </td>
-                                                                <td class="px-6 py-4">
+                                                                <td class="px-6 py-4">                                                                   
                                                                     <div class="flex items-center">
                                                                         @if ($items->oper_status)
-                                                                            <div
-                                                                                class="h-2.5 w-2.5 rounded-full bg-green-500 me-2">
-                                                                            </div> Aktiv
+                                                                            <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2">
+                                                                            </div> 
+                                                                            <p class="hidden sm:block">Aktiv!</p>
                                                                         @else
-                                                                            <div
-                                                                                class="h-2.5 w-2.5 rounded-full bg-red-500 me-2">
-                                                                            </div> Aktiv emas
+                                                                            <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2">
+                                                                            </div> 
+                                                                            <p class="hidden sm:block">Aktiv emas!</p>
                                                                         @endif
                                                                     </div>
                                                                 </td>
@@ -327,7 +330,7 @@
                                                         class="hidden mb-5"
                                                         aria-labelledby="accordion-nested-collapse-heading-{{ $items->id }}">
                                                         <div
-                                                            class="py-5 px-2 border border-b-0 border-gray-200 dark:border-gray-700">
+                                                            class="py-5 px-2     border border-b-0 border-gray-200 dark:border-gray-700">
                                                             <p class="text-gray-500 dark:text-gray-400">
                                                             <blockquote
                                                                 class="p-4 my-4 border-s-4 text-md border-gray-300 bg-gray-50 dark:border-gray-500 dark:bg-gray-800">
