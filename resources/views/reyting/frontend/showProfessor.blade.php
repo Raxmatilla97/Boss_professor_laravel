@@ -327,7 +327,7 @@
                                                         class="hidden mb-5"
                                                         aria-labelledby="accordion-nested-collapse-heading-{{ $items->id }}">
                                                         <div
-                                                            class="p-5 border border-b-0 border-gray-200 dark:border-gray-700">
+                                                            class="py-5 px-2 border border-b-0 border-gray-200 dark:border-gray-700">
                                                             <p class="text-gray-500 dark:text-gray-400">
                                                             <blockquote
                                                                 class="p-4 my-4 border-s-4 text-md border-gray-300 bg-gray-50 dark:border-gray-500 dark:bg-gray-800">
@@ -337,7 +337,7 @@
 
                                                             </p>
 
-                                                            <div class="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+                                                            <div class="px-1 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
                                                                 <dd
                                                                     class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                                                     <ul role="list"
