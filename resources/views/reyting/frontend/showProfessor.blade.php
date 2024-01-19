@@ -271,7 +271,7 @@
 
                                             <!-- Nested accordion -->
                                             <div id="accordion-nested-collapse-{{ $item->id }}"
-                                                data-accordion="collapse" class="mt-4 mb-12 m-auto w-[1100px]">
+                                                data-accordion="collapse" class="mt-4 mb-12 m-auto w-full">
 
                                                 @foreach ($item->operator as $items)
                                                     <h2 id="accordion-nested-collapse-heading-{{ $items->id }}">
@@ -290,15 +290,23 @@
                                                                 <th scope="row"
                                                                     class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
 
-                                                                    <div class="ps-3 operator_name">
+                                                                    <div class="ps-3 md:min-w-0 custom-min-width-lg">
                                                                         <div class="text-base font-semibold">
                                                                             {{ $items->oper_fish }}
                                                                         </div>
                                                                         <div class="font-normal text-gray-500">
                                                                             {{ str_pad(substr($items->oper_slug_number, 0, -3), strlen($items->oper_slug_number), '*', STR_PAD_RIGHT) }}
                                                                         </div>
-
                                                                     </div>
+
+                                                                    <style>
+                                                                        @media (min-width: 1024px) { /* lg breakpoint uchun */
+                                                                          .custom-min-width-lg {
+                                                                            min-width: 500px;
+                                                                          }
+                                                                        }
+                                                                        </style>
+                                                                    
                                                                 </th>
                                                                 <td class="px-6 py-4">
                                                                     Ball: {{ $items->oper_custom_ball }}

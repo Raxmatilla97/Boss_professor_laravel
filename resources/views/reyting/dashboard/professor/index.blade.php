@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Professorlar') }}
+            {{ __("Kordinatorlar ro'yxati sahifasi") }}
         </h2>
     </x-slot>
 
@@ -49,17 +49,17 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <div class="container mx-auto">
-                        <h1 class="text-2xl font-bold mb-4">Professorlar ro'yxati</h1>
+                    <div class="container mx-auto overflow-x-auto">
+                        <h1 class="text-2xl font-bold mb-4">Kordinatorlar ro'yxati</h1>
                 
-                        <a href="{{ route('professors.create') }}" class="bg-blue-500 text-white py-2 px-4 mb-4 inline-block">Yangi professor qo'shish</a>
+                        <a href="{{ route('professors.create') }}" class="bg-blue-500 text-white py-2 px-4 mb-4 inline-block">Yangi kordinator qo'shish</a>
                 
                         <table class="w-full border">
                             <thead>
                                 <tr>
                                     <th class="border px-4 py-2">ID</th>
-                                    <th class="border px-4 py-2">Professor F.I.SH</th>
-                                    <th class="border px-4 py-2">Surati</th>
+                                    <th class="border px-4 py-2">Kordinator F.I.SH</th>
+                                    <th class="border px-4 py-2 ">Surati</th>
                                     <th class="border px-4 py-2" style="width: 130px;">Status</th>
                                     <th class="border px-4 py-2" style="width: 150px;">Umumiy ballari</th>                                  
                                     <th class="border px-4 py-2" style="width: 20px;">Amaliyot</th>
@@ -110,7 +110,7 @@
                                                                 <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                                                                     <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">O'chirishni tasdiqlang!</h3>
                                                                     <div class="mt-2">
-                                                                    <p class="text-sm text-gray-500">Ushbu professorni o'chirishni istaysizmi? Agarda ha bo'lsa unutmang o'chirilgan ma'lumotlar qayta tiklanmaydi!</p>
+                                                                    <p class="text-sm text-gray-500">Ushbu kordinatorni o'chirishni istaysizmi? Agarda ha bo'lsa unutmang o'chirilgan ma'lumotlar qayta tiklanmaydi!</p>
                                                                     </div>
                                                                 </div>
                                                                 </div>

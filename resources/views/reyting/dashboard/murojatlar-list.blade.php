@@ -64,7 +64,7 @@
 
 
                             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-
+                                @if (count($murojatlar) > 0)
                                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                     <thead
                                         class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -167,6 +167,13 @@
 
                                     </tbody>
                                 </table>
+                                @else
+                                <h1
+                                class="text-center text-xl font-medium mb-4 mt-2 text-gray-400">
+                               Murojaatlar kelib tushmagan!</h1>
+                            @include('reyting.frontend.frogments.skeletonTable')
+                                @endif
+                               
                             </div>
 
                         </div>

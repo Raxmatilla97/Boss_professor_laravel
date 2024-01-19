@@ -74,9 +74,15 @@
                                                 </td>
                                                 <th scope="row"
                                                     class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                                    <img class="w-10 h-10 rounded-full"
+                                                    @if ($item->moder_image)
+                                                    <img class="hidden sm:block w-10 h-10 rounded-full"
                                                         src="/uploads/moderator_images/{{ $item->moder_image }}"
                                                         alt="Jese image">
+                                                @else
+                                                    <img class="hidden sm:block w-10 h-10 rounded-full"
+                                                        src="https://cspi.uz/storage/app/media/2023/avgust/i.webp"
+                                                        alt="Jese image">
+                                                @endif
                                                     <div class="ps-3">
                                                         <div class="text-base font-semibold">
                                                             {{ substr($item->moder_fish, 0, strpos($item->moder_fish, ' ', strpos($item->moder_fish, ' ') + 1)) }}
@@ -92,12 +98,14 @@
                                                 <td class="px-6 py-4">
                                                     <div class="flex items-center">
                                                         @if ($item->moder_status == 1)
-                                                            <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2">
-                                                            </div> Aktiv!
-                                                        @else
-                                                            <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2">
-                                                            </div> Aktiv emas!
-                                                        @endif
+                                                        <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2">
+                                                        </div> 
+                                                        <p class="hidden sm:block">Aktiv!</p>
+                                                    @else
+                                                        <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2">
+                                                        </div> 
+                                                        <p class="hidden sm:block">Aktiv emas!</p>
+                                                    @endif
                                                     </div>
                                                 </td>
     
@@ -118,14 +126,20 @@
                                     <div id="accordion-color-body-{{ $item->id }}" class="hidden"
                                         aria-labelledby="accordion-color-heading-{{ $item->id }}">
                                         <div
-                                            class="p-5 border border-b-1 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+                                            class="py-5 sm:px-2 md:px-4 lg:px-4 border border-b-1 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
                                             <div class="flex justify-center">
-                                                <img class="w-20 mr-8 h-20 rounded"
-                                                    style="object-fit: cover; object-position: 50% 50%;"
-                                                    src="/uploads/moderator_images/{{ $item->moder_image }}"
-                                                    alt="{{$item->moder_fish}}">
+                                                 @if ($item->moder_image)
+                                                 <img class="w-20 mr-8 h-20 rounded image_moder"
+                                                 style="object-fit: cover; object-position: 50% 50%;"
+                                                 src="/uploads/moderator_images/{{ $item->moder_image }}"
+                                                 alt="{{ $item->moder_fish }}">
+                                                @else
+                                                    <img class="hidden sm:block w-10 h-10 rounded-full"
+                                                        src="https://cspi.uz/storage/app/media/2023/avgust/i.webp"
+                                                        alt="Jese image">
+                                                @endif
     
-                                                <p class="mb-2  text-gray-500 dark:text-gray-400 ">
+                                                <p class="mb-2 p-3 text-gray-500 dark:text-gray-400 ">
                                                 <p class="text-gray-500 text-xl mt-6 dark:text-gray-400">Moderator <b>
                                                         <span
                                                             class="bg-green-100 text-green-800 text-m font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{ $item->moder_fish }}</span></b>ga
@@ -148,7 +162,7 @@
     
                                             <p class="text-gray-500 dark:text-gray-400">Moderator tomonidan
                                                 yuklangan fayllar va ularga qo'yilgan ballar:</p>
-                                            <div class="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+                                            <div class="px-1 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
                                                 <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                                     <ul role="list"
                                                         class="divide-y divide-gray-100 rounded-md border border-gray-200">
@@ -210,33 +224,41 @@
                                                                             №{{ $loop->iteration }}
                                                                         </div>
                                                                     </td>
-                                                                    <th scope="row "
-                                                                        class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-    
-                                                                        <div class="ps-3" style="min-width: 500px">
-                                                                            <div class="text-base font-semibold">
-                                                                                {{ $items->oper_fish }}
-                                                                            </div>
-                                                                            <div class="font-normal text-gray-500">
-                                                                                {{ str_pad(substr($items->oper_slug_number, 0, -3), strlen($items->oper_slug_number), '*', STR_PAD_RIGHT) }}
-                                                                            </div>
-    
+                                                                    <th scope="row"
+                                                                    class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+
+                                                                    <div class="ps-3 md:min-w-0 custom-min-width-lg">
+                                                                        <div class="text-base font-semibold">
+                                                                            {{ $items->oper_fish }}
                                                                         </div>
-                                                                    </th>
+                                                                        <div class="font-normal text-gray-500">
+                                                                            {{ str_pad(substr($items->oper_slug_number, 0, -3), strlen($items->oper_slug_number), '*', STR_PAD_RIGHT) }}
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <style>
+                                                                        @media (min-width: 1024px) { /* lg breakpoint uchun */
+                                                                          .custom-min-width-lg {
+                                                                            min-width: 500px;
+                                                                          }
+                                                                        }
+                                                                        </style>
+                                                                    
+                                                                </th>
                                                                     <td class="px-6 py-4">
                                                                         Ball: {{$items->oper_custom_ball}}
                                                                     </td>
                                                                     <td class="px-6 py-4">
                                                                         <div class="flex items-center">
                                                                             @if ($items->oper_status)
-                                                                                <div
-                                                                                    class="h-2.5 w-2.5 rounded-full bg-green-500 me-2">
-                                                                                </div> Aktiv
-                                                                            @else
-                                                                                <div
-                                                                                    class="h-2.5 w-2.5 rounded-full bg-red-500 me-2">
-                                                                                </div> Aktiv emas
-                                                                            @endif
+                                                                            <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2">
+                                                                            </div> 
+                                                                            <p class="hidden sm:block">Aktiv!</p>
+                                                                        @else
+                                                                            <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2">
+                                                                            </div> 
+                                                                            <p class="hidden sm:block">Aktiv emas!</p>
+                                                                        @endif
                                                                         </div>
                                                                     </td>
                                                                     <td class="px-6 py-4">
@@ -257,7 +279,7 @@
                                                             class="hidden mb-5"
                                                             aria-labelledby="accordion-nested-collapse-heading-{{ $items->id }}">
                                                             <div
-                                                                class="p-5 border border-b-0 border-gray-200 dark:border-gray-700">
+                                                                class="py-5 px-2 border border-b-0 border-gray-200 dark:border-gray-700">
                                                                 <p class="text-gray-500 dark:text-gray-400">
                                                                 <blockquote
                                                                     class="p-4 my-4 border-s-4 text-md border-gray-300 bg-gray-50 dark:border-gray-500 dark:bg-gray-800">
