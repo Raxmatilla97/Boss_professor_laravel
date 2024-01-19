@@ -163,9 +163,9 @@
                                                         {{-- {{ substr($item->moder_fish, 0, strpos($item->moder_fish, ' ', strpos($item->moder_fish, ' ') + 1)) }} --}}
                                                         {{ $item->moder_fish }}
                                                     </div>
-                                                    <div class="font-normal text-gray-500">
+                                                    {{-- <div class="font-normal text-gray-500">
                                                         {{ str_pad(substr($item->moder_slug_number, 0, -3), strlen($item->moder_slug_number), '*', STR_PAD_RIGHT) }}
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </th>
 
@@ -294,9 +294,9 @@
                                                                         <div class="text-base font-semibold">
                                                                             {{ $items->oper_fish }}
                                                                         </div>
-                                                                        <div class="font-normal text-gray-500">
+                                                                        {{-- <div class="font-normal text-gray-500">
                                                                             {{ str_pad(substr($items->oper_slug_number, 0, -3), strlen($items->oper_slug_number), '*', STR_PAD_RIGHT) }}
-                                                                        </div>
+                                                                        </div> --}}
                                                                     </div>
 
                                                                     <style>
