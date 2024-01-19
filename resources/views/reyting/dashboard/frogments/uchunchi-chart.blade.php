@@ -26,7 +26,7 @@
                         d="M5 13V1m0 0L1 5m4-4 4 4" />
                 </svg>    
 
-                {{ "+" . floor($percentageChange) . "%" }}
+                {{ "+" . round($percentageChange, 2) . "%" }}
             </span>
                 @else
                 <span
