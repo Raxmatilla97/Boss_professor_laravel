@@ -149,29 +149,46 @@
                                 @endforeach
                             </ul>
                             <style>
-                                /* Tablet uchun max-width: 768px gacha bo'lgan ekranlar uchun qoidalar */
-                                @media (max-width: 768px) {
-                                  .moderator-content {
-                                    max-width: 100%; /* Kenglik ekran kengligini to'ldiradi */
-                                    min-width: 0; /* Min-width ni bekor qiladi */
-                                    width: auto; /* Avtomatik kenglikni belgilaydi */
-                                  }
-                                }
-                              
-                                /* Mobil qurilmalar uchun max-width: 480px gacha bo'lgan ekranlar uchun qoidalar */
-                                @media (max-width: 480px) {
-                                  .moderator-content {
-                                    max-width: 100%;
-                                    min-width: 0;
-                                    width: auto;
-                                  }
-                                }
+                            /* Asosiy stil qoidalari */
+.moderator-content {
+  display: none; /* Boshlang'ich holatda kontentni yashirish */
+  /* Boshqa kerakli stil qoidalari */
+}
+
+/* Katta ekranlar uchun stil qoidalarini belgilaymiz (masalan, keng ekranli monitörler) */
+@media (min-width: 1200px) {
+  .moderator-content {
+    width: 790px; /* Katta ekranlar uchun statik kenglik */
+  }
+}
+
+/* O'rta o'lchamdagi ekranlar uchun (masalan, gorizontal holatdagi tablet yoki kichikroq monitörler) */
+@media (max-width: 1199px) {
+  .moderator-content {
+    width: 75%; /* O'rta ekranlar uchun kontent kengligi */
+  }
+}
+
+/* Kichik ekranlar uchun (masalan, vertikal holatdagi tablet yoki katta smartfonlar) */
+@media (max-width: 991px) {
+  .moderator-content {
+    width: 85%; /* Kichik ekranlar uchun kontent kengligi */
+  }
+}
+
+/* Eng kichik ekranlar uchun (masalan, smartfonlar) */
+@media (max-width: 767px) {
+  .moderator-content {
+    width: 95%; /* Eng kichik ekranlar uchun kontent kengligi */
+  }
+}
+                                
                               </style>  
                             <!-- Content for each tab -->
                             @foreach ($item->moderator as $moderator)
                                 <div id="Moderator{{ $moderator->id }}"
                                     class="moderator-content p-6 bg-gray-50 text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg mx-auto"
-                                    style="display: none; max-width: 790px; min-width: 790px;">
+                                    style="display: none;">
                                     <div class="flex justify-center pb-8">
                                         @if ($moderator->moder_image)
                                             <img style="width: 300px; height: 300px; object-fit: cover; object-position: 50% 50%;"
