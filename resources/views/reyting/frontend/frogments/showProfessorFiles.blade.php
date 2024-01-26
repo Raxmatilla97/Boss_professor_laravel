@@ -1,6 +1,17 @@
+<style>
+    @media only screen and (max-width: 600px) {
+    .svg {
+        display: none;
+    
+    }
+    .data {
+        display: none;
+    }
+}
+</style>
 <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
     <div class="flex w-0 mr-3 flex-1 items-center">
-        <svg class="w-6 h-6 sm:hidden text-gray-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+        <svg class="w-6 h-6 svg text-gray-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
             fill="none" viewBox="0 0 20 19">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M15 15h.01M4 12H2a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-3M9.5 1v10.93m4-3.93-4 4-4-4" />
@@ -38,7 +49,7 @@
                         class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300"><a target="_blank" href="{{$files_or_urls->site_url}}">WEB</a></span>
                 @endif
             </span>
-            <span class="flex-shrink-0 text-gray-400">{{ $files_or_urls->created_at->format('d-M-Y') }}</span>
+            <span class="flex-shrink-0 data text-gray-400">{{ $files_or_urls->created_at->format('d-M-Y') }}</span>
         </div>
     </div>
     <style>
