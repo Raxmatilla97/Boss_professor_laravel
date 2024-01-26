@@ -22,6 +22,7 @@ class IndexController extends Controller
     {
         $professors = Professor::with(['moderator.files', 'moderator.operator.files'])
             ->orderBy('created_at', 'desc')
+            ->where('status', 1)
             ->paginate(8);
 
         $this->calculateProfessorsPoints($professors);

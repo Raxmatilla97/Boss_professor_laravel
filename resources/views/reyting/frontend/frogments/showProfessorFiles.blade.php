@@ -23,8 +23,8 @@
 
                         @if (isset($files_or_urls->site_url))
                             <span
-                                class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300"><a href="/storage/upload/files/{{ $files_or_urls->filename }}">{{ '' . strtoupper($extension) }}</a>
-                                + <a href="{{$files_or_urls->site_url}}">WEB</a> </span>
+                                class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300"><a target="_blank" href="/storage/upload/files/{{ $files_or_urls->filename }}">{{ '' . strtoupper($extension) }}</a>
+                                + <a target="_blank" href="{{$files_or_urls->site_url}}">WEB</a> </span>
                         @else
                             <span
                                 class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">{{ '' . strtoupper($extension) }}</span>
@@ -35,7 +35,7 @@
                 @else
                     {{-- {{ strlen($files_or_urls->site_url) > 15 ? substr(str_replace(['www.', 'http://', 'https://'], '', $files_or_urls->site_url), 0, 15) . '...' : $files_or_urls->site_url }} --}}
                     <span
-                        class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300"><a href="{{$files_or_urls->site_url}}">WEB</a></span>
+                        class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300"><a target="_blank" href="{{$files_or_urls->site_url}}">WEB</a></span>
                 @endif
             </span>
             <span class="flex-shrink-0 text-gray-400">{{ $files_or_urls->created_at->format('d-M-Y') }}</span>
