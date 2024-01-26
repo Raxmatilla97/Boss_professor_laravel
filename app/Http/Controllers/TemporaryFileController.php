@@ -34,7 +34,7 @@ class TemporaryFileController extends Controller
 
         if ($request->hasFile('document')) {
             $file = $request->file('document');
-            $destinationPath = '/upload/files'; // Yuklash uchun yangi yo'l
+            $destinationPath = '/public/upload/files'; // Yuklash uchun yangi yo'l
 
             $randomNumber = random_int(10000000000000000, 99999999999999999); // 10 xonali unikal raqam
             $filename = $randomNumber . '.' . $file->getClientOriginalExtension(); // Kengaytmani saqlab qolish bilan birga yangi fayl nomi 

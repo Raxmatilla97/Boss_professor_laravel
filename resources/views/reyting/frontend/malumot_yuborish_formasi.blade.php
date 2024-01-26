@@ -140,14 +140,8 @@
 
             // Set options
             FilePond.setOptions({
-                acceptedFileTypes: [
-                    
-                    'application/pdf',
-                    'application/msword',
-                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                    'application/x-zip-compressed',
-                    'application/x-rar-compressed',
-                   
+                acceptedFileTypes: [                    
+                    'application/pdf'  
                 ],
                 server: {
                     process: {

@@ -15,16 +15,16 @@
                     @endphp
 
                     @if (in_array($extension, $allowedExtensions))
-                        @if (strlen($filename) > 10)
+                        {{-- @if (strlen($filename) > 10)
                             {{ substr($filename, 0, 10) . '...' }}
                         @else
                             {{ $filename }}
-                        @endif
+                        @endif --}}
 
                         @if (isset($files_or_urls->site_url))
                             <span
-                                class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">{{ '' . strtoupper($extension) }}
-                                + WEB </span>
+                                class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300"><a href="/storage/upload/files/{{ $files_or_urls->filename }}">{{ '' . strtoupper($extension) }}</a>
+                                + <a href="{{$files_or_urls->site_url}}">WEB</a> </span>
                         @else
                             <span
                                 class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">{{ '' . strtoupper($extension) }}</span>
@@ -33,23 +33,55 @@
                         {{ $files_or_urls->filename }}
                     @endif
                 @else
-                    {{ strlen($files_or_urls->site_url) > 15 ? substr(str_replace(['www.', 'http://', 'https://'], '', $files_or_urls->site_url), 0, 15) . '...' : $files_or_urls->site_url }}
+                    {{-- {{ strlen($files_or_urls->site_url) > 15 ? substr(str_replace(['www.', 'http://', 'https://'], '', $files_or_urls->site_url), 0, 15) . '...' : $files_or_urls->site_url }} --}}
                     <span
-                        class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300">WEB</span>
+                        class="bg-indigo-100 text-indigo-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-indigo-900 dark:text-indigo-300"><a href="{{$files_or_urls->site_url}}">WEB</a></span>
                 @endif
             </span>
             <span class="flex-shrink-0 text-gray-400">{{ $files_or_urls->created_at->format('d-M-Y') }}</span>
         </div>
     </div>
-    <div class="mr-12 flex-shrink-0 items-start">
-        <span data-tooltip-target="tooltip-mavzu"
-            class="bg-blue-100 text-blue-800 text-center text-sm font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">{{ substr($files_or_urls->category_name, 0, 70) . '...' }}</span>
+    <style>
+        @media (max-width: 772px) {
+            .my-div {
+                display: none !important; /* !important bilan o'zgartirishni kuchaytiramiz */
+            }
+        }
+    
+        @media (min-width: 1200px) {
+            .my-div {
+                max-width: 50%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: flex;
+            }
+        }
+    
+        @media (max-width: 1199px) {
+            .my-div {
+                max-width: 40%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: flex;
+            }
+        }
 
-        <div id="tooltip-mavzu" role="tooltip"
-            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            {{ $files_or_urls->category_name }}
-            <div class="tooltip-arrow" data-popper-arrow></div>
-        </div>
+        @media (max-width: 1000px) {
+            .my-div {
+                max-width: 30%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: flex;
+                font-size: 8px;
+            }
+        }
+    </style>
+    <div class="mr-12  my-div flex-shrink-0 items-start" >
+        {{-- <span data-tooltip-target="tooltip-mavzu"
+            class="bg-blue-100 text-blue-800 text-center text-sm font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">{{ substr($files_or_urls->category_name, 0, 70) . '...' }}</span> --}}
+            <span 
+            class="bg-blue-100 text-blue-800 text-center text-sm font-sm me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">{{$files_or_urls->category_name}}</span>
+       
 
 
     </div>

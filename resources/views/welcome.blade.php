@@ -49,13 +49,13 @@
             <div class="bg-white p-5 rounded shadow-lg relative">
 
                 <img src="{{ '/uploads/professor_images' }}/{{ $item->image }}" alt="{{ $item->fish }}"
-                class="w-full h-auto object-cover mb-4 rounded">
+                class="w-full h-auto object-cover mb-4 rounded" style="width: 100%; height: 433px; object-fit: cover;">
             <span
                 class="absolute top-6 left-6 px-2 py-1 text-md font-semibold text-white uppercase bg-blue-600 rounded">
                 Ball: {{ $item->custom_ball }}
             </span>
             <h3 class="text-xl md:text-2xl font-bold mb-2">{{ $item->fish }}</h3>
-            <p class="text-gray-700 text-sm md:text-base">
+            <p class="text-gray-700 text-sm md:text-base" style="min-height: 40px;">
                 <span class="font-medium">Mavzu:</span> {{ $item->small_info }}
             </p>
             <div class="flex flex-col space-y-2 mt-5 justify-between sm:flex-row sm:space-y-0 sm:space-x-4 md:text-sm lg:text-base">

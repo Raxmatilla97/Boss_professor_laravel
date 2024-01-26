@@ -3807,7 +3807,7 @@
         labelThousandsSeparator: [getThousandsSeparator(), Type.STRING], // Default is locale separator
 
         labelIdle: [
-            'Bitadan ortiq hujjatlaringiz bo\'lsa arxivlab (zip, rar) holatida yuklang! <span class="filepond--label-action"> Max: 5MB</span>',
+            'PDF formatidagi fayilingizni yuklang! <span class="filepond--label-action"> Max: 5MB</span>',
             Type.STRING,
         ],
 
