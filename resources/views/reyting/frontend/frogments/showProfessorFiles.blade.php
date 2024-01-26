@@ -98,7 +98,7 @@
         </span>
     </div>
 
-    <div class="mr-2 flex-shrink-0" style="    min-width: 150px;">
+    <div class="mr-2 flex-shrink-0" style="    min-width: 105px;">
         @if ($files_or_urls->ariza_holati == 'maqullandi')
             <span
                 class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Maqullangan!</span>
@@ -108,8 +108,7 @@
                 etilgan!</span>
         @else
             <span
-                class="bg-purple-100 text-purple-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300">Ko'rib
-                chiqilmoqda!</span>
+                class="bg-purple-100 text-purple-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300">Tekshiruvda!</span>
         @endif
     </div>
 </li>
