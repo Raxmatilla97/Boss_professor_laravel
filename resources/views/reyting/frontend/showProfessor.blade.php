@@ -63,7 +63,7 @@
                                 src="{{ '/uploads/professor_images' }}/{{ $professor->image }}" alt="Extra large avatar">
                         </div>
 
-
+{{-- dddd --}}
 
                         <div class="mt-6 border-t border-gray-100">
                             <dl class="divide-y divide-gray-100">
