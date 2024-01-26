@@ -76,7 +76,7 @@
             }
         }
     </style>
-    <div class="mr-12  my-div flex-shrink-0 items-start" >
+    <div class="mr-6  my-div flex-shrink-0 items-start" >
         {{-- <span data-tooltip-target="tooltip-mavzu"
             class="bg-blue-100 text-blue-800 text-center text-sm font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">{{ substr($files_or_urls->category_name, 0, 70) . '...' }}</span> --}}
             <span 
@@ -86,7 +86,7 @@
 
     </div>
 
-    <div class="mr-6 flex-shrink-0">
+    <div class="mr-3 flex-shrink-0">
         <span
             class="bg-blue-100 text-blue-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Ball:
             @if (empty($files_or_urls->points))
@@ -108,7 +108,7 @@
                 etilgan!</span>
         @else
             <span
-                class="bg-purple-100 text-purple-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300">Tekshiruvda!</span>
+                class="bg-purple-100 text-purple-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300">Tekshiruvda    !</span>
         @endif
     </div>
 </li>
