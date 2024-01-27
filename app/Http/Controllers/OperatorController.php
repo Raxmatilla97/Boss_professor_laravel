@@ -200,9 +200,13 @@ class OperatorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Operator $operator)
+    public function destroy($id)
     {
-        //
+       
+        $operator = Operator::where('id', $id)->firstOrFail();
+        $operator->delete();
+
+        return redirect()->route('professors.edit', $operator->moderator->professor->slug_number)->with('toaster', ['success', "Operator o'chirildi!"]);
     }
     
     public function list(Operator $operator, Request $request)
