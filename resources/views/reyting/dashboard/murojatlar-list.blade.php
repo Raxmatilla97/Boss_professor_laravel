@@ -6,6 +6,11 @@
 
     </x-slot>
 
+    
+    {{-- Sahifada yangilanish qilganda o'ng tarafda chiqadigan bildirishnoma --}}
+    @include('reyting.dashboard.professor.frogments.edit.toaster')
+
+    
     <div class="py-1 mt-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 

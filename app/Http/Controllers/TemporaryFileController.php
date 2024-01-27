@@ -303,4 +303,12 @@ class TemporaryFileController extends Controller
         return redirect()->back()->with('success', 'Ma\'lumot muvaffaqiyatli saqlandi');
     }
 
+    public function destroy($fileId)
+    {       
+        $file = TemporaryFile::where('id', $fileId)->firstOrFail();
+        $file->delete();
+
+        return redirect()->route('murojatlar.list')->with('toaster', ['success', "Murojaat o'chirildi!"]);
+    }
+
 }

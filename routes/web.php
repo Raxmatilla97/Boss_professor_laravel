@@ -74,9 +74,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/operatorlar-list/{name?}', [OperatorController::class, 'list'])->name('operator.list');
 
     Route::get('/murojatlar-list/{name?}', [TemporaryFileController::class, 'list'])->name('murojatlar.list');
-    Route::get('/murojatni-korish/{name?}', [TemporaryFileController::class, 'show'])->name('murojatlar.show');
+    Route::get('/murojatni-korish/{name?}', [TemporaryFileController::class, 'show'])->name('murojatlar.show');    
 
     Route::post('/murojatni-tasdiqlash', [TemporaryFileController::class, 'murojatniTasdiqlash'])->name('murojatlar.murojatniTasdiqlash');
+
+    Route::delete('/murojatni-ochirish/{id}', [TemporaryFileController::class, 'destroy'])->name('murojaat.destroy');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 

@@ -39,6 +39,12 @@
                         {{ __("Kelib tushgan murojaatlar") }}
                     </x-nav-link>
                 </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex bg-blue-800">
+                    <x-nav-link :href="route('site.index')" :active="request()->routeIs('site.index')" class="text-white hover:text-white   ">
+                        {{ __("Sahifa") }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
@@ -108,6 +114,10 @@
 
             <x-responsive-nav-link :href="route('murojatlar.list')" :active="request()->routeIs('murojatlar.list')">
                 {{ __("Kelib tushgan murojaatlar") }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('site.index')" :active="request()->routeIs('site.index')">
+                {{ __("Sahifa") }}
             </x-responsive-nav-link>
 
         </div>
