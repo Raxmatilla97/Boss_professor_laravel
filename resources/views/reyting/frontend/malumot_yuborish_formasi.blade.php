@@ -23,6 +23,7 @@
                             enctype="multipart/form-data">
                             @csrf
 
+                            <input type="hidden" name="slug_number" value="{{ $user_info['slug_number'] }}">
                             <input type="hidden" name="position" value="{{ $user_info['position'] }}">
                             <input type="hidden" name="user_id" value="{{ $user_info['id'] }}">
                             <div class="md:space-y-2 mb-3">

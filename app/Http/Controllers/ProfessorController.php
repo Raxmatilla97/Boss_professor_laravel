@@ -47,7 +47,8 @@ class ProfessorController extends Controller
             "fish" => "required|string|min:5|max:100",
             "image" => "required|mimes:png,jpg,jpeg|max:3024",
             "status" => "boolean",
-            'small_info' => 'nullable|string'
+            'small_info' => 'nullable|string',
+            'small_info2' => 'nullable|string'
         ], [
             'fish.required' => 'F.I.SH maydoni majburiy.',
             'fish.string' => 'F.I.SH  maydoni matn bo\'lishi kerak.',
@@ -56,7 +57,8 @@ class ProfessorController extends Controller
             'image.required' => 'Rasm majburiy! rasm joylashingiz kerak.',
             'image.mimes' => 'Rasm png, jpg, jpeg turlaridan biri bo\'lishi kerak.',
             'image.max' => 'Rasm :max kilobaytdan katta bo\'lmasligi kerak.',            
-            'small_info.string' => 'Kordinator haqida ma\'lumot maydoni matn bo\'lishi kerak.',
+            'small_info.string' => 'Kordinator mavzusi maydoni matn bo\'lishi kerak.',
+            'small_info2.string' => 'Kordinator mavzusi muommolari maydoni matn bo\'lishi kerak.',
         ]);
     
         $tempPath = $request->image->path(); // Temp fayl joylashuvi
@@ -85,6 +87,7 @@ class ProfessorController extends Controller
             'image' => $fileName,
             'status' => $validated['status'] ?? 0,
             'small_info' => $validated['small_info'],
+            'small_info2' => $validated['small_info2'],
             'slug_number' => $slug_number
         ]);
     
@@ -159,7 +162,8 @@ class ProfessorController extends Controller
             "fish" => "required|string|min:5|max:100",
             "image" => "nullable|mimes:png,jpg,jpeg|max:3024",
             "status" => "boolean",
-            'small_info' => 'nullable|string'
+            'small_info' => 'nullable|string',
+            'small_info2' => 'nullable|string'
         ], [
             'fish.required' => 'F.I.SH maydoni majburiy.',
             'fish.string' => 'F.I.SH  maydoni matn bo\'lishi kerak.',
@@ -168,7 +172,8 @@ class ProfessorController extends Controller
             'image.required' => 'Rasm majburiy! rasm joylashingiz kerak.',
             'image.mimes' => 'Rasm png, jpg, jpeg turlaridan biri bo\'lishi kerak.',
             'image.max' => 'Rasm :max kilobaytdan katta bo\'lmasligi kerak.',            
-            'small_info.string' => 'Kordinator haqida ma\'lumot maydoni matn bo\'lishi kerak.',
+            'small_info.string' => 'Kordinator mavzusi maydoni matn bo\'lishi kerak.',
+            'small_info2.string' => 'Kordinator mavzusi muommolari maydoni matn bo\'lishi kerak.',
         ]);
 
         $status = $validated['status'] ?? 0;

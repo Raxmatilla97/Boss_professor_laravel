@@ -19,6 +19,7 @@ return new class extends Migration
             $table->boolean('status')->nullable();
             $table->integer('custom_ball')->nullable();
             $table->text('small_info')->nullable();
+            $table->text('small_info2')->nullable();
             $table->timestamps();
         });
     }

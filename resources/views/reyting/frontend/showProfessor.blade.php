@@ -82,7 +82,7 @@
                                     </dd>
                                 </div>
                                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                    <dt class="text-md font-medium leading-6 text-gray-900">Ilmiy yo‘nalish nomi</dt>
+                                    <dt class="text-md font-medium leading-6 text-gray-900">Ilmiy yo‘nalish mavzusi nomi</dt>
                                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                                         <blockquote class="text-xl italic font-semibold text-gray-900 dark:text-white">
                                             <svg class="w-8 h-8 text-gray-400 dark:text-gray-600 mb-4" aria-hidden="true"
@@ -90,8 +90,15 @@
                                                 <path
                                                     d="M6 0H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3H2a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Zm10 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3h-1a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Z" />
                                             </svg>
-                                            <p>"{{ $professor->small_info }} "</p>
+                                            "{{ $professor->small_info }}" 
                                         </blockquote>
+                                    </dd>
+                                </div>
+
+                                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt class="text-md font-medium leading-6 text-gray-900">Ilmiy yo‘nalish mavzusi muommolari</dt>
+                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                        <p class="text-md italic font-semibold text-gray-900 dark:text-white">{{ $professor->small_info2 }} </p>
                                     </dd>
                                 </div>
 

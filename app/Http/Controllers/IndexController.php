@@ -43,7 +43,7 @@ class IndexController extends Controller
      */
     public function store(Request $request)
     {
-
+        // Inputlardan kelgan ma'lumotni tekshirish validatsiya qismi
         $validated = $this->validate($request, [
             "category_name" => "required|max:100",
             "user_id" => "required",
@@ -66,10 +66,16 @@ class IndexController extends Controller
         // 'user_id' ni 'user_position' asosida o'zgartirish
         $variableName = strtolower($userPosition) . '_id';
 
+        // Agarda murojaat qabul bo'lsa bu haqda xabar beradigan text ma'zmuni
         $infogramma = "Siz yuborgan murojat qabul qilindi va u tez kunda ko'rib chiqiladi.";
 
+        // Murojaat qabul bo'lgach yana murojaat yuborishni so'raganda kerak bo'ladigan number_slugni olish kodi
+        $number_slug = $request->slug_number;
+       
+        // Murojatda fayl yuklangan yoki yuklanmaganligiga qarab uni qabul qilish shartlari 
         if (empty($request->document)) {
 
+            // Agarda requestda document nomi kelmasa demak fayl yuklanmagan holda kelganligini bildiradi va u yaratiladi va user_id birlashtiriladi
             $request_create = TemporaryFile::create([
                 'category_name' => $validated['category_name'],
                 'site_url' => $validated['site_url'],
@@ -78,26 +84,35 @@ class IndexController extends Controller
                 'filename' => null,
                 'folder' => null
             ]);
-
-            return redirect()->route('site.index')->with('success', $infogramma);
+          
+            return redirect()->route('site.index')->with([
+                'success' => $infogramma,
+                'number_slug' => $number_slug
+            ]);
 
         } else {
 
+            // Agarda documentda nimadur kelgan bo'lsa demak fayl yuklangan va u faylni birinchi qidirib topib so'ng murojaatga biriktiriladi!
             $faylni_qidirish = TemporaryFile::where('filename', $request->document)->first();
 
             if ($faylni_qidirish) {
 
+                // Fayl TemporaryFile dan chiqsa, murojaat yangilanadi va user id birlashtiriladi
                 $faylni_qidirish->update([
                     'category_name' => $validated['category_name'],
                     'site_url' => $validated['site_url'],
                     $variableName => $validated['user_id'],
                     'ariza_holati' => "kutulmoqda"
                 ]);
-
-                return redirect()->route('site.index')->with('success', $infogramma);
+              
+                return redirect()->route('site.index')->with([
+                    'success' => $infogramma,
+                    'number_slug' => $number_slug
+                ]);
 
             } else {
 
+                // Agarda if shartida fayl topilmasa bu haqda xabar beriladi!
                 return redirect()->back()->with('error', "Fayl yuklangandan keyin uni qaytib DB dan topish imkoni bo'lmadi!");
             }
 
@@ -147,6 +162,7 @@ class IndexController extends Controller
             if ($professor) {
                 $user_info = [
                     'id' => $professor->id,
+                    'slug_number' => $professor->slug_number,
                     'fish' => $professor->fish,
                     'position' => "Professor",
                     'theme' => $professor->small_info,
@@ -158,6 +174,7 @@ class IndexController extends Controller
             } elseif ($moderator) {
                 $user_info = [
                     'id' => $moderator->id,
+                    'slug_number' => $moderator->moder_slug_number,
                     'fish' => $moderator->moder_fish,
                     'position' => "Moderator",
                     'theme' => $moderator->moder_small_info,
@@ -169,6 +186,7 @@ class IndexController extends Controller
             } elseif ($operator) {
                 $user_info = [
                     'id' => $operator->id,
+                    'slug_number' => $operator->oper_slug_number,
                     'fish' => $operator->oper_fish,
                     'position' => "Operator",
                     'theme' => $operator->oper_small_info,

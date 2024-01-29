@@ -28,13 +28,26 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div> 
                     <div class="items-center px-4 py-3">
+
+                        <form action="{{ route('site.kirishUchunSlugQidirish') }}" method="POST" class="mb-4">
+                            @csrf
+                            <input type="hidden" name="code" value="{{session('number_slug')}}">
+                            <button type="submit"
+                                class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                                Yana murojaat yuborish
+                            </button>
+                        </form>
+
                         <button id="close-modal"
                             onclick="document.getElementById('notification-modal').style.display='none'"
                             class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md w-5/12 shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">
                             Yoping
                         </button>
+                      
+                     
+
                     </div>
                 </div>
             </div>
@@ -49,23 +62,26 @@
             <div class="bg-white p-5 rounded shadow-lg relative">
 
                 <img src="{{ '/uploads/professor_images' }}/{{ $item->image }}" alt="{{ $item->fish }}"
-                class="w-full h-auto object-cover mb-4 rounded" style="width: 100%; height: 433px; object-fit: cover;">
-            <span
-                class="absolute top-6 left-6 px-2 py-1 text-md font-semibold text-white uppercase bg-blue-600 rounded">
-                Ball: {{ $item->custom_ball }}
-            </span>
-            <h3 class="text-xl md:text-2xl font-bold mb-2">{{ $item->fish }}</h3>
-            <p class="text-gray-700 text-sm md:text-base" style="min-height: 40px;">
-                <span class="font-medium">Mavzu:</span> {{ $item->small_info }}
-            </p>
-            <div class="flex flex-col space-y-2 mt-5 justify-between sm:flex-row sm:space-y-0 sm:space-x-4 md:text-sm lg:text-base">
-                <button onclick="toggleModal({{ $item->id }})"
-                    class="bg-blue-500 text-white px-4 py-2 rounded w-full md:px-3 md:py-1 lg:px-4 lg:py-2">Moderatorlar ro'yxati</button>
-                <a href="{{ route('show.index', $item->slug_number) }}"
-                    class="bg-green-500 text-center text-white px-4 py-2 rounded w-full md:px-3 md:py-1 lg:px-4 lg:py-2">To'liq ko'rish</a>
-            </div>
-            
-            
+                    class="w-full h-auto object-cover mb-4 rounded" style="width: 100%; height: 433px; object-fit: cover;">
+                <span
+                    class="absolute top-6 left-6 px-2 py-1 text-md font-semibold text-white uppercase bg-blue-600 rounded">
+                    Ball: {{ $item->custom_ball }}
+                </span>
+                <h3 class="text-xl md:text-2xl font-bold mb-2">{{ $item->fish }}</h3>
+                <p class="text-gray-700 text-sm md:text-base" style="min-height: 40px;">
+                    <span class="font-medium">Mavzu:</span> {{ $item->small_info }}
+                </p>
+                <div
+                    class="flex flex-col space-y-2 mt-5 justify-between sm:flex-row sm:space-y-0 sm:space-x-4 md:text-sm lg:text-base">
+                    <button onclick="toggleModal({{ $item->id }})"
+                        class="bg-blue-500 text-white px-4 py-2 rounded w-full md:px-3 md:py-1 lg:px-4 lg:py-2">Moderatorlar
+                        ro'yxati</button>
+                    <a href="{{ route('show.index', $item->slug_number) }}"
+                        class="bg-green-500 text-center text-white px-4 py-2 rounded w-full md:px-3 md:py-1 lg:px-4 lg:py-2">To'liq
+                        ko'rish</a>
+                </div>
+
+
                 <style>
                     @media only screen and (max-width: 768px) {
                         .space-x-8.mt-5.flex {
@@ -79,7 +95,7 @@
                             /* Elementlar orasidagi masofa */
                         }
 
-                       
+
                     }
 
                     /* Mobil qurilmalar uchun (masalan, 600px dan kichikroq ekranlar uchun) */
@@ -106,7 +122,7 @@
                             /* Ekran o'lchamiga mos, biroz kengroq */
                             min-width: 0;
                             /* Min-width o'chirilgan */
-                           
+
                         }
                     }
 
@@ -149,41 +165,45 @@
                                 @endforeach
                             </ul>
                             <style>
-                            /* Asosiy stil qoidalari */
-.moderator-content {
-  display: none; /* Boshlang'ich holatda kontentni yashirish */
-  /* Boshqa kerakli stil qoidalari */
-}
+                                /* Asosiy stil qoidalari */
+                                .moderator-content {
+                                    display: none;
+                                    /* Boshlang'ich holatda kontentni yashirish */
+                                    /* Boshqa kerakli stil qoidalari */
+                                }
 
-/* Katta ekranlar uchun stil qoidalarini belgilaymiz (masalan, keng ekranli monitörler) */
-@media (min-width: 1200px) {
-  .moderator-content {
-    width: 790px; /* Katta ekranlar uchun statik kenglik */
-  }
-}
+                                /* Katta ekranlar uchun stil qoidalarini belgilaymiz (masalan, keng ekranli monitörler) */
+                                @media (min-width: 1200px) {
+                                    .moderator-content {
+                                        width: 790px;
+                                        /* Katta ekranlar uchun statik kenglik */
+                                    }
+                                }
 
-/* O'rta o'lchamdagi ekranlar uchun (masalan, gorizontal holatdagi tablet yoki kichikroq monitörler) */
-@media (max-width: 1199px) {
-  .moderator-content {
-    width: 75%; /* O'rta ekranlar uchun kontent kengligi */
-  }
-}
+                                /* O'rta o'lchamdagi ekranlar uchun (masalan, gorizontal holatdagi tablet yoki kichikroq monitörler) */
+                                @media (max-width: 1199px) {
+                                    .moderator-content {
+                                        width: 75%;
+                                        /* O'rta ekranlar uchun kontent kengligi */
+                                    }
+                                }
 
-/* Kichik ekranlar uchun (masalan, vertikal holatdagi tablet yoki katta smartfonlar) */
-@media (max-width: 991px) {
-  .moderator-content {
-    width: 85%; /* Kichik ekranlar uchun kontent kengligi */
-  }
-}
+                                /* Kichik ekranlar uchun (masalan, vertikal holatdagi tablet yoki katta smartfonlar) */
+                                @media (max-width: 991px) {
+                                    .moderator-content {
+                                        width: 85%;
+                                        /* Kichik ekranlar uchun kontent kengligi */
+                                    }
+                                }
 
-/* Eng kichik ekranlar uchun (masalan, smartfonlar) */
-@media (max-width: 767px) {
-  .moderator-content {
-    width: 95%; /* Eng kichik ekranlar uchun kontent kengligi */
-  }
-}
-                                
-                              </style>  
+                                /* Eng kichik ekranlar uchun (masalan, smartfonlar) */
+                                @media (max-width: 767px) {
+                                    .moderator-content {
+                                        width: 95%;
+                                        /* Eng kichik ekranlar uchun kontent kengligi */
+                                    }
+                                }
+                            </style>
                             <!-- Content for each tab -->
                             @foreach ($item->moderator as $moderator)
                                 <div id="Moderator{{ $moderator->id }}"

@@ -20,7 +20,8 @@ class Professor extends Model
         'status',
         'custom_ball',
         'small_info',
-        'slug_number'
+        'slug_number',
+        'small_info2'
     ];
 
     public function moderator()

@@ -139,11 +139,21 @@
                     </div>
 
                     <div class="mb-4">
-                        <label for="small_info" class="block text-gray-600">Kordinator haqida
+                        <label for="small_info" class="block text-gray-600">Kordinator mavzusi haqida
                             qisqacha yozish:</label>
                         <textarea name="small_info" id="small_info" class="border px-4 py-2 w-full"
                             rows="6">{{ old('small_info') ?? $professor->small_info }}</textarea>
                         @error('small_info')
+                        <span class="text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="small_info2" class="block text-gray-600">Kordinator mavzusi muommolari haqida
+                            qisqacha yozish:</label>
+                        <textarea name="small_info2" id="small_info2" class="border px-4 py-2 w-full"
+                            rows="6">{{ old('small_info2') ?? $professor->small_info2 }}</textarea>
+                        @error('small_info2')
                         <span class="text-red-500">{{ $message }}</span>
                         @enderror
                     </div>

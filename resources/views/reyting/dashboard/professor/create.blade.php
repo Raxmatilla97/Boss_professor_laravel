@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Professorlar') }}
+            {{ __('Kordinator yaratish sahifasi') }}
         </h2>
     </x-slot>
   
@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="container mx-auto">
-                        <h1 class="text-2xl font-bold mb-6">Yangi professor qo'shish sahifasi</h1>
+                        <h1 class="text-2xl font-bold mb-6">Yangi kordinator qo'shish sahifasi</h1>
 
                         @if ($message = Session::get('success'))
                         <div class="alert alert-success alert-dismissible fade show mb-2 mt-4" role="alert">
@@ -22,7 +22,7 @@
                         <form action="{{ route('professors.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-5">
-                                <label for="fish" class="block text-gray-600">Professor F.I.SH to'liq yozing:</label>
+                                <label for="fish" class="block text-gray-600">Kordinator F.I.SH to'liq yozing:</label>
                                 <input type="text" name="fish" value="{{ old('fish')}}" id="fish" class="border px-4 py-2 w-full" required>
                                 @error('fish')
                                 <span class="text-red-500">{{ $message }}</span>
@@ -30,7 +30,7 @@
                             </div>
 
                             <div class="mb-4">
-                                <label for="image" class="block text-gray-600">Professor suratini yuklash:</label>
+                                <label for="image" class="block text-gray-600">Kordinator suratini yuklash:</label>
                                 <input 
                                     type="file" 
                                     name="image" 
@@ -52,12 +52,20 @@
                             </div>
 
                             <div class="mb-4">
-                                <label for="small_info" class="block text-gray-600">Professor haqida qisqacha yozish:</label>
+                                <label for="small_info" class="block text-gray-600">Kordinator mavzusi haqida:</label>
                                 <textarea name="small_info" id="small_info" class="border px-4 py-2 w-full" rows="6" >{{old('small_info')}}</textarea>
                                 @error('small_info')
                                 <span class="text-red-500">{{ $message }}</span>
                                 @enderror
-                            </div>                
+                            </div>         
+
+                            <div class="mb-4">
+                                <label for="small_info2" class="block text-gray-600">Kordinator mavzusining muammolari:</label>
+                                <textarea name="small_info2" id="small_info2" class="border px-4 py-2 w-full" rows="6" >{{old('small_info2')}}</textarea>
+                                @error('small_info2')
+                                <span class="text-red-500">{{ $message }}</span>
+                                @enderror
+                            </div>       
                        
                 
                             <div class="mb-4 text-right">
