@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('moder_image')->nullable();  
             $table->integer('custom_ball')->nullable();  
             $table->text('moder_small_info')->nullable();       
+            $table->text('moder_small_info2')->nullable();       
             $table->boolean('moder_status')->nullable(); 
             $table->foreignId('professor_id')->constrained('professors')->onDelete('cascade');
             $table->foreignId('file_id')->nullable()->constrained('files')->onDelete('cascade');

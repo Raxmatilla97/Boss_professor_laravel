@@ -51,6 +51,7 @@ class ModeratorController extends Controller
         $validated = $this->validate($request, [
             "moder_fish" => "required|string|min:5|max:100",
             "moder_small_info" => "nullable|string",
+            "moder_small_info2" => "nullable|string",
             "moder_status" => "boolean",
             'professor_id' => 'required|integer'
 
@@ -112,6 +113,7 @@ class ModeratorController extends Controller
             'moder_slug_number' => $slug_number,
             'moder_status' => $validated['moder_status'] ?? 0,
             'moder_small_info' => $validated['moder_small_info'],
+            'moder_small_info2' => $validated['moder_small_info2'],
             'professor_id' => $validated['professor_id']
         ]);
 
@@ -159,7 +161,8 @@ class ModeratorController extends Controller
             "moder_fish" => "required|string|min:5|max:100",
             "moder_image" => "nullable|mimes:png,jpg,jpeg,webp|max:3024",
             "moder_status" => "boolean",
-            'moder_small_info' => 'nullable|string'
+            'moder_small_info' => 'nullable|string',
+            'moder_small_info2' => 'nullable|string'
         ], [
             'moder_fish.required' => 'F.I.SH maydoni majburiy.',
             'moder_fish.string' => 'F.I.SH  maydoni matn bo\'lishi kerak.',

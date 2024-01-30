@@ -217,8 +217,8 @@
                                 @if ($files_or_urls->filename)
                                     <br>
                                     <div class="flex justify-start">
-                                        <a href="/storage/upload/files/{{ $files_or_urls->filename }}" target="_black"><button
-                                                type="button"
+                                        <a href="/storage/upload/files/{{ $files_or_urls->filename }}"
+                                            target="_black"><button type="button"
                                                 class="inline-flex items-center py-2 mr-4  mt-3 px-3 text-sm font-medium text-white bg-blue-700 hover:bg-blue-800  focus:outline-none rounded-lg border border-gray-200 focus:z-10  focus:ring-4 focus:ring-blue-300 dark:focus:ring-gray-700 dark:bg-gray-700 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-600">
                                                 <svg class="w-3 h-3 me-1.5" aria-hidden="true"
                                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -231,20 +231,22 @@
                                                 Ko'rish
                                             </button>
                                         </a>
-                                        <a href="/storage/upload/files/{{ $files_or_urls->filename }}" target="_black" download="/storage/upload/files/{{ $files_or_urls->filename }}">
+                                        <a href="/storage/upload/files/{{ $files_or_urls->filename }}"
+                                            target="_black"
+                                            download="/storage/upload/files/{{ $files_or_urls->filename }}">
                                             <button type="button"
-                                            class="inline-flex items-center py-2 mt-3 px-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-700 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-600">
-                                            <svg class="w-3 h-3 me-1.5" aria-hidden="true"
-                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                viewBox="0 0 20 20">
-                                                <path
-                                                    d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z" />
-                                                <path
-                                                    d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z" />
-                                            </svg>
-                                            Yuklab olish
-                                        </button>
-                                    </a>
+                                                class="inline-flex items-center py-2 mt-3 px-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-700 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-600">
+                                                <svg class="w-3 h-3 me-1.5" aria-hidden="true"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                    viewBox="0 0 20 20">
+                                                    <path
+                                                        d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z" />
+                                                    <path
+                                                        d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z" />
+                                                </svg>
+                                                Yuklab olish
+                                            </button>
+                                        </a>
                                     </div>
                                 @else
                                     <div class="mt-3">
@@ -259,15 +261,16 @@
                             <p class="block mb-3 mt-3 text-sm font-normal leading-1 text-gray-500 dark:text-gray-400">
                                 <b>Ilmiy izlanishda duch kelingan muommolar:</b><br>
                             <p>
-                               
-                               <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
-                                <span class="font-medium">Matn mazmuni:</span> 
-                                @if($files_or_urls->duch_kelingan_muommo)
-                                {{$files_or_urls->duch_kelingan_muommo}}
+
+                            <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400"
+                                role="alert">
+                                <span class="font-medium">Matn mazmuni:</span>
+                                @if ($files_or_urls->duch_kelingan_muommo)
+                                    {{ $files_or_urls->duch_kelingan_muommo }}
                                 @else
-                                Ilmiy izlanishda duch kelingan muommolar haqida yozilmagan!
+                                    Ilmiy izlanishda duch kelingan muommolar haqida yozilmagan!
                                 @endif
-                              </div>
+                            </div>
                             </p>
                             </p>
                         </li>

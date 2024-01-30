@@ -14,6 +14,7 @@ class Moderator extends Model
         'moder_fish',
         'moder_slug_number',
         'moder_small_info',
+        'moder_small_info2',
         'moder_status',
         'professor_id',
         'file_id',

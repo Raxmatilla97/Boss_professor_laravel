@@ -90,6 +90,15 @@
                     </div>
 
                     <div class="mb-4">
+                        <label for="moder_small_info2" class="block text-gray-600">Moderator mavzusi muommolari haqida
+                            qisqacha yozish:</label>
+                        <textarea name="moder_small_info2" id="moder_small_info" class="border px-4 py-2 w-full" rows="4">{{ old('moder_small_info2') }}</textarea>
+                        @error('moder_small_info2')
+                            <span class="text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
                         <label class="relative inline-flex items-center cursor-pointer">
                             <input type="checkbox" value="1" name="moder_status"
                                 class="hidden peer"
