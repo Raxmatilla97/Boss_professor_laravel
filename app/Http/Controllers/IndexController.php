@@ -49,6 +49,7 @@ class IndexController extends Controller
             "user_id" => "required",
             "position" => "required",
             "site_url" => "nullable|string|min:3|max:300",
+            "duch_kelingan_muommo" => "nullable|string",
         ], [
             'category_name.required' => "Yo'nalishni tanlashingiz kerak!",
             'user_id.required' => "Foydalanuvchi ID raqami aniqlanmadi! (Sahifani yangilab ko'ring)",
@@ -56,6 +57,8 @@ class IndexController extends Controller
             "site_url.string" => "Sayt manzili matindan iborat bo'lishi kerak!",
             "site_url.min" => "Sayt manzili uzunligi eng kamida min: harfdam kotta bo'lishi kerak!",
             "site_url.max" => "Sayt manzili uzunligi eng ko'pida max: harfdam kichik bo'lishi kerak!",
+          
+          
 
         ]);
 
@@ -81,6 +84,7 @@ class IndexController extends Controller
                 'site_url' => $validated['site_url'],
                 $variableName => $validated['user_id'],
                 'ariza_holati' => "kutulmoqda",
+                'duch_kelingan_muommo' => $validated['duch_kelingan_muommo'],
                 'filename' => null,
                 'folder' => null
             ]);
