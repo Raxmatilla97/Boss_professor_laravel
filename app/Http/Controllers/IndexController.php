@@ -70,7 +70,7 @@ class IndexController extends Controller
         $variableName = strtolower($userPosition) . '_id';
 
         // Agarda murojaat qabul bo'lsa bu haqda xabar beradigan text ma'zmuni
-        $infogramma = "Siz yuborgan murojat qabul qilindi va u tez kunda ko'rib chiqiladi.";
+        $infogramma = "Siz yuborgan ma'lumotlar qabul qilindi va u tez kunda ko'rib chiqiladi.";
 
         // Murojaat qabul bo'lgach yana murojaat yuborishni so'raganda kerak bo'ladigan number_slugni olish kodi
         $number_slug = $request->slug_number;

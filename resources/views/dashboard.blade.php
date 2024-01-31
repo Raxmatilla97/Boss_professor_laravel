@@ -39,7 +39,7 @@
                                 to'plaganligini ko'rish mumkin</h3>
                         </div>
                         <div class="mt-2 mb-4 text-sm">
-                            Ballar umumiy shakilda hisoblangan, unda Kordinator yuborgan murojaatlardan tashqari
+                            Ballar umumiy shakilda hisoblangan, unda Kordinator yuborgan ma'lumotlardan tashqari
                             kordinatorga tegishli Moderatorlar va Operatorlar ballari ham qo'shib hisoblangan.
                         </div>
 
@@ -85,7 +85,7 @@
                                 to'plaganligini ko'rish mumkin</h3>
                         </div>
                         <div class="mt-2 mb-4 text-sm">
-                            Ballar umumiy shakilda hisoblangan, unda Operatorlar yuborgan murojaatlarga tegishli ballar
+                            Ballar umumiy shakilda hisoblangan, unda Operatorlar yuborgan ma'lumotlarga tegishli ballar
                             qo'shib hisoblangan.
                         </div>
 

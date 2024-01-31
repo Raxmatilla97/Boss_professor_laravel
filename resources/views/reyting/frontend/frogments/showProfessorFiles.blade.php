@@ -190,7 +190,7 @@
                                 </svg>
                             </span>
                             <h3 class="flex items-start mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                                Murojaat yuborilgan <span
+                                Ma'lumot yuborilgan <span
                                     class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3">{{ $files_or_urls->created_at->format('d-M-Y') }}</span>
 
 
@@ -284,7 +284,7 @@
                                 </svg>
                             </span>
                             <h3 class="flex items-start mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                                Murojaatni tasdiqlash
+                                Ma'lumotni tasdiqlash
                                 @if ($files_or_urls->ariza_holati == 'maqullandi')
                                     <span
                                         class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3">
@@ -318,7 +318,7 @@
 
 
                             <p class="block mb-3 text-sm font-normal leading-1 text-gray-500 dark:text-gray-400">
-                                <b>Murojaatga yozilgan tasnif:</b>
+                                <b>Ma'lumotga yozilgan tasnif:</b>
 
                             <div class="flex items-center p-4 mb-4 text-sm @if ($files_or_urls->ariza_holati == 'maqullandi') text-blue-800 bg-blue-50 @elseif($files_or_urls->ariza_holati == 'rad_etildi') text-red-800 bg-red-50 @elseif($files_or_urls->ariza_holati == 'kutulmoqda') text-gray-800 bg-gray-50 @endif rounded-lg dark:bg-gray-800 dark:text-blue-400"
                                 role="alert">

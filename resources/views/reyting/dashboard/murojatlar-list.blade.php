@@ -25,7 +25,7 @@
                     </svg>
                     <span class="sr-only">Info</span>
                     <h3 class="text-lg font-medium">Kordinatorlardan, moderatorlarda va operatorlardan kelib
-                        tushgan murojaatlar.</h3>
+                        tushgan ma'lumotlar.</h3>
                 </div>
                 <div class="mt-2 mb-4 text-sm">
                     Ularni ko'rib baholab chiqing.
@@ -88,7 +88,7 @@
                                                 Yo'nalish
                                             </th>
                                             <th scope="col" class="px-6 py-3">
-                                                Murojaat holati
+                                            Ma'lumot holati
                                             </th>
                                             <th scope="col" class="px-6 py-3">
                                                 Berilgan ball

@@ -12,7 +12,7 @@
             </div>
             <div>
                 <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">{{$totalCount}} ta
-                    murojaat</h5>
+                  Ma'lumot</h5>
                 <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Bir hafta davomidagi statistika</p>
             </div>
         </div>

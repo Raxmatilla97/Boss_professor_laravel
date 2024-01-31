@@ -36,7 +36,7 @@
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('murojatlar.list')" :active="request()->routeIs('murojatlar.list')">
-                        {{ __("Kelib tushgan murojaatlar") }}
+                        {{ __("Kelib tushgan ma'lumotlar") }}
                     </x-nav-link>
                 </div>
 
@@ -113,7 +113,7 @@
             </x-responsive-nav-link>
 
             <x-responsive-nav-link :href="route('murojatlar.list')" :active="request()->routeIs('murojatlar.list')">
-                {{ __("Kelib tushgan murojaatlar") }}
+                {{ __("Kelib tushgan ma'lumotlar") }}
             </x-responsive-nav-link>
 
             <x-responsive-nav-link :href="route('site.index')" :active="request()->routeIs('site.index')">

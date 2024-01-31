@@ -20,7 +20,7 @@
                                         d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
                                 </svg>
                                 <span class="sr-only">Info</span>
-                                <h3 class="text-lg font-medium">Murojatingiz qabul qilindi!</h3>
+                                <h3 class="text-lg font-medium">Ma'lumotingiz qabul qilindi!</h3>
                             </div>
                             <div class="mt-2 mb-4 text-md">
 
@@ -36,7 +36,7 @@
                             <input type="hidden" name="code" value="{{session('number_slug')}}">
                             <button type="submit"
                                 class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">
-                                Yana murojaat yuborish
+                                Yana ma'lumot yuborish
                             </button>
                         </form>
 

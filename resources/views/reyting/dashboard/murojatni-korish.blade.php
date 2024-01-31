@@ -15,7 +15,7 @@
 
                         <div class="flex flex-col items-center px-4 sm:px-0 lg:flex-row lg:justify-between">
                             <div class="mb-4 lg:mb-0">
-                                <h3 class="text-base font-semibold leading-7 text-gray-900">Murojaat yuboruvchi haqida
+                                <h3 class="text-base font-semibold leading-7 text-gray-900">Ma'lumot yuboruvchi haqida
                                     ma'lumotlar
                                 </h3>
                                 <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Reyting ballari o'zgarib
@@ -140,7 +140,7 @@
                                             class="max-w-5xl mt-6 mx-auto bg-white rounded-xl top-bottom-shadow overflow-hidden">
                                             <div class="p-6">
                                                 <h2 class="text-2xl mb-6 font-bold text-gray-800 text-center">
-                                                    {{ $information->fish_info }}ning Murojaati</h2>
+                                                    {{ $information->fish_info }}ning Ma'lumoti</h2>
 
                                                 <!-- Category Item -->
                                                 <div class="mt-4 flex">
@@ -257,7 +257,7 @@
                                             </svg>
                                         </span>
                                         <h3 class="font-medium leading-tight">Baholash va natija haqida yozish</h3>
-                                        <p class="text-sm">Yuborilgan murojaat bo'yicha baholash va natijani yozib
+                                        <p class="text-sm">Yuborilgan ma'lumot bo'yicha baholash va natijani yozib
                                             qo'yish
                                         </p>
 
@@ -301,7 +301,7 @@
                                                 <div class="mt-4 flex mb-4">
                                                     <div class="label-box" style="width: 300px;">
                                                         <i class="fas fa-tags text-blue-500"></i>
-                                                        <span class="ml-2 text-lg font-medium">Murojaat holati:</span>
+                                                        <span class="ml-2 text-lg font-medium">Ma'lumot holati:</span>
                                                     </div>
                                                     <div class="w-full">
                                                         <label for="countries"
@@ -329,7 +329,7 @@
                                                 <div class="mt-4 flex mb-4">
                                                     <div class="label-box" style="width: 300px;">
                                                         <i class="fas fa-link text-purple-500"></i>
-                                                        <span class="ml-2 text-lg font-medium">Murojatga reyting
+                                                        <span class="ml-2 text-lg font-medium">Ma'lumotga reyting
                                                             bali:</span>
                                                     </div>
                                                     <div>
@@ -365,7 +365,7 @@
                                                 <div class="mt-4 flex">
                                                     <div class="label-box" style="width: 300px;">
                                                         <i class="fas fa-file-upload text-red-500"></i>
-                                                        <span class="ml-2 text-lg font-medium">Murojaat holati
+                                                        <span class="ml-2 text-lg font-medium">Ma'lumot holati
                                                             izohi:</span>
                                                     </div>
 
@@ -426,7 +426,7 @@
                                                 </div>
 
                                             </div>
-                                            <button data-modal-target="popup-modal" data-modal-toggle="popup-modal"  type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-small rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Murojaatni O'chirish</button>
+                                            <button data-modal-target="popup-modal" data-modal-toggle="popup-modal"  type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-small rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Ma'lumotni O'chirish</button>
                                           
 
                                         </div>
@@ -457,7 +457,7 @@
                     <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
-                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Murojaatni o'chirishni istaysizmi? 
+                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Ma'lumotni o'chirishni istaysizmi? 
                         <p class="mt-3 text-sm">Agarda Murojaatni o'chirsangiz ma'lumotlarni qaytib tiklab bo'lmaydi!</p></h3>
                       
                             <button data-modal-hide="popup-modal" type="submit" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">

@@ -273,18 +273,18 @@ class TemporaryFileController extends Controller
             'murojaat_bali' => 'nullable|numeric',
             'murojaat_izohi' => 'nullable|string'
         ], [
-            'murojaat_holati.required' => 'Murojaat holatini kiritish majburiy.',
-            'murojaat_holati.string' => 'Murojaat holati matn ko\'rinishida bo\'lishi kerak.',
-            'murojaat_holati.max' => 'Murojaat holati eng ko\'pi bilan 255 belgidan iborat bo\'lishi kerak.',
-            'murojaat_bali.numeric' => 'Murojaat bali raqam bo\'lishi kerak.',
-            'murojaat_izohi.string' => 'Murojaat izohi matn ko\'rinishida bo\'lishi kerak.'
+            'murojaat_holati.required' => 'Ma\'lumot holatini kiritish majburiy.',
+            'murojaat_holati.string' => 'Ma\'lumot holati matn ko\'rinishida bo\'lishi kerak.',
+            'murojaat_holati.max' => 'Ma\'lumot holati eng ko\'pi bilan 255 belgidan iborat bo\'lishi kerak.',
+            'murojaat_bali.numeric' => 'Ma\'lumot bali raqam bo\'lishi kerak.',
+            'murojaat_izohi.string' => 'Ma\'lumot izohi matn ko\'rinishida bo\'lishi kerak.'
         ]);
 
         // Agar murojaat_holati "maqullandi" ga teng bo'lsa, murojaat_bali majburiy bo'ladi
         $validator->sometimes('murojaat_bali', 'required|numeric', function ($input) {
             return $input->murojaat_holati == 'maqullandi';
         }, [
-            'murojaat_bali.required' => 'Murojaat holati "maqullandi" bo\'lganida, murojaat bali kiritish majburiy.'
+            'murojaat_bali.required' => 'Ma\'lumot holati "maqullandi" bo\'lganida, Ma\'lumot bali kiritish majburiy.'
         ]);
 
         if ($validator->fails()) {
@@ -308,7 +308,7 @@ class TemporaryFileController extends Controller
         $file = TemporaryFile::where('id', $fileId)->firstOrFail();
         $file->delete();
 
-        return redirect()->route('murojatlar.list')->with('toaster', ['success', "Murojaat o'chirildi!"]);
+        return redirect()->route('murojatlar.list')->with('toaster', ['success', "Ma'lumot o'chirildi!"]);
     }
 
 }
