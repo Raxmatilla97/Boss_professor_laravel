@@ -77,5 +77,39 @@ class ModeratorsSeeder extends Seeder
             ],
             // Yana ma'lumotlar shu tariqada qo'shilishi mumkin...
         ]);
+
+        DB::table('moderators')->insert([
+            [   
+                'id' => 7,
+                'moder_fish' => 'Pulatova Dilfuza Azamkulovna',
+                'moder_image' => 'pulatova.jpg',
+                'moder_status' => 1,
+                'custom_ball' => 0,
+                'moder_small_info' => "Aralash ta’lim sharoitida maxsus pedagogika yo‘nalishi talabalarini tadqiqotchilik faoliyatiga tayyorlash texnologiyalari",
+                'moder_slug_number' => Str::random(10),
+                'professor_id' => 2
+            ],
+            [   
+                'id' => 8,
+                'moder_fish' => "Dehqonova Muborak G’iyeziddin qizi",
+                'moder_image' => 'dehqonova.jpg',
+                'moder_status' => 1,
+                'custom_ball' => 0,
+                'moder_small_info' => "Individual ta’lim sharoitida korreksion mashg’ulotlarni modellashtirish metodikasi",
+                'moder_slug_number' => Str::random(10),
+                'professor_id' => 2
+            ],
+            [   
+                'id' => 9,
+                'moder_fish' => "Fayziyeva Ubayda Yunusovna",
+                'moder_image' => 'fayziyeva.jpg',
+                'moder_status' => 1,
+                'custom_ball' => 0,
+                'moder_small_info' => "Tadqiqot mavzusi: O‘zbekiston respublikasida inklyuziv ta’lim klaster modelining nazariy asoslari",
+                'moder_slug_number' => Str::random(10),
+                'professor_id' => 2
+            ]
+            // Yana ma'lumotlar shu tariqada qo'shilishi mumkin...
+        ]);
     }
 }
