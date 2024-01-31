@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('oper_slug_number')->nullable();  
             $table->string('oper_image')->nullable();  
             $table->text('oper_small_info')->nullable();       
+            $table->text('oper_small_info2')->nullable();       
             $table->boolean('oper_status')->nullable(); 
             $table->integer('oper_custom_ball')->nullable(); 
             $table->foreignId('moderator_id')->constrained('moderators')->onDelete('cascade');

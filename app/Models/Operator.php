@@ -14,6 +14,7 @@ class Operator extends Model
         'oper_fish',
         'oper_slug_number',
         'oper_small_info',
+        'oper_small_info2',
         'oper_status',
         'moderator_id',
         'file_id',

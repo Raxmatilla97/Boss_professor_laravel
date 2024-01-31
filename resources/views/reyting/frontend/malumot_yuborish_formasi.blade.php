@@ -70,7 +70,7 @@
                                         @endforeach
                                     </select>
 
-                                   
+
                                 </div>
                                 <div class="flex-auto w-full mb-1 text-xs space-y-2">
 
@@ -84,17 +84,21 @@
                                     <p id="helper-text-explanation "
                                         class="mt-2 text-sm text-gray-500 dark:text-gray-400">Sahifa manzilini
                                         qo'yishdan oldin o'sha sahifa ishlayotganligiga amin bo'ling! <br>
-                                    <b>Sayt manzilini https:// bilan yozing!</b> <b class="text-blue-600 text-sm font-medium inline-block"> masalan: https://lib.cspu.uz/....</b>
+                                        <b>Sayt manzilini https:// bilan yozing!</b> <b
+                                            class="text-blue-600 text-sm font-medium inline-block"> masalan:
+                                            https://lib.cspu.uz/....</b>
                                     </p>
 
                                 </div>
 
                                 <div class="flex-auto w-full mb-1 text-xs space-y-2">
 
-                                    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Muommolar haqida yozing</label>
-                                    <textarea id="message" name="duch_kelingan_muommo" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ilmiy izlanishignizda siz duch kelgan muommolar haqida yozishingiz mumkin..."></textarea>
-                                 
-
+                                    <label for="message"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Muommolar
+                                        haqida yozing</label>
+                                    <textarea id="message" name="duch_kelingan_muommo" rows="4"
+                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        placeholder="Ilmiy izlanishignizda siz duch kelgan muommolar haqida yozishingiz mumkin..." required></textarea>
                                 </div>
 
                                 <div class="flex-auto w-full mb-1 text-xs space-y-2">

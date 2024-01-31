@@ -177,7 +177,7 @@ class ModeratorController extends Controller
         $moder_status = $validated['moder_status'] ?? 0;
         $validated['moder_status'] = $moder_status;
 
-        if ($request->hasFile('moder_image')) {
+        if ($request->hasFile('moder_image') ) {
             $tempPath = $request->moder_image->path(); // Temp fayl joylashuvi
             $fileName = time() . '.' . $request->moder_image->extension();
             $publicPath = public_path('uploads/moderator_images/' . $fileName); // Public fayl joylashuvi
@@ -187,16 +187,8 @@ class ModeratorController extends Controller
         
             // Yangi fayl nomini validated ma'lumotlarga qo'shish
             $validated['moder_image'] = $fileName;
-        } else {
-            // Foydalanuvchi rasm yubormagan taqdirda, default rasmni belgilash
-            $defaultImageName = 'default.webp'; // Bu yerda sizning default rasmingizning nomini kiriting
-            $validated['moder_image'] = $defaultImageName;
-        }
-
-          
-
+        } 
         
-
         $moderator->update($validated);
 
         return redirect()->route('professors.edit', $moderator->professor->slug_number)->with('toaster', ['success', "Moderator ma'lumotlari o'zgartirildi"]);

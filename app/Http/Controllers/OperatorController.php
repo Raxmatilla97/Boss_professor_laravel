@@ -49,7 +49,8 @@ class OperatorController extends Controller
             "oper_fish" => "required|string|min:5|max:100",
             "oper_image" => "nullable|mimes:png,jpg,jpeg,webp|max:3024",
             "oper_status" => "boolean",
-            "oper_small_info" => 'nullable|string'
+            "oper_small_info" => 'nullable|string',
+            "oper_small_info2" => 'nullable|string'
 
         ], [
             'oper_fish.required' => 'F.I.SH maydoni majburiy.',
@@ -113,6 +114,7 @@ class OperatorController extends Controller
             'oper_image' => $fileName,
             'oper_status' => $validated['oper_status'] ?? 0,
             'oper_small_info' => $validated['oper_small_info'],
+            'oper_small_info2' => $validated['oper_small_info2'],
             'oper_slug_number' => $slug_number,
             'moderator_id' => $request->moderator_id
         ]);
@@ -162,7 +164,8 @@ class OperatorController extends Controller
             "oper_fish" => "required|string|min:5|max:100",
             "oper_image" => "nullable|mimes:png,jpg,jpeg|max:3024",
             "oper_status" => "boolean",
-            'oper_small_info' => 'nullable|string'
+            'oper_small_info' => 'nullable|string',
+            'oper_small_info2' => 'nullable|string'
         ], [
             'oper_fish.required' => 'F.I.SH maydoni majburiy.',
             'oper_fish.string' => 'F.I.SH  maydoni matn bo\'lishi kerak.',
