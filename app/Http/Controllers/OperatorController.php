@@ -184,7 +184,7 @@ class OperatorController extends Controller
         if ($request->hasFile('oper_image')) {
             $tempPath = $request->oper_image->path(); // Temp fayl joylashuvi
             $fileName = time() . '.' . $request->oper_image->extension();
-            $publicPath = public_path('uploads/operator_images/' . $fileName); // Public fayl joylashuvi
+            $publicPath = public_path('uploads/operator_image/' . $fileName); // Public fayl joylashuvi
 
             // Faylni temp papkadan public papkaga ko'chirish
             move_uploaded_file($tempPath, $publicPath);

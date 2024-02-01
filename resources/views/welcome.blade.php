@@ -55,8 +55,8 @@
     @endif
 
 
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-8">
+    <div class="flex justify-center p-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-8"> 
         @foreach ($professors as $item)
             <!-- Sample Card -->
             <div class="bg-white p-5 rounded shadow-lg relative">
@@ -284,7 +284,7 @@
         <!-- Continue to create more cards as per required -->
 
     </div>
-    <script>
+</div>    <script>
         // Hujjat yuklanganda, har bir overlay uchun event listener qo'shish
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.overlay').forEach(function(overlay) {
