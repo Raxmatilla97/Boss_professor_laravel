@@ -33,7 +33,7 @@
                                     stroke-width="2" d="m1 9 4-4-4-4" />
                             </svg>
                             <a href="{{ route('professors.index') }}"
-                                class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Professorlar
+                                class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Kordinatorlar
                                 ro'yxati</a>
                         </div>
                     </li>
@@ -45,7 +45,7 @@
                                     stroke-width="2" d="m1 9 4-4-4-4" />
                             </svg>
                             <a href="{{ route('professors.edit', $operator->moderator->professor->slug_number) }}"
-                                class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Professor
+                                class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Kordinator
                                 ma'lumotlarini tahirlash</a>
                         </div>
                     </li>
@@ -81,9 +81,20 @@
                             @enderror
                         </div>
                         @if ($operator->oper_image)
-                            <img id="image-preview" style="width: 150px; margin: auto;" class="rounded-full"
-                                src="/uploads/moderator_images/{{ $operator->oper_image }}" alt="Image Preview"
-                                style="display: none;">
+                            
+                                <img id="image-preview" class="rounded-full"
+                                src="/uploads/operator_images/{{ $operator->oper_image }}" alt="{{ $operator->oper_fish }}">
+                            <style>
+                                #image-preview {
+                                    width: 150px;
+                                    height: 150px;
+                                    object-fit: cover;
+                                    /* Rasmning o'lchamini saqlash uchun qo'shimcha stil */
+                                    margin: auto;
+                                    display: block;
+                                    /* Blok elementni markazga joylash uchun */
+                                }
+                            </style>
                         @else
                             <img id="image-preview" style="width: 150px; margin: auto;" class="rounded-full"
                                 src="https://cspi.uz/storage/app/media/2023/avgust/i.webp" alt="Image Preview"
@@ -91,7 +102,7 @@
                         @endif
 
                         <div class="mb-5">
-                            <label for="oper_fish" class="block text-gray-600">Moderator
+                            <label for="oper_fish" class="block text-gray-600">Operator
                                 F.I.SH:</label>
                             <input type="text" name="oper_fish" value="{{ old('oper_fish', $operator->oper_fish) }}" id="moder_fish"
                                 class="border px-4 py-2 w-full" required>
@@ -101,7 +112,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="oper_small_info" class="block text-gray-600">Moderator mavzusi
+                            <label for="oper_small_info" class="block text-gray-600">Operator mavzusi
                                 haqida:</label>
                             <textarea name="oper_small_info" id="oper_small_info" class="border px-4 py-2 w-full" rows="4">{{ old('oper_small_info', $operator->oper_small_info) }}</textarea>
                             @error('oper_small_info')

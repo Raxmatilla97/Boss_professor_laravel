@@ -61,8 +61,8 @@
                                     <th class="border px-4 py-2">Kordinator F.I.SH</th>
                                     <th class="border px-4 py-2 ">Surati</th>
                                     <th class="border px-4 py-2" style="width: 130px;">Status</th>
-                                    <th class="border px-4 py-2" style="width: 150px;">Umumiy ballari</th>                                  
-                                    <th class="border px-4 py-2" style="width: 20px;">Amaliyot</th>
+                                    <th class="border px-4 py-2" style="width: 120px;">Umumiy ballari</th>                                  
+                                    <th class="border px-4 py-2" >Amaliyot</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -70,8 +70,20 @@
                                     <tr>
                                         <td class="border px-4 py-2">{{ $item->id }}</td>
                                         <td class="border px-4 py-2">{{ $item->fish }}</td>
-                                        <td class="border px-4 py-2 text-center">
-                                            <img style="width: 100px; border-radius: 50%" src="{{ url('/uploads/professor_images') }}/{{ $item->image }}" alt="" class="d-block mx-auto rounded">
+                                        <td class="border px-4 py-2 text-center">                                            
+                                            <img id="image-preview" class="rounded-full"
+                                            src="{{ url('/uploads/professor_images') }}/{{ $item->image }}" alt="{{ $item->fish }}">
+                                        <style>
+                                            #image-preview {
+                                                width: 90px;
+                                                height: 90px;
+                                                object-fit: cover;
+                                                /* Rasmning o'lchamini saqlash uchun qo'shimcha stil */
+                                                margin: auto;
+                                                display: block;
+                                                /* Blok elementni markazga joylash uchun */
+                                            }
+                                        </style>
                                         </td>
                                         
                                         <td class="border px-4 py-2 text-center">
@@ -84,10 +96,14 @@
                                         <td class="border px-4 py-2">{{ $item->custom_ball }}</td>
                                        
                                         <td class="border px-4 py-2 text-cente">
-                                            <a href="{{ route('professors.edit', $item->slug_number) }}"><span class="bg-indigo-100 text-indigo-800 text-md font-medium me-2 px-2.5 py-0.5 rounded border border-indigo-400">Tahrirlash</span></a>
+                                            <div class="grid grid-rows-2 gap-2">
+                                                <a href="{{ route('professors.edit', $item->slug_number) }}"><span class="bg-indigo-100 text-indigo-800 text-md font-medium me-2 px-2.5 py-0.5 rounded border border-indigo-400">Tahrirlash</span></a>
+                                                <a href="{{ route('dashboard.kordinatorpdf', $item->id) }}"><span class="bg-indigo-100 text-indigo-800 text-md font-medium me-2 px-2.5 py-0.5 rounded border border-indigo-400">PDF yuklash</span></a>
+                                            </div>
+                                            
                                             <div x-data="{ showModal: false }">
                                                 <!-- Modal Trigger Button -->
-                                                <button data-modal-trigger="popup-modal-{{$item->id}}" @click="showModal = true" class="text-red-500">O'chirish</button>
+                                                <button data-modal-trigger="popup-modal-{{$item->id}}" @click="showModal = true" class="mt-3 text-red-500">O'chirish</button>
                                             
                                                 <!-- Modal -->
                                                 <div x-show="showModal" @click.away="showModal = true" class="fixed inset-0 overflow-y-auto">                                                   

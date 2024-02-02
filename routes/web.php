@@ -1,15 +1,16 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FilesController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProfessorController;
-use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\OperatorController;
-use App\Http\Controllers\FilesController;
-use App\Http\Controllers\TemporaryFileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ModeratorController;
+use App\Http\Controllers\ProfessorController;
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GeneratePdfController;
+use App\Http\Controllers\TemporaryFileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,6 +84,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 
+    Route::get('/kordinator-pdf/{id}', [GeneratePdfController::class, 'kordinatorBoyichaPdf'])->name('dashboard.kordinatorpdf');
 
 
 });

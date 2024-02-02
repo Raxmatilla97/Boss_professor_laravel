@@ -235,7 +235,7 @@
 
                                 <div class="px-4 pt-6 sm:grid sm:grid-cols-3 text-center w-5/6 m-auto sm:gap-2 sm:px-0">
                                     <dt class="text-md font-medium leading-6 pt-6 text-gray-900">Ilmiy yo‘nalish mavzusi
-                                        nom:
+                                        nomi:
                                     </dt>
                                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                                         <blockquote
@@ -417,10 +417,32 @@
 
 
                                             </div> --}}
+                                            <div class="flex justify-center mt-6">
+                                               
+                                                    @if($items->oper_image)
+                                                        {{$items->oper_image}}
+                                                    @else
+                                                        @php $items->oper_image = 'default.webp'; @endphp
+                                                    @endif                                                   
+                                              
+                                                <img class="w-20 mr-8 h-20 rounded image_moder"
+                                                    style="object-fit: cover; object-position: 50% 50%;"
+                                                    src="/uploads/operator_images/{{ $items->oper_image }}"
+                                                    alt="{{ $items->oper_fish }}">
+            
+                                                <p class="mb-2  text-gray-500 dark:text-gray-400 ">
+                                                <p class="text-gray-500 text-xl mt-6 dark:text-gray-400">Operator <b>
+                                                        <span
+                                                            class="bg-green-100 text-green-800 text-m font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{
+                                                            $items->oper_fish }}</span></b>ga
+                                                    Biriktirilgan mavzu nomi:</p>
+                                                </p>
+                                            </div>
+            
                                             <div
-                                                class="px-4 pt-6 sm:grid sm:grid-cols-3 text-center w-5/6 m-auto sm:gap-2 sm:px-0">
+                                                class="px-4 pt-4 sm:grid sm:grid-cols-3 text-center w-5/6 m-auto sm:gap-2 sm:px-0">
                                                 <dt class="text-md font-medium leading-6 pt-6 text-gray-900">Ilmiy
-                                                    yo‘nalish mavzusi nom:
+                                                    yo‘nalish mavzusi nomi:
                                                 </dt>
                                                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                                                     <blockquote
