@@ -171,7 +171,31 @@
                                                         @endif
 
                                                     </div>
+                                                    
                                                 </div>
+                                                
+                                                 <!-- URL Site -->
+                                                 <div class="mt-4 flex">
+                                                    <div class="label-box">
+                                                        <i class="fas fa-link text-purple-500"></i>
+                                                        <span class="ml-2 text-lg font-medium"> Muommolar haqida:</span>
+                                                    </div>
+                                                    <div>
+                                                        @if ($information->muommo_text )
+                                                        <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                                                            <span class="font-medium"> {{ $information->muommo_text }}
+                                                          </div>
+                                                       
+                                                        @else
+                                                        <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                                                            <span class="font-medium"> Muommolar haqida yozilmagan!
+                                                          </div>
+                                                        @endif
+
+                                                    </div>
+                                                    
+                                                </div>
+                                             
                                                 <!-- File Upload Info -->
                                                 <div class="mt-4 flex">
                                                     <div class="label-box">
@@ -229,11 +253,27 @@
                                                                     {{ $information->created_at }}</p>
                                                             </div>
 
-                                                            <div class="flex items-center justify-between">
+
+                                                            <div class="flex items-center justify-center">
                                                                 <a href="/storage/upload/files/{{ $information->filename }}"
-                                                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                                                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                                                     download>
                                                                     Yuklab olish
+                                                                </a>
+
+                                                                <a href="/storage/upload/files/{{ $information->filename }}"
+                                                                    target="_black"><button type="button"
+                                                                        class="inline-flex items-center py-2 mr-4  mt-0 ml-6 px-3 text-sm font-medium text-white bg-blue-700 hover:bg-blue-800  focus:outline-none rounded-lg border border-gray-200 focus:z-10  focus:ring-4 focus:ring-blue-300 dark:focus:ring-gray-700 dark:bg-gray-700 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-600">
+                                                                        <svg class="w-3 h-3 me-1.5" aria-hidden="true"
+                                                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                                            viewBox="0 0 24 24">
+                                                                            <path fill-rule="evenodd"
+                                                                                d="M5 7.8C6.7 6.3 9.2 5 12 5s5.3 1.3 7 2.8a12.7 12.7 0 0 1 2.7 3.2c.2.2.3.6.3 1s-.1.8-.3 1a2 2 0 0 1-.6 1 12.7 12.7 0 0 1-9.1 5c-2.8 0-5.3-1.3-7-2.8A12.7 12.7 0 0 1 2.3 13c-.2-.2-.3-.6-.3-1s.1-.8.3-1c.1-.4.3-.7.6-1 .5-.7 1.2-1.5 2.1-2.2Zm7 7.2a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+                                                                                clip-rule="evenodd" />
+                                                                        </svg>
+                        
+                                                                        Ko'rish
+                                                                    </button>
                                                                 </a>
                                                             </div>
                                                         </div>

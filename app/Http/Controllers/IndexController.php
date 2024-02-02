@@ -106,7 +106,8 @@ class IndexController extends Controller
                     'category_name' => $validated['category_name'],
                     'site_url' => $validated['site_url'],
                     $variableName => $validated['user_id'],
-                    'ariza_holati' => "kutulmoqda"
+                    'ariza_holati' => "kutulmoqda",
+                    'duch_kelingan_muommo' => $validated['duch_kelingan_muommo'],
                 ]);
               
                 return redirect()->route('site.index')->with([

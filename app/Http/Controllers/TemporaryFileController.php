@@ -117,11 +117,11 @@ class TemporaryFileController extends Controller
 
                 $item->surat = '/uploads/professor_images/' . $item->filesProfessor->image;
 
-            } elseif ($item->moderator_id && $item->filesModerator && $item->filesModerator->image) {
+            } elseif ($item->moderator_id && $item->filesModerator && $item->filesModerator->moder_image) {
 
                 $item->surat = '/uploads/moderator_images/' . $item->filesModerator->moder_image;
 
-            } elseif ($item->operator_id && $item->filesOperator && $item->filesOperator->image) {
+            } elseif ($item->operator_id && $item->filesOperator && $item->filesOperator->oper_image) {
 
                 $item->surat = '/uploads/operator_images/' . $item->filesOperator->oper_image;
 
@@ -179,6 +179,8 @@ class TemporaryFileController extends Controller
 
             // Kordinator mavzusini small_infoga o'tqazish
             $information->small_info = $information->filesProfessor->small_info;
+            $information->small_info2 = $information->filesProfessor->small_info2;
+            $information->muommo_text = $information->duch_kelingan_muommo;
 
         } elseif ($information->moderator_id && $information->filesModerator) {
 
@@ -196,6 +198,10 @@ class TemporaryFileController extends Controller
             // Moderator mavzusini small_infoga o'tqazish
             $information->small_info = $information->filesModerator->moder_small_info;
 
+            $information->small_info2 = $information->filesModerator->moder_small_info2;
+
+            $information->muommo_text = $information->duch_kelingan_muommo;
+           
         } elseif ($information->operator_id && $information->filesOperator) {
 
              // Operator ballarini hisoblash
@@ -211,6 +217,11 @@ class TemporaryFileController extends Controller
 
             // Operator mavzusini small_infoga o'tqazish
             $information->small_info = $information->filesOperator->oper_small_info;
+
+            $information->small_info2 = $information->filesOperator->oper_small_info2;
+
+           $information->muommo_text = $information->duch_kelingan_muommo;
+            // dd($information->small_info2);
 
         } else {
             $information->surat = "https://cspu.uz/storage/app/media/2023/avgust/i.webp"; // Standart surat manzili
