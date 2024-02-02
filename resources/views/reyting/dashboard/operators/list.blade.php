@@ -94,7 +94,7 @@
                                                     style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%;">
                                                     @if ($items->oper_image)
                                                     <img style="width: 100%; height: 100%; object-fit: cover;" 
-                                                    src="{{ $items->oper_image ? asset('uploads/operator_image/' . $items->oper_image) : 'https://cspi.uz/storage/app/media/2023/avgust/i.webp' }}"
+                                                    src="{{ $items->oper_image ? asset('uploads/operator_images/' . $items->oper_image) : 'https://cspi.uz/storage/app/media/2023/avgust/i.webp' }}"
                                                     alt="Operator image">
                                                
                                                     @else

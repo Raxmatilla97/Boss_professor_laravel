@@ -93,13 +93,14 @@ class TemporaryFileController extends Controller
                     });
             })
                 ->orderBy("created_at", 'desc')
+                ->whereNotNull('ariza_holati')
                 ->paginate(20);
 
         } else {
             // Agar name parametri mavjud bo'lmasa, barcha moderatorlarni tartib bilan olish
-            $murojatlar = $files->orderBy("created_at", 'desc')->paginate(20);
+            $murojatlar = $files->orderBy("created_at", 'desc')->whereNotNull('ariza_holati')->paginate(20);
         }
-
+    
 
         $murojatlar->getCollection()->each(function ($item) {
             // name xususiyatini belgilash

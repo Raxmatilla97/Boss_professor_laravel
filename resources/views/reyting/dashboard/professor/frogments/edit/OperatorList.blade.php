@@ -69,7 +69,7 @@
                         <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                             <div style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%;">
                                 @if ($items->oper_image)
-                                <img style="width: 100%; height: 100%; object-fit: cover;" src="{{'/uploads/operator_image'}}/{{$items->oper_image}}" alt="Jese image">
+                                <img style="width: 100%; height: 100%; object-fit: cover;" src="{{'/uploads/operator_images'}}/{{$items->oper_image}}" alt="Jese image">
                                 @else                                
                                 <img style="width: 100%; height: 100%; object-fit: cover;" src="https://cspi.uz/storage/app/media/2023/avgust/i.webp" alt="Jese image">
                                 @endif
