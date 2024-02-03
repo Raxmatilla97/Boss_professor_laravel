@@ -76,8 +76,14 @@ class TemporaryFileController extends Controller
 
 
     public function list(TemporaryFile $files, Request $request)
-    {
-
+    { dd($request);
+        if($request->has('category')) {
+            $category = $request->category;
+            dd($category);
+        } else {
+            //dd('Category parametri mavjud emas');
+        }
+        
         // Agar name parametri mavjud bo'lsa, shu nomga mos keladigan moderatorlarni qidirish
         if ($request) {
             $murojatlar = $files->when($request->filled('name'), function (Builder $query) use ($request) {
@@ -91,14 +97,14 @@ class TemporaryFileController extends Controller
                     ->orWhereHas('filesOperator', function (Builder $q) use ($name) {
                         $q->where('oper_fish', 'like', $name);
                     });
-            })
-                ->orderBy("created_at", 'desc')
+            })->where('ariza_holati', 'rad_etildi   ')
+                ->orderBy("created_at", 'desc')                
                 ->whereNotNull('ariza_holati')
                 ->paginate(20);
-
+                // dd($request->category);
         } else {
             // Agar name parametri mavjud bo'lmasa, barcha moderatorlarni tartib bilan olish
-            $murojatlar = $files->orderBy("created_at", 'desc')->whereNotNull('ariza_holati')->paginate(20);
+            $murojatlar = $files->where('ariza_holati', 'maqullandi')->orderBy("created_at", 'desc')->whereNotNull('ariza_holati')->paginate(20);
         }
     
 
@@ -160,7 +166,7 @@ class TemporaryFileController extends Controller
 
         // Default surat buni o'zgartirsa bo'ladi
         $default_image = 'https://cspu.uz/storage/app/media/2023/avgust/i.webp';
-
+        
         // Ismni belgilash manzilini belgilash
         if ($information->professor_id && $information->filesProfessor) {
 

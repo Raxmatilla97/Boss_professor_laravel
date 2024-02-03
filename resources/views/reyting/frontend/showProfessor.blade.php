@@ -73,11 +73,11 @@
                                     {{ $professor->fish }}</dd>
                             </div>
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                <dt class="text-md font-medium leading-6 text-gray-900">Umumiy to'plagan ballari</dt>
+                                <dt class="text-md font-medium leading-6 text-gray-900">Kordinatorning shaxsiy ballari</dt>
                                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                                     <span
                                         class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                                        {{ $professor->custom_ball }} ball
+                                        {{ $professor->shaxsiy_custom_ball }} ballga ega
                                     </span>
                                 </dd>
                             </div>
@@ -168,7 +168,7 @@
 
 
                                         @if ($item->moder_image)
-                                        <img class="hidden sm:block w-10 h-10 rounded-full"
+                                        <img class="hidden sm:block w-10 h-10 rounded-full" style=" object-fit: cover;"
                                             src="/uploads/moderator_images/{{ $item->moder_image }}" alt="Jese image">
                                         @else
                                         <img class="hidden sm:block w-10 h-10 rounded-full"

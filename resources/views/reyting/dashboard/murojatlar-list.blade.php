@@ -6,11 +6,11 @@
 
     </x-slot>
 
-    
+
     {{-- Sahifada yangilanish qilganda o'ng tarafda chiqadigan bildirishnoma --}}
     @include('reyting.dashboard.professor.frogments.edit.toaster')
 
-    
+
     <div class="py-1 mt-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
@@ -28,7 +28,7 @@
                         tushgan ma'lumotlar.</h3>
                 </div>
                 <div class="mt-2 mb-4 text-sm">
-                    Ularni ko'rib baholab chiqing.
+                    Kelgan ma'lumotlarni ko'rib baholab chiqing.
                 </div>
                 <div class="flex justify-end">
                     {{-- <a href="{{ route('moderator.create', ['professor_id' => $professor->id]) }}"><button type="button"
@@ -43,6 +43,48 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-1 bg-white border-b border-gray-200">
 
+                    <div class="flex justify-center mt-4 ml-4">
+                        <a href="">
+                            <button type="button"
+                                class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
+                                Barcha kelgan ma'lumotlar
+                                <span
+                                    class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
+                                    2
+                                </span>
+                            </button>
+                        </a>
+                        <a href="{{route('murojatlar.list',  ['name' => '', 'category' => 'maqullandi'] )}}">
+                            <button type="button"
+                                class="text-yellow-400 hover:text-white border border-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-white dark:hover:bg-yellow-400 dark:focus:ring-yellow-900">
+                                Tasdiqlash lozim bo'lganlar
+                                <span
+                                    class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-yellow-800 bg-yellow-200 rounded-full">
+                                    2
+                                </span>
+                            </button>
+                        </a>
+                        <a href="">
+                            <button type="button"
+                                class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
+                                Tasdiqlangan ma'lumotlar
+                                <span
+                                    class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-green-800 bg-green-200 rounded-full">
+                                    2
+                                </span>
+                            </button>
+                        </a>
+                        <a href="">
+                            <button type="button"
+                                class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
+                                Rad etilgan ma'lumotlar
+                                <span
+                                    class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-red-800 bg-red-200 rounded-full">
+                                    2
+                                </span>
+                            </button>
+                        </a>
+                    </div>
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
                         <div class="p-6 text-gray-900 mb-8">
@@ -70,118 +112,126 @@
 
                             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                                 @if (count($murojatlar) > 0)
-                                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    <thead
-                                        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                        <tr>
-                                            <th scope="col" class="p-4">
-                                                <div class="flex items-center">
-                                                    <input id="checkbox-all-search" type="checkbox"
-                                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                                    <label for="checkbox-all-search" class="sr-only"> </label>
-                                                </div>
-                                            </th>
-                                            <th scope="col" class="px-6 py-3">
-                                                F.I.SH
-                                            </th>
-                                            <th scope="col" class="px-6 py-3">
-                                                Yo'nalish
-                                            </th>
-                                            <th scope="col" class="px-6 py-3">
-                                            Ma'lumot holati
-                                            </th>
-                                            <th scope="col" class="px-6 py-3">
-                                                Berilgan ball
-                                            </th>
-                                            <th scope="col" class="px-6 py-3">
-                                                Vaqti
-                                            </th>
-                                            <th scope="col" class="px-6 py-3">
-                                                Bajarish
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($murojatlar as $item)
-                                            <tr
-                                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                                <td class="w-4 p-4">
+                                    <table
+                                        class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                        <thead
+                                            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                            <tr>
+                                                <th scope="col" class="p-4">
                                                     <div class="flex items-center">
-                                                        <input id="checkbox-table-search-1" type="checkbox"
-                                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                                        <label for="checkbox-table-search-1"
-                                                            class="sr-only">checkbox</label>
-                                                    </div>
-                                                </td>
-                                                <th scope="row"
-                                                    class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                                    <img class="w-10 h-10 rounded-full" src="{{ $item->surat }}"
-                                                        alt="Jese image">
-                                                    <div class="ps-3">
-                                                        <div class="text-base font-semibold">{{ $item->name }}</div>
-                                                        <div class="font-normal text-gray-500">
-                                                            @if ($item->professor_id)
-                                                                Kordinator
-                                                            @elseif($item->moderator_id)
-                                                                Moderator
-                                                            @else
-                                                                Operator
-                                                            @endif
-                                                        </div>
+                                                        №
                                                     </div>
                                                 </th>
-                                                <td class="px-6 py-4">
-                                                    {{ $item->category_name }}
-                                                </td>
-
-                                                <td class="px-6 py-4">
-                                                    <div class="flex items-center">
-                                                        @if ($item->ariza_holati == 'maqullandi')
-                                                            <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2">
-                                                            </div>
-                                                            Maqullangan!
-                                                        @elseif($item->ariza_holati == 'kutulmoqda')
-                                                            <div class="h-2.5 w-2.5 rounded-full bg-indigo-500 me-2">
-                                                            </div>
-                                                            Ko'rib chiqish lozim!
-                                                        @else
-                                                            <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div>
-                                                            Rad etilgan
-                                                        @endif
-                                                    </div>
-                                                </td>
-                                                <td class="px-6 py-4">
-                                                   @if($item->ariza_holati == 'maqullandi')
-                                                   <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{ $item->points }} - ball</span>
-                                                   @elseif($item->ariza_holati == 'rad_etildi')
-                                                   <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Hisoblanmadi!</span>
-                                                   @else
-                                                   <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Baholanmagan!</span>
-                                                   @endif
-                                                   
-                                                </td>
-                                                <td class="px-6 py-4">
-                                                    {{ $item->created_at }}
-                                                </td>
-                                                <td class="px-6 py-4">
-                                                    <a href="{{route('murojatlar.show', $item->id)}}"
-                                                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Ko'rish</a>
-                                                </td>
+                                                <th scope="col" class="px-6 py-3">
+                                                    F.I.SH
+                                                </th>
+                                                <th scope="col" class="px-6 py-3">
+                                                    Yo'nalish
+                                                </th>
+                                                <th scope="col" class="px-6 py-3">
+                                                    Ma'lumot holati
+                                                </th>
+                                                <th scope="col" class="px-6 py-3">
+                                                    Berilgan ball
+                                                </th>
+                                                <th scope="col" class="px-6 py-3">
+                                                    Vaqti
+                                                </th>
+                                                <th scope="col" class="px-6 py-3">
+                                                    Bajarish
+                                                </th>
                                             </tr>
-                                        @endforeach
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $i = 1;
+                                            @endphp
+                                            @foreach ($murojatlar as $item)
+                                                <tr
+                                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                                    <td class="w-4 p-4">
+                                                        <div class="flex items-center font-bold">
+                                                            {{ $i++ }}
+                                                        </div>
+                                                    </td>
+                                                    <th scope="row"
+                                                        class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                                                        <img class="w-10 h-10 rounded-full" src="{{ $item->surat }}"
+                                                            alt="Jese image">
+                                                        <div class="ps-3">
+                                                            <div class="text-base font-semibold">{{ $item->name }}
+                                                            </div>
+                                                            <div class="font-normal text-gray-500">
+                                                                @if ($item->professor_id)
+                                                                    Kordinator
+                                                                @elseif($item->moderator_id)
+                                                                    Moderator
+                                                                @else
+                                                                    Operator
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </th>
+                                                    <td class="px-6 py-4">
+                                                        {{ $item->category_name }}
+                                                    </td>
 
-                                    </tbody>
-                                </table>
+                                                    <td class="px-6 py-4">
+                                                        <div class="flex items-center">
+                                                            @if ($item->ariza_holati == 'maqullandi')
+                                                                <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2">
+                                                                </div>
+                                                                Maqullangan!
+                                                            @elseif($item->ariza_holati == 'kutulmoqda')
+                                                                <div
+                                                                    class="h-2.5 w-2.5 rounded-full bg-indigo-500 me-2">
+                                                                </div>
+                                                                Ko'rib chiqish lozim!
+                                                            @else
+                                                                <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2">
+                                                                </div>
+                                                                Rad etilgan
+                                                            @endif
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4">
+                                                        @if ($item->ariza_holati == 'maqullandi')
+                                                            <span
+                                                                class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{ $item->points }}
+                                                                - ball</span>
+                                                        @elseif($item->ariza_holati == 'rad_etildi')
+                                                            <span
+                                                                class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Hisoblanmadi!</span>
+                                                        @else
+                                                            <span
+                                                                class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Baholanmagan!</span>
+                                                        @endif
+
+                                                    </td>
+                                                    <td class="px-6 py-4">
+                                                        {{ $item->created_at }}
+                                                    </td>
+                                                    <td class="px-6 py-4">
+                                                        <a href="{{ route('murojatlar.show', $item->id) }}"
+                                                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Ko'rish</a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+
+                                        </tbody>
+                                    </table>
                                 @else
-                                <h1
-                                class="text-center text-xl font-medium mb-4 mt-2 text-gray-400">
-                               Murojaatlar kelib tushmagan!</h1>
-                            @include('reyting.frontend.frogments.skeletonTable')
+                                    <h1 class="text-center text-xl font-medium mb-4 mt-2 text-gray-400">
+                                        Murojaatlar kelib tushmagan!</h1>
+                                    @include('reyting.frontend.frogments.skeletonTable')
                                 @endif
-                               
-                            </div>
 
+                            </div>
+                            <div class=" items-center justify-between mt-6">
+                                {{ $murojatlar->links() }}
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>

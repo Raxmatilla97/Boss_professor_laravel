@@ -215,10 +215,12 @@ class IndexController extends Controller
             ->where('slug_number', $slug_number)
             ->firstOrFail();
 
-
-
+      
         // Professor va unga bog'liq moderatorlar uchun ballarni hisoblash
         $professor->custom_ball = $this->calculatePointsForFiles($professor->files ?? []);
+
+        //Kordinatorning o'zini ballari
+        $professor->shaxsiy_custom_ball = $professor->custom_ball;
 
         $professor_moder = $professor->moderator()->orderBy('created_at', 'desc')->get();
 

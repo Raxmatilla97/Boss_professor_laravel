@@ -75,7 +75,7 @@
                                                 <th scope="row"
                                                     class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                                                     @if ($item->moder_image)
-                                                    <img class="hidden sm:block w-10 h-10 rounded-full"
+                                                    <img class="hidden sm:block w-10 h-10 rounded-full" style=" object-fit: cover;"
                                                         src="/uploads/moderator_images/{{ $item->moder_image }}"
                                                         alt="Jese image">
                                                 @else

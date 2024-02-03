@@ -65,8 +65,8 @@ class DashboardController extends Controller
         $totalCount = $haftaMurojaatlari->count();
 
         if ($totalCount > 0) {
-            $percentageMaqullangan = ($countMaqullangan / $totalCount) * 100;
-            $percentageRadEtilgan = ($countRadEtilgan / $totalCount) * 100;
+            $percentageMaqullangan = round(($countMaqullangan / $totalCount) * 100);
+            $percentageRadEtilgan = round(($countRadEtilgan / $totalCount) * 100);
         } else {
             // $totalCount nol bo'lsa, foizlarni 0 deb belgilash mumkin
             $percentageMaqullangan = 0;
