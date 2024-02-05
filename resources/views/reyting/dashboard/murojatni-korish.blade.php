@@ -40,7 +40,7 @@
                                 </div>
 
                             </div>
-                            <img class="rounded w-36 h-36" src="{{ $information->surat }}" alt="Extra large avatar">
+                            <img class="w-36 h-36  rounded" style=" object-fit: cover;" src="{{ $information->surat }}" alt="">
                         </div>
 
 
@@ -202,8 +202,8 @@
                                                         <i class="fas fa-file-upload text-red-500"></i>
                                                         <span class="ml-2 text-lg font-medium">Fayl:</span>
                                                     </div>
-
-                                                    @php
+                                                    @if(isset($information->filename))
+                                                      @php
                                                         $filename = pathinfo($information->filename, PATHINFO_FILENAME);
                                                         $extension = pathinfo($information->filename, PATHINFO_EXTENSION);
                                                         $allowedExtensions = ['zip', 'doc', 'docx', 'pdf'];
@@ -278,6 +278,18 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    @else
+                                                    <div id="alert-border-1" class="flex items-center w-full p-4 mb-4 text-blue-800 border-t-4 border-blue-300 bg-blue-50 dark:text-blue-400 dark:bg-gray-800 dark:border-blue-800" role="alert">
+                                                        <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                                          <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                                                        </svg>
+                                                        <div class="ms-3 text-sm font-medium">
+                                                            Ma'lumotga fayl yuklanmagan!
+                                                        </div>
+                                                       
+                                                    </div>
+                                                    @endif
+                                                  
 
                                                 </div>
                                             </div>

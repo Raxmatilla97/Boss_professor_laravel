@@ -44,43 +44,43 @@
                 <div class="p-1 bg-white border-b border-gray-200">
 
                     <div class="flex justify-center mt-4 ml-4">
-                        <a href="">
+                        <a href="{{route('murojatlar.list')}}">
                             <button type="button"
                                 class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
                                 Barcha kelgan ma'lumotlar
                                 <span
                                     class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
-                                    2
+                                    {{$filter->count()}}
                                 </span>
                             </button>
                         </a>
-                        <a href="{{route('murojatlar.list',  ['name' => '', 'category' => 'maqullandi'] )}}">
+                        <a href="{{route('murojatlar.list',  ['name' => 'no', 'category' => 'kutulmoqda'] )}}">
                             <button type="button"
-                                class="text-yellow-400 hover:text-white border border-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-white dark:hover:bg-yellow-400 dark:focus:ring-yellow-900">
+                                class="text-indigo-400 hover:text-white border border-indigo-400 hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-indigo-300 dark:text-indigo-300 dark:hover:text-white dark:hover:bg-indigo-400 dark:focus:ring-indigo-900">
                                 Tasdiqlash lozim bo'lganlar
                                 <span
-                                    class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-yellow-800 bg-yellow-200 rounded-full">
-                                    2
+                                    class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-indigo-800 bg-indigo-200 rounded-full">
+                                    {{$filter->where('ariza_holati', 'kutulmoqda')->count()}}
                                 </span>
                             </button>
                         </a>
-                        <a href="">
+                        <a href="{{route('murojatlar.list',  ['name' => 'no', 'category' => 'maqullandi'] )}}">
                             <button type="button"
                                 class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
                                 Tasdiqlangan ma'lumotlar
                                 <span
                                     class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-green-800 bg-green-200 rounded-full">
-                                    2
+                                    {{$filter->where('ariza_holati', 'maqullandi')->count()}}
                                 </span>
                             </button>
                         </a>
-                        <a href="">
+                        <a href="{{route('murojatlar.list',  ['name' => 'no', 'category' => 'rad_etildi'] )}}">
                             <button type="button"
                                 class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
                                 Rad etilgan ma'lumotlar
                                 <span
                                     class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-red-800 bg-red-200 rounded-full">
-                                    2
+                                    {{$filter->where('ariza_holati', 'rad_etildi')->count()}}
                                 </span>
                             </button>
                         </a>
@@ -154,12 +154,11 @@
                                                             {{ $i++ }}
                                                         </div>
                                                     </td>
-                                                    <th scope="row"
-                                                        class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                                        <img class="w-10 h-10 rounded-full" src="{{ $item->surat }}"
-                                                            alt="Jese image">
-                                                        <div class="ps-3">
-                                                            <div class="text-base font-semibold">{{ $item->name }}
+                                                    <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                                                        <img class="hidden sm:block w-10 h-10 rounded-full" style="object-fit: cover;" src="{{ $item->surat }}" alt="">
+                                                        <div class="ps-3" style="    width: 300px;">
+                                                            <div class="text-base font-semibold" style="max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                                                {{ $item->name }}
                                                             </div>
                                                             <div class="font-normal text-gray-500">
                                                                 @if ($item->professor_id)
@@ -172,6 +171,7 @@
                                                             </div>
                                                         </div>
                                                     </th>
+                                                    
                                                     <td class="px-6 py-4">
                                                         {{ $item->category_name }}
                                                     </td>

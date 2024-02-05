@@ -169,10 +169,11 @@
 
                                         @if ($item->moder_image)
                                         <img class="hidden sm:block w-10 h-10 rounded-full" style=" object-fit: cover;"
-                                            src="/uploads/moderator_images/{{ $item->moder_image }}" alt="Jese image">
+                                            src="/uploads/moderator_images/{{ $item->moder_image }}" alt="{{ $item->moder_fish }}">
+                                            
                                         @else
                                         <img class="hidden sm:block w-10 h-10 rounded-full"
-                                            src="https://cspi.uz/storage/app/media/2023/avgust/i.webp" alt="Jese image">
+                                            src="https://cspi.uz/storage/app/media/2023/avgust/i.webp" alt="{{ $item->moder_fish }}">
                                         @endif
                                         <div class="ps-3" style="width: 400px;">
                                             <div class="text-base font-semibold">

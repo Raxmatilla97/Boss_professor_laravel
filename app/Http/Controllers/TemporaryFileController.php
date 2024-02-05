@@ -75,17 +75,13 @@ class TemporaryFileController extends Controller
 
 
 
-    public function list(TemporaryFile $files, Request $request)
-    { dd($request);
-        if($request->has('category')) {
-            $category = $request->category;
-            dd($category);
-        } else {
-            //dd('Category parametri mavjud emas');
-        }
-        
+    public function list(TemporaryFile $files, Request $request, $name = null, $category = null)
+    { 
+        $filter = TemporaryFile::whereNotNull('ariza_holati')->get();
         // Agar name parametri mavjud bo'lsa, shu nomga mos keladigan moderatorlarni qidirish
-        if ($request) {
+        if ($request->filled('name') && $request->name != "no") {
+
+         
             $murojatlar = $files->when($request->filled('name'), function (Builder $query) use ($request) {
                 $name = '%' . $request->name . '%';
                 return $query->whereHas('filesProfessor', function (Builder $q) use ($name) {
@@ -97,14 +93,22 @@ class TemporaryFileController extends Controller
                     ->orWhereHas('filesOperator', function (Builder $q) use ($name) {
                         $q->where('oper_fish', 'like', $name);
                     });
-            })->where('ariza_holati', 'rad_etildi   ')
-                ->orderBy("created_at", 'desc')                
+            })->orderBy("created_at", 'desc')                
                 ->whereNotNull('ariza_holati')
                 ->paginate(20);
-                // dd($request->category);
+              
         } else {
-            // Agar name parametri mavjud bo'lmasa, barcha moderatorlarni tartib bilan olish
-            $murojatlar = $files->where('ariza_holati', 'maqullandi')->orderBy("created_at", 'desc')->whereNotNull('ariza_holati')->paginate(20);
+            
+            if($category){
+                // Agar name parametri mavjud bo'lmasa, barcha moderatorlarni tartib bilan olish
+                $murojatlar = $files->whereNotNull('ariza_holati')->Where('ariza_holati', $category)->orderBy("created_at", 'desc')->paginate(20);
+                
+            }else{
+                 // Agar name parametri mavjud bo'lmasa, barcha moderatorlarni tartib bilan olish
+                 $murojatlar = $files->whereNotNull('ariza_holati')->orderBy("created_at", 'desc')->paginate(20);
+                
+            }
+           
         }
     
 
@@ -154,7 +158,7 @@ class TemporaryFileController extends Controller
         IndexController::calculateOperatorsPoints($murojatlar);
 
         // Natijani ko'rsatish uchun ko'rinishni qaytarish
-        return view('reyting.dashboard.murojatlar-list', compact('murojatlar'));
+        return view('reyting.dashboard.murojatlar-list', compact('murojatlar', 'filter'));
     }
 
 
