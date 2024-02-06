@@ -57,31 +57,24 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('professors', ProfessorController::class);
 
-   Route::resource('moderator', ModeratorController::class)
-    ->except(['create', 'edit']); // 'create' va 'edit' methodlarini istisno qilish
+    Route::resource('moderator', ModeratorController::class)
+        ->except(['create', 'edit']); // 'create' va 'edit' methodlarini istisno qilish
 
-Route::get('/moderator/{professor_id}/create', [ModeratorController::class, 'create'])->name('moderator.create');
-Route::get('/moderator/{moderator_id}/edit', [ModeratorController::class, 'edit'])->name('moderator.edit');
+    Route::get('/moderator/{professor_id}/create', [ModeratorController::class, 'create'])->name('moderator.create');
+    Route::get('/moderator/{moderator_id}/edit', [ModeratorController::class, 'edit'])->name('moderator.edit');
 
 
-  Route::resource('operator', OperatorController::class)
-    ->except(['create', 'edit']); // 'create' va 'edit' methodlarini istisno qilish
+    Route::resource('operator', OperatorController::class)
+        ->except(['create', 'edit']); // 'create' va 'edit' methodlarini istisno qilish
 
-Route::get('/operator/create', [OperatorController::class, 'create'])->name('operator.create'); // 'create' routeni belgilash
-Route::get('/operator/{operator_id}/edit', [OperatorController::class, 'edit'])->name('operator.edit'); // 'edit' routeni belgilash
-
+    Route::get('/operator/create', [OperatorController::class, 'create'])->name('operator.create'); // 'create' routeni belgilash
+    Route::get('/operator/{operator_id}/edit', [OperatorController::class, 'edit'])->name('operator.edit'); // 'edit' routeni belgilash
 
     Route::get('/moderatorlar-list/{name?}', [ModeratorController::class, 'list'])->name('moderator.list');
 
     Route::get('/operatorlar-list/{name?}', [OperatorController::class, 'list'])->name('operator.list');
-    // dsddd
-    Route::get('/murojatlar-list', [TemporaryFileController::class, 'list'])->name('murojatlar.list');
 
-    Route::get('/murojatlar-list-search/{name?}', [TemporaryFileController::class, 'search'])->name('murojatlar.search');
-
-    Route::get('/murojatlar-list-category/{category?}', [TemporaryFileController::class, 'category'])->name('murojatlar.category');
-
-    // dsddd
+    Route::get('/murojatlar-list/{name?}/{category?}', [TemporaryFileController::class, 'list'])->name('murojatlar.list');
     Route::get('/murojatni-korish/{name?}', [TemporaryFileController::class, 'show'])->name('murojatlar.show');
 
     Route::post('/murojatni-tasdiqlash', [TemporaryFileController::class, 'murojatniTasdiqlash'])->name('murojatlar.murojatniTasdiqlash');

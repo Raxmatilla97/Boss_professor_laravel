@@ -54,7 +54,7 @@
                                 </span>
                             </button>
                         </a>
-                        <a href="{{route('murojatlar.category',  ['category' => 'kutulmoqda'])}}">
+                        <a href="{{route('murojatlar.list',  ['name' => 'no', 'category' => 'kutulmoqda'] )}}">
                             <button type="button"
                                 class="text-indigo-400 hover:text-white border border-indigo-400 hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-indigo-300 dark:text-indigo-300 dark:hover:text-white dark:hover:bg-indigo-400 dark:focus:ring-indigo-900">
                                 Tasdiqlash lozim bo'lganlar
@@ -64,7 +64,7 @@
                                 </span>
                             </button>
                         </a>
-                        <a href="{{route('murojatlar.category',  ['category' => 'maqullandi'] )}}">
+                        <a href="{{route('murojatlar.list',  ['name' => 'no', 'category' => 'maqullandi'] )}}">
                             <button type="button"
                                 class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
                                 Tasdiqlangan ma'lumotlar
@@ -74,7 +74,7 @@
                                 </span>
                             </button>
                         </a>
-                        <a href="{{route('murojatlar.category',  ['category' => 'rad_etildi'] )}}">
+                        <a href="{{route('murojatlar.list',  ['name' => 'no', 'category' => 'rad_etildi'] )}}">
                             <button type="button"
                                 class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
                                 Rad etilgan ma'lumotlar
@@ -88,7 +88,7 @@
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
                         <div class="p-6 text-gray-900 mb-8">
-                            <form class="mb-6" action="{{ route('murojatlar.search') }}" method="get">
+                            <form class="mb-6" action="{{ route('murojatlar.list') }}" method="get">
 
                                 <label for="default-search"
                                     class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Qidirish</label>
@@ -100,7 +100,7 @@
                                                 stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                                         </svg>
                                     </div>
-                                    <input type="input" name="name" id="default-search"
+                                    <input type="search" name="name" id="default-search"
                                         class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="Kordinator, Moderator yoki Operator ism familyasini yozing...">
                                     <button type="submit"

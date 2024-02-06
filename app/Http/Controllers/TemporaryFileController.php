@@ -72,12 +72,16 @@ class TemporaryFileController extends Controller
         }
     }
 
-    public function search(TemporaryFile $files, Request $request)
-    {
-       
-        $filter = TemporaryFile::whereNotNull('ariza_holati')->get();
-        if ($request->name) {
 
+
+
+    public function list(TemporaryFile $files, Request $request, $name = null, $category = null)
+    { 
+        $filter = TemporaryFile::whereNotNull('ariza_holati')->get();
+        // Agar name parametri mavjud bo'lsa, shu nomga mos keladigan moderatorlarni qidirish
+        if ($request->filled('name') && $request->name != "no") {
+
+         
             $murojatlar = $files->when($request->filled('name'), function (Builder $query) use ($request) {
                 $name = '%' . $request->name . '%';
                 return $query->whereHas('filesProfessor', function (Builder $q) use ($name) {
@@ -89,137 +93,24 @@ class TemporaryFileController extends Controller
                     ->orWhereHas('filesOperator', function (Builder $q) use ($name) {
                         $q->where('oper_fish', 'like', $name);
                     });
-            })->orderBy("created_at", 'desc')
+            })->orderBy("created_at", 'desc')                
                 ->whereNotNull('ariza_holati')
-                ->paginate(15);
-
+                ->paginate(20);
+              
         } else {
-            // Agar name parametri mavjud bo'lmasa, barcha moderatorlarni tartib bilan olish
-            $murojatlar = $files->whereNotNull('ariza_holati')->orderBy("created_at", 'desc')->paginate(15);
-
-        }
-
-
-
-        $murojatlar->getCollection()->each(function ($item) {
-            // name xususiyatini belgilash
-            $item->name = optional($item->filesProfessor)->fish
-                ?? optional($item->filesModerator)->moder_fish
-                ?? optional($item->filesOperator)->oper_fish
-                ?? 'F.I.SH aniqlanmadi!';
-        });
-
-
-        $murojatlar->getCollection()->each(function ($item) {
-            // Surat manzilini belgilash
-            if ($item->professor_id && $item->filesProfessor && $item->filesProfessor->image) {
-
-                $item->surat = '/uploads/professor_images/' . $item->filesProfessor->image;
-
-            } elseif ($item->moderator_id && $item->filesModerator && $item->filesModerator->moder_image) {
-
-                $item->surat = '/uploads/moderator_images/' . $item->filesModerator->moder_image;
-
-            } elseif ($item->operator_id && $item->filesOperator && $item->filesOperator->oper_image) {
-
-                $item->surat = '/uploads/operator_images/' . $item->filesOperator->oper_image;
-
-            } else {
-
-                $item->surat = "https://cspu.uz/storage/app/media/2023/avgust/i.webp"; // Standart surat manzili
+            
+            if($category){
+                // Agar name parametri mavjud bo'lmasa, barcha moderatorlarni tartib bilan olish
+                $murojatlar = $files->whereNotNull('ariza_holati')->Where('ariza_holati', $category)->orderBy("created_at", 'desc')->paginate(20);
+                
+            }else{
+                 // Agar name parametri mavjud bo'lmasa, barcha moderatorlarni tartib bilan olish
+                 $murojatlar = $files->whereNotNull('ariza_holati')->orderBy("created_at", 'desc')->paginate(20);
+                
             }
-        });
-
-        // Mavzularni chiqazish   
-        foreach ($murojatlar as $item) {
-            // mavzular metodi chaqirilmoqda va uning qaytarilgan qiymatlari saqlash
-            $mavzular_turi = TemporaryFileController::mavzular([]);
-
-            // $information->category_name qiymati mavjudligi va mavzular turi ichida mos kelishini tekshirish
-            if (isset($mavzular_turi[$item->category_name])) {
-                // Agar mos kelish topilsa, $information->category_name qiymatini yangilash
-                $item->category_name = $mavzular_turi[$item->category_name];
-
-            }
-
+           
         }
-
-        IndexController::calculateOperatorsPoints($murojatlar);
-
-        // Natijani ko'rsatish uchun ko'rinishni qaytarish
-        return view('reyting.dashboard.murojatlar-list', compact('murojatlar', 'filter'));
-    }
-
-    public function category(TemporaryFile $files, $category = null)
-    {
-
-        $filter = TemporaryFile::whereNotNull('ariza_holati')->get();
-
-        if ($category) {
-            // Agar name parametri mavjud bo'lmasa, barcha moderatorlarni tartib bilan olish
-            $murojatlar = $files->whereNotNull('ariza_holati')->where('ariza_holati', $category)->orderBy("created_at", 'desc')->paginate(15);
-        } else {
-            // Agar name parametri mavjud bo'lmasa, barcha moderatorlarni tartib bilan olish
-            $murojatlar = $files->whereNotNull('ariza_holati')->orderBy("created_at", 'desc')->paginate(15);
-        }
-
-
-
-        $murojatlar->getCollection()->each(function ($item) {
-            // name xususiyatini belgilash
-            $item->name = optional($item->filesProfessor)->fish
-                ?? optional($item->filesModerator)->moder_fish
-                ?? optional($item->filesOperator)->oper_fish
-                ?? 'F.I.SH aniqlanmadi!';
-        });
-
-
-        $murojatlar->getCollection()->each(function ($item) {
-            // Surat manzilini belgilash
-            if ($item->professor_id && $item->filesProfessor && $item->filesProfessor->image) {
-
-                $item->surat = '/uploads/professor_images/' . $item->filesProfessor->image;
-
-            } elseif ($item->moderator_id && $item->filesModerator && $item->filesModerator->moder_image) {
-
-                $item->surat = '/uploads/moderator_images/' . $item->filesModerator->moder_image;
-
-            } elseif ($item->operator_id && $item->filesOperator && $item->filesOperator->oper_image) {
-
-                $item->surat = '/uploads/operator_images/' . $item->filesOperator->oper_image;
-
-            } else {
-
-                $item->surat = "https://cspu.uz/storage/app/media/2023/avgust/i.webp"; // Standart surat manzili
-            }
-        });
-
-        // Mavzularni chiqazish   
-        foreach ($murojatlar as $item) {
-            // mavzular metodi chaqirilmoqda va uning qaytarilgan qiymatlari saqlash
-            $mavzular_turi = TemporaryFileController::mavzular([]);
-
-            // $information->category_name qiymati mavjudligi va mavzular turi ichida mos kelishini tekshirish
-            if (isset($mavzular_turi[$item->category_name])) {
-                // Agar mos kelish topilsa, $information->category_name qiymatini yangilash
-                $item->category_name = $mavzular_turi[$item->category_name];
-
-            }
-
-        }
-
-        IndexController::calculateOperatorsPoints($murojatlar);
-
-        // Natijani ko'rsatish uchun ko'rinishni qaytarish
-        return view('reyting.dashboard.murojatlar-list', compact('murojatlar', 'filter'));
-    }
-
-    public function list(TemporaryFile $files)
-    {
-        $filter = TemporaryFile::whereNotNull('ariza_holati')->get();
-
-        // Agar name parametri mavjud bo'lmasa, barcha moderatorlarni tartib bilan olish
-        $murojatlar = $files->whereNotNull('ariza_holati')->orderBy("created_at", 'desc')->paginate(15);
+    
 
         $murojatlar->getCollection()->each(function ($item) {
             // name xususiyatini belgilash
@@ -279,7 +170,7 @@ class TemporaryFileController extends Controller
 
         // Default surat buni o'zgartirsa bo'ladi
         $default_image = 'https://cspu.uz/storage/app/media/2023/avgust/i.webp';
-
+        
         // Ismni belgilash manzilini belgilash
         if ($information->professor_id && $information->filesProfessor) {
 
@@ -303,10 +194,10 @@ class TemporaryFileController extends Controller
 
         } elseif ($information->moderator_id && $information->filesModerator) {
 
-            // Moderator ballarini hisoblash
-            $moderator = $information->filesModerator;
-            ModeratorController::calculateModeratorPoints($moderator);
-            $information->custom_ball = $moderator->custom_ball;
+             // Moderator ballarini hisoblash
+             $moderator = $information->filesModerator;
+             ModeratorController::calculateModeratorPoints($moderator);
+             $information->custom_ball = $moderator->custom_ball;
 
             $information->fish_info = $information->filesModerator->moder_fish;
 
@@ -320,14 +211,14 @@ class TemporaryFileController extends Controller
             $information->small_info2 = $information->filesModerator->moder_small_info2;
 
             $information->muommo_text = $information->duch_kelingan_muommo;
-
+           
         } elseif ($information->operator_id && $information->filesOperator) {
 
-            // Operator ballarini hisoblash
-            $operator = $information->filesOperator;
-            OperatorController::calculateOperatorPoints($operator);
-            $information->custom_ball = $operator->custom_ball;
-
+             // Operator ballarini hisoblash
+             $operator = $information->filesOperator;
+             OperatorController::calculateOperatorPoints($operator);
+             $information->custom_ball = $operator->custom_ball;
+          
             $information->fish_info = $information->filesOperator->oper_fish;
 
             $information->surat = $information->filesOperator->oper_image
@@ -339,7 +230,7 @@ class TemporaryFileController extends Controller
 
             $information->small_info2 = $information->filesOperator->oper_small_info2;
 
-            $information->muommo_text = $information->duch_kelingan_muommo;
+           $information->muommo_text = $information->duch_kelingan_muommo;
             // dd($information->small_info2);
 
         } else {
@@ -435,7 +326,7 @@ class TemporaryFileController extends Controller
     }
 
     public function destroy($fileId)
-    {
+    {       
         $file = TemporaryFile::where('id', $fileId)->firstOrFail();
         $file->delete();
 
