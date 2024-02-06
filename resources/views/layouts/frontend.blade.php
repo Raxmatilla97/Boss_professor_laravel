@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <meta name="description" content="CSPU, Reyting, Klaster, Universitet, Chirchiq, Uzbekistan. Universitet haqida eng so'nggi yangiliklar, ma'lumotlar va tadbirlar.">
+    <meta name="keywords" content="CSPU, Reyting, Klaster, Universitet, Chirchiq, Uzbekistan">
+    <meta name="author" content="Fayziyev Raxmatilla">
+    <link rel="canonical" href="https://n-reyting.cspu.uz">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/flowbite.min.css" rel="stylesheet" />
