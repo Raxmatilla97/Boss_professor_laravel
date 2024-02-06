@@ -74,6 +74,7 @@ class TemporaryFileController extends Controller
 
     public function search(TemporaryFile $files, Request $request)
     {
+       
         $filter = TemporaryFile::whereNotNull('ariza_holati')->get();
         if ($request->name) {
 
