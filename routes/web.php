@@ -63,11 +63,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/moderator/{professor_id}/create', [ModeratorController::class, 'create'])->name('moderator.create');
     Route::get('/moderator/{moderator_id}/edit', [ModeratorController::class, 'edit'])->name('moderator.edit');
 
-
     Route::resource('operator', OperatorController::class)
         ->except(['create', 'edit']); // 'create' va 'edit' methodlarini istisno qilish
 
-    Route::get('/operator/create', [OperatorController::class, 'create'])->name('operator.create'); // 'create' routeni belgilash
+    Route::get('/operator/{id}/create', [OperatorController::class, 'create'])->name('operator.create'); // 'create' routeni belgilash
     Route::get('/operator/{operator_id}/edit', [OperatorController::class, 'edit'])->name('operator.edit'); // 'edit' routeni belgilash
 
     Route::get('/moderatorlar-list/{name?}', [ModeratorController::class, 'list'])->name('moderator.list');
