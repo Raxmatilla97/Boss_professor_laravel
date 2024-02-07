@@ -55,8 +55,10 @@
     @endif
 
 
-    <div class="flex justify-center p-8">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-8"> 
+    <div class="flex justify-center p-2">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-4 sm:p-8 lg:p-8">
+    
+    
         @foreach ($professors as $item)
             <!-- Sample Card -->
             <div class="bg-white p-5 rounded shadow-lg relative">

@@ -89,7 +89,7 @@
             <marquee behavior="" direction="" style="color: #fff; margin-top: 16px;">
             <div class="flex items-center">
                     <img src="https://www.clipartmax.com/png/full/162-1622253_clipart-warning-triangle-yellow-triangle-with-exclamation-point.png" class="mr-2 h-8">
-                    <p class="font-medium text-md text-white">Saytda sozlash ishlari olib borilishi mumkin! (Betta-test: v1.2.2)</p>
+                    <p class="font-medium text-md text-white">Saytda sozlash ishlari olib borilishi mumkin! (Betta-test: v1.2.5)</p>
                 </div>
             </marquee>
              
