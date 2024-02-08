@@ -43,9 +43,9 @@
         <div class="max-w-8xl mx-auto sm:px-1 lg:px-1">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-1 bg-white border-b border-gray-200">
-
+                   
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-
+                       
                         <div class="p-6 text-gray-900 mb-8">
                             <form class="mb-6" action="{{ route('operator.list') }}" method="get">
 
@@ -71,7 +71,9 @@
                             <!-- Nested accordion -->
                             <div id="accordion-nested-collapse-1" data-accordion="collapse"
                                 class="mt-4 mb-12 m-auto w-full">
-
+                            @php
+                               $i = ($operators->currentPage() - 1) * $operators->perPage() + 1;
+                            @endphp
                                 @foreach ($operators as $items)
                                     <h2 id="accordion-nested-collapse-heading-{{ $items->id }}">
                                         <button type="button"
@@ -83,7 +85,7 @@
                                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                                 <td class="w-4 p-4">
                                                     <div class="flex items-center">
-                                                        №{{ $loop->iteration }}
+                                                        №{{ $i++ }}
                                                     </div>
                                                 </td>
                                                 
@@ -201,8 +203,10 @@
 
                             </div>
                             <!-- End: Nested accordion -->
+                              {{ $operators->links()}}
                         </div>
                     </div>
+                  
                 </div>
             </div>
         </div>

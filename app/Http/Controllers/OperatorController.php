@@ -77,8 +77,12 @@ class OperatorController extends Controller
             $fileName = 'default.webp'; // Bu yerda sizning default rasmingizning nomini kiriting
             // E'tibor bering, default rasm oldindan sizning public papkangizda bo'lishi kerak
         }
-        
 
+        $name_tekshirish =  Operator::where('oper_fish', $validated['oper_fish'])->first();
+
+        if($name_tekshirish){
+            return redirect()->back()->with('error', "$name_tekshirish->oper_fish nomli Operator ro'yxatdan o'tqazilgan!");
+        }
         
 
         // Slug uchun generatsiya kodi

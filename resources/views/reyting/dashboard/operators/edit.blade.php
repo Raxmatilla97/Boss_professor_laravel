@@ -9,7 +9,11 @@
     <div class="py-2">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-
+            @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
             <!-- Breadcrumb -->
             <nav class="flex px-5 mb-4 py-3 text-gray-700 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700"
                 aria-label="Breadcrumb">

@@ -55,7 +55,11 @@
                                     <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Moderator qidirish</button>
                                 </div>
                             </form>
+                            @php
+                            $i = ($moderators->currentPage() - 1) * $moderators->perPage() + 1;
+                             @endphp
 
+                           
                             <div id="accordion-color" data-accordion="collapse"
                                 data-active-classes="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white">
     
@@ -69,7 +73,7 @@
                                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                                 <td class="w-4 p-4">
                                                     <div class="flex items-center">
-                                                        №{{ $loop->iteration }}
+                                                        №{{ $i++ }}
                                                     </div>
                                                 </td>
                                                 <th scope="row"
@@ -324,6 +328,7 @@
     
                                                 </div>
                                                 <!-- End: Nested accordion -->
+                                                {{ $moderators->links()}}
                                             </div>
                                             <div class="inline-flex items-center justify-center w-full ">
                                                 <hr class="w-full h-1 my-8 bg-gray-200 border-0 rounded dark:bg-gray-700">
