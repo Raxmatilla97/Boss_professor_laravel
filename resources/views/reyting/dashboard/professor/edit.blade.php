@@ -33,36 +33,60 @@
                 <!-- Tab 1 kontenti -->
                 <div id="prof" class="tab-content">
 
-                   {{-- Professor ma'lumotlarini tahrirlash formasi fragmenti --}}
+                  <!-- Professor ma'lumotlarini tahrirlash formasi fragmenti -->
                     @include('reyting.dashboard.professor.frogments.edit.professorEditForm')
                 </div>
 
                 <!-- Tab 2 kontenti -->
                 <div id="moder" class="hidden tab-content">
-                    {{-- Sahifada yangi moderator yaratish formasi frogmenti --}}
-                    {{-- @include('reyting.dashboard.professor.frogments.edit.moderatorCreateForm')               --}}
+                <!-- Sahifada yangi moderator yaratish formasi frogmenti -->
+                {{-- @include('reyting.dashboard.professor.frogments.edit.moderatorCreateForm') --}}
 
-                   
-                   
-                    {{-- Sahifada moderatorlar ro'yxatini chiqarish frogmenti --}}
+                                      
+                   <!-- Sahifada moderatorlar royxatini chiqarish frogmenti -->
                     @include('reyting.dashboard.professor.frogments.edit.moderatorsList')
 
-                    <!-- Boshqa tablarning kontentlarini ham shu tarzda qo'shing -->
+                    <!-- Boshqa tablarning kontentlarini ham shu tarzda qoshing -->
                 </div>
 
                 <!-- Tab 3 kontenti -->
                 <div id="oper" class="hidden tab-content">
-                    {{-- Sahifada moderatorlar ro'yxatini chiqarish frogmenti --}}
+                    <!-- Sahifada moderatorlar ro'yxatini chiqarish frogmenti -->
                     {{-- @include('reyting.dashboard.professor.frogments.edit.OperatorCreateForm') --}}
 
-                     {{-- Sahifada moderatorlar ro'yxatini chiqarish frogmenti --}}
+                    <!--  Sahifada moderatorlar ro'yxatini chiqarish frogmenti -->
                      @include('reyting.dashboard.professor.frogments.edit.OperatorList')
                 </div>
                 </div>
 
             </div>
         </div>
-
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var fragment = window.location.hash.substr(1); // URL dagi fragmentni olish
+                var tabsToHide = ["prof", "moder"]; // Yashiriladigan tablarning ID'lari
+            
+                if (fragment === "oper") { // agar fragment "oper" ga teng bo'lsa
+                    var tabOper = document.getElementById("oper"); // HTML-da "oper" ID ga ega bo'lgan tabni topish
+                    if (tabOper) { // agar tab topilsa
+                        tabOper.classList.remove("hidden"); // "hidden" klassini olib tashlash
+                        // "oper" ID'siga ega bo'lgan tabni ko'rsatish
+                        // ...
+                        // "oper" ID'siga ega bo'lgan tabni ekran yuqorisiga olish
+                        tabOper.scrollIntoView();
+                    }
+            
+                    // Barcha tablarni yashirish
+                    tabsToHide.forEach(function(tabId) {
+                        var tab = document.getElementById(tabId);
+                        if (tab) {
+                            tab.classList.add("hidden");
+                        }
+                    });
+                }
+            });
+            
+        </script>
 
         {{-- Sahifada yangilanish qilganda o'ng tarafda chiqadigan bildirishnoma --}}
         @include('reyting.dashboard.professor.frogments.edit.scripts')

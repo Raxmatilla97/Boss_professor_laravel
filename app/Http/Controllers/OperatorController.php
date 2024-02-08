@@ -123,7 +123,7 @@ class OperatorController extends Controller
             'moderator_id' => $request->moderator_id
         ]);
 
-        return redirect()->route('professors.edit', $request->professor_id)->with('toaster', ['success', "(" . $validated['oper_fish'] . ") operator sifatida yaratildi!"]);
+        return redirect()->route('professors.edit', [$request->professor_id, '#oper'])->with('toaster', ['success', "(" . $validated['oper_fish'] . ") operator sifatida yaratildi!"]);
     }
 
     /**
