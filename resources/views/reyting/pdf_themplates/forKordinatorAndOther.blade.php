@@ -182,7 +182,7 @@
         document.getElementById('download').addEventListener('click', function() {
             var element = document.getElementById('content');
             var opt = {
-                margin:       [30, 0, 30, 0], // top, left, bottom, right
+                margin:       [40, 0, 40, 0], // top, left, bottom, right
                 filename:     'download.pdf',
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { scale: 2 },
