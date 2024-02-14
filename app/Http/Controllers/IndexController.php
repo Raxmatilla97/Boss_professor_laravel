@@ -58,6 +58,9 @@ class IndexController extends Controller
                 $info->fish = $user->moder_fish;
                 $info->image = "uploads/moderator_images/" . $user->moder_image;
                 $info->small_info = $user->moder_small_info;
+
+                 // Moderator va unga bog'liq moderatorlar uchun ballarni hisoblash
+                 $info->custom_ball = $this->calculatePointsForFiles($info->files ?? []);
             } else {
                 abort(404);
             }
@@ -68,6 +71,9 @@ class IndexController extends Controller
                 $info->fish = $user->oper_fish;
                 $info->image = "uploads/operator_images/" . $user->oper_image;
                 $info->small_info = $user->oper_small_info;
+
+                 // Operator va unga bog'liq moderatorlar uchun ballarni hisoblash
+                 $info->custom_ball = $this->calculatePointsForFiles($info->files ?? []);
             } else {
                 abort(404);
             }
