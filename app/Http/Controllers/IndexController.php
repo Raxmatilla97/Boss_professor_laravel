@@ -80,7 +80,7 @@ class IndexController extends Controller
 
 
         // Paginatsiya uchun default sahifa limiti
-        $perPage = 3;
+        $perPage = 20;
 
         // Get the current page from the request query parameters
         $page = request()->input('page', 1);
