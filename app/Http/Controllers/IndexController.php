@@ -7,10 +7,12 @@ use App\Models\Moderator;
 use App\Models\Operator;
 use App\Models\Files;
 use App\Models\TemporaryFile;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class IndexController extends Controller
 {
@@ -28,6 +30,73 @@ class IndexController extends Controller
         $this->calculateProfessorsPoints($professors);
 
         return view('welcome', compact('professors'));
+    }
+
+
+    public function showDetails(Request $request)
+    {
+
+        if (isset($request->professor_id)) {
+            $user = Professor::findOrFail($request->professor_id);
+            $info = $user;
+            if ($user->status == true) {
+                $info->fish = $user->fish;
+                $info->image = "uploads/professor_images/" . $user->image;
+                $info->small_info = $user->small_info;
+
+                // Professor va unga bog'liq moderatorlar uchun ballarni hisoblash
+                $info->custom_ball = $this->calculatePointsForFiles($info->files ?? []);
+
+            } else {
+                abort(404);
+            }
+
+        } elseif (isset($request->moderator_id)) {
+            $user = Moderator::findOrFail($request->moderator_id);
+            $info = $user;
+            if ($user->moder_status == true) {
+                $info->fish = $user->moder_fish;
+                $info->image = "uploads/moderator_images/" . $user->moder_image;
+                $info->small_info = $user->moder_small_info;
+            } else {
+                abort(404);
+            }
+        } elseif (isset($request->operator_id)) {
+            $user = Operator::findOrFail($request->operator_id);
+            $info = $user;
+            if ($user->oper_status == true) {
+                $info->fish = $user->oper_fish;
+                $info->image = "uploads/operator_images/" . $user->oper_image;
+                $info->small_info = $user->oper_small_info;
+            } else {
+                abort(404);
+            }
+        } else {
+            abort(404);
+        }
+
+
+
+
+
+        // Paginatsiya uchun default sahifa limiti
+        $perPage = 3;
+
+        // Get the current page from the request query parameters
+        $page = request()->input('page', 1);
+
+        // $info->fayllar to'plamida paginatsiyani qo'lda yozilgan kodi
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $paginator = new LengthAwarePaginator(
+            $info->files->sortByDesc('created_at')->forPage($currentPage, $perPage),
+            $info->files->count(),
+            $perPage,
+            $currentPage,
+            ['path' => LengthAwarePaginator::resolveCurrentPath()]
+        );
+
+
+        return view('reyting.frontend.showDetails', compact('info', 'paginator'));
     }
 
     /**
@@ -57,8 +126,8 @@ class IndexController extends Controller
             "site_url.string" => "Sayt manzili matindan iborat bo'lishi kerak!",
             "site_url.min" => "Sayt manzili uzunligi eng kamida min: harfdam kotta bo'lishi kerak!",
             "site_url.max" => "Sayt manzili uzunligi eng ko'pida max: harfdam kichik bo'lishi kerak!",
-          
-          
+
+
 
         ]);
 
@@ -74,7 +143,7 @@ class IndexController extends Controller
 
         // Murojaat qabul bo'lgach yana murojaat yuborishni so'raganda kerak bo'ladigan number_slugni olish kodi
         $number_slug = $request->slug_number;
-       
+
         // Murojatda fayl yuklangan yoki yuklanmaganligiga qarab uni qabul qilish shartlari 
         if (empty($request->document)) {
 
@@ -88,7 +157,7 @@ class IndexController extends Controller
                 'filename' => null,
                 'folder' => null
             ]);
-          
+
             return redirect()->route('site.index')->with([
                 'success' => $infogramma,
                 'number_slug' => $number_slug
@@ -109,7 +178,7 @@ class IndexController extends Controller
                     'ariza_holati' => "kutulmoqda",
                     'duch_kelingan_muommo' => $validated['duch_kelingan_muommo'],
                 ]);
-              
+
                 return redirect()->route('site.index')->with([
                     'success' => $infogramma,
                     'number_slug' => $number_slug
@@ -215,7 +284,7 @@ class IndexController extends Controller
             ->where('slug_number', $slug_number)
             ->firstOrFail();
 
-      
+
         // Professor va unga bog'liq moderatorlar uchun ballarni hisoblash
         $professor->custom_ball = $this->calculatePointsForFiles($professor->files ?? []);
 

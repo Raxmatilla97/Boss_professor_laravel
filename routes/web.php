@@ -27,6 +27,8 @@ use App\Http\Controllers\TemporaryFileController;
 Route::get('/', [IndexController::class, 'index'])->name('site.index');
 Route::get('/show/{slug_number?}', [IndexController::class, 'show'])->name('show.index');
 
+Route::get('/show-details/{id?}', [IndexController::class, 'showDetails'])->name('showDetails.index');
+
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');

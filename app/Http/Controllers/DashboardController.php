@@ -79,12 +79,12 @@ class DashboardController extends Controller
         // O'tgan haftadagi murojaatlar sonini hisoblash
         $previousWeekStart = Carbon::now()->subWeek()->startOfWeek();
         $previousWeekEnd = Carbon::now()->subWeek()->endOfWeek();
-        $previousWeekCount = TemporaryFile::whereBetween('created_at', [$previousWeekStart, $previousWeekEnd])->count();
+        $previousWeekCount = TemporaryFile::whereBetween('updated_at', [$previousWeekStart, $previousWeekEnd])->count();
 
         // Bu haftadagi murojaatlar sonini hisoblash
         $thisWeekStart = Carbon::now()->startOfWeek();
         $thisWeekEnd = Carbon::now()->endOfWeek();
-        $thisWeekCount = TemporaryFile::whereBetween('created_at', [$thisWeekStart, $thisWeekEnd])->count();
+        $thisWeekCount = TemporaryFile::whereBetween('updated_at', [$thisWeekStart, $thisWeekEnd])->count();
 
         // Foizdagi o'zgarishni hisoblash
         if ($previousWeekCount > 0) {
@@ -120,7 +120,7 @@ class DashboardController extends Controller
         $moderators = Moderator::all();
         $chartData2 = ModeratorChartController::prepareChartData2($moderators);
 
-        // Eng ko'p ball to'plagan Kordinatorni aniqlash
+        // Eng ko'p ball to'plagan Moderatorni aniqlash
         $moderatorData2 = IndexController::calculateModeratorsPoints($moderators);
         $engKopBalliModerator = $moderatorData2->sortByDesc('custom_ball')->first();
 
@@ -135,9 +135,9 @@ class DashboardController extends Controller
          $operators = Operator::all();
          $chartDataOperator = OperatorChartController::prepareChartData3($operators);
 
-        // Eng ko'p ball to'plagan Kordinatorni aniqlash
+        // Eng ko'p ball to'plagan Operatorni aniqlash
         $operatorData3 = IndexController::calculateOperatorsPoints($operators);
-        $engKopBalliOperator3 = $operatorData3->sortByDesc('custom_ball')->first();
+        $engKopBalliOperator3 = $operatorData3->sortByDesc('oper_custom_ball')->first();
 
         // Umumiy professorlar pointlarini bir oy davomida o'sgan yoki o'smaganini aniqlash
         $umumiyPointlargaQarabOsish3 = OperatorChartController::calculatePercentageChange($operators);
