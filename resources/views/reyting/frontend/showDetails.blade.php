@@ -37,7 +37,7 @@
 
                         <div class="flex flex-col items-center px-4 sm:px-0 lg:flex-row lg:justify-between">
                             <div class="mb-4 lg:mb-0">
-                                <h3 class="text-base font-semibold leading-7 text-gray-900">Kordinator haqida ma'lumotlar
+                                <h3 class="text-base font-semibold leading-7 text-gray-900">Foydalanuvchi haqida ma'lumotlar
                                 </h3>
                                 <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Reyting ballari o'zgarib turushi
                                     mumkin!</p>
@@ -73,7 +73,7 @@
                                         {{ $info->fish }}</dd>
                                 </div>
                                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                    <dt class="text-md font-medium leading-6 text-gray-900">Kordinatorning shaxsiy ballari
+                                    <dt class="text-md font-medium leading-6 text-gray-900">Foydalanuvchining shaxsiy ballari
                                     </dt>
                                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                                         <span
@@ -105,7 +105,7 @@
                     <p class="text-gray-500 dark:text-gray-400 pl-4 m-auto text-center" style="width: 90%">
                         <span
                             class="bg-gray-100 text-gray-800 text-md font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">
-                            Kordinator tomonidan yuklangan fayllar va ularga qo'yilgan ballar:</span>
+                            Foydalanuvchi tomonidan yuklangan fayllar va ularga qo'yilgan ballar:</span>
                     </p>
                     <div class="px-0 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
                         <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
