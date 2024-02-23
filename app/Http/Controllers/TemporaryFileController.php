@@ -75,10 +75,99 @@ class TemporaryFileController extends Controller
 
 
 
-    public function list(TemporaryFile $files, Request $request, $name = null, $category = null)
+    // public function list(TemporaryFile $files, Request $request, $name = null, $category = null)
+    // { 
+        
+    //     $filter = TemporaryFile::whereNotNull('ariza_holati')->get();
+    //     // Agar name parametri mavjud bo'lsa, shu nomga mos keladigan userlarni qidirish
+    //     if ($request->filled('name') && $request->name != "no") {
+
+         
+    //         $murojatlar = $files->when($request->filled('name'), function (Builder $query) use ($request) {
+    //             $name = '%' . $request->name . '%';
+    //             return $query->whereHas('filesProfessor', function (Builder $q) use ($name) {
+    //                 $q->where('fish', 'like', $name);
+    //             })
+    //                 ->orWhereHas('filesModerator', function (Builder $q) use ($name) {
+    //                     $q->where('moder_fish', 'like', $name);
+    //                 })
+    //                 ->orWhereHas('filesOperator', function (Builder $q) use ($name) {
+    //                     $q->where('oper_fish', 'like', $name);
+    //                 });
+    //         })->orderBy("created_at", 'desc')                
+    //             ->whereNotNull('ariza_holati')
+    //             ->paginate(4);
+              
+    //     } else {
+            
+    //         if($category){
+    //             // Agar name parametri mavjud bo'lmasa, barcha userlarni tartib bilan olish
+    //             $murojatlar = $files->whereNotNull('ariza_holati')->Where('ariza_holati', $category)->orderBy("created_at", 'desc')->paginate(4);
+                
+    //         }else{
+    //              // Agar name parametri mavjud bo'lmasa, barcha userlarni tartib bilan olish
+    //              $murojatlar = $files->whereNotNull('ariza_holati')->orderBy("created_at", 'desc')->paginate(4);
+                
+    //         }
+           
+    //     }
+    
+
+    //     $murojatlar->getCollection()->each(function ($item) {
+    //         // name xususiyatini belgilash
+    //         $item->name = optional($item->filesProfessor)->fish
+    //             ?? optional($item->filesModerator)->moder_fish
+    //             ?? optional($item->filesOperator)->oper_fish
+    //             ?? 'F.I.SH aniqlanmadi!';
+    //     });
+
+
+    //     $murojatlar->getCollection()->each(function ($item) {
+    //         // Surat manzilini belgilash
+    //         if ($item->professor_id && $item->filesProfessor && $item->filesProfessor->image) {
+
+    //             $item->surat = '/uploads/professor_images/' . $item->filesProfessor->image;
+
+    //         } elseif ($item->moderator_id && $item->filesModerator && $item->filesModerator->moder_image) {
+
+    //             $item->surat = '/uploads/moderator_images/' . $item->filesModerator->moder_image;
+
+    //         } elseif ($item->operator_id && $item->filesOperator && $item->filesOperator->oper_image) {
+
+    //             $item->surat = '/uploads/operator_images/' . $item->filesOperator->oper_image;
+
+    //         } else {
+
+    //             $item->surat = "https://cspu.uz/storage/app/media/2023/avgust/i.webp"; // Standart surat manzili
+    //         }
+    //     });
+
+    //     // Mavzularni chiqazish   
+    //     foreach ($murojatlar as $item) {
+    //         // mavzular metodi chaqirilmoqda va uning qaytarilgan qiymatlari saqlash
+    //         $mavzular_turi = TemporaryFileController::mavzular([]);
+
+    //         // $information->category_name qiymati mavjudligi va mavzular turi ichida mos kelishini tekshirish
+    //         if (isset($mavzular_turi[$item->category_name])) {
+    //             // Agar mos kelish topilsa, $information->category_name qiymatini yangilash
+    //             $item->category_name = $mavzular_turi[$item->category_name];
+
+    //         }
+
+    //     }
+
+    //     IndexController::calculateOperatorsPoints($murojatlar);
+
+    //     // Natijani ko'rsatish uchun ko'rinishni qaytarish
+    //     return view('reyting.dashboard.murojatlar-list', compact('murojatlar', 'filter'));
+    // }
+
+
+    public function list(TemporaryFile $files, Request $request)
     { 
+        dd($request);
         $filter = TemporaryFile::whereNotNull('ariza_holati')->get();
-        // Agar name parametri mavjud bo'lsa, shu nomga mos keladigan moderatorlarni qidirish
+        // Agar name parametri mavjud bo'lsa, shu nomga mos keladigan userlarni qidirish
         if ($request->filled('name') && $request->name != "no") {
 
          
@@ -95,17 +184,17 @@ class TemporaryFileController extends Controller
                     });
             })->orderBy("created_at", 'desc')                
                 ->whereNotNull('ariza_holati')
-                ->paginate(20);
+                ->paginate(4);
               
         } else {
             
             if($category){
-                // Agar name parametri mavjud bo'lmasa, barcha moderatorlarni tartib bilan olish
-                $murojatlar = $files->whereNotNull('ariza_holati')->Where('ariza_holati', $category)->orderBy("created_at", 'desc')->paginate(20);
+                // Agar name parametri mavjud bo'lmasa, barcha userlarni tartib bilan olish
+                $murojatlar = $files->whereNotNull('ariza_holati')->Where('ariza_holati', $category)->orderBy("created_at", 'desc')->paginate(4);
                 
             }else{
-                 // Agar name parametri mavjud bo'lmasa, barcha moderatorlarni tartib bilan olish
-                 $murojatlar = $files->whereNotNull('ariza_holati')->orderBy("created_at", 'desc')->paginate(20);
+                 // Agar name parametri mavjud bo'lmasa, barcha userlarni tartib bilan olish
+                 $murojatlar = $files->whereNotNull('ariza_holati')->orderBy("created_at", 'desc')->paginate(4);
                 
             }
            
