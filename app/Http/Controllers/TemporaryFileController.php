@@ -229,7 +229,7 @@ class TemporaryFileController extends Controller
 
 
             // Agar name parametri mavjud bo'lmasa, barcha userlarni tartib bilan olish
-            $murojatlar = $files->whereNotNull('ariza_holati')->orderBy("created_at", 'desc')->paginate(4);
+            $murojatlar = $files->whereNotNull('ariza_holati')->orderBy("created_at", 'desc')->paginate(15);
 
 
 
