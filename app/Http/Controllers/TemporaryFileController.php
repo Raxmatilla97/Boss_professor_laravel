@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TemporaryFile;
+use DateTime;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Helpers\date_helpers;
+use App\Models\TemporaryFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ProfessorController;
 
 class TemporaryFileController extends Controller
@@ -77,12 +80,12 @@ class TemporaryFileController extends Controller
 
     // public function list(TemporaryFile $files, Request $request, $name = null, $category = null)
     // { 
-        
+
     //     $filter = TemporaryFile::whereNotNull('ariza_holati')->get();
     //     // Agar name parametri mavjud bo'lsa, shu nomga mos keladigan userlarni qidirish
     //     if ($request->filled('name') && $request->name != "no") {
 
-         
+
     //         $murojatlar = $files->when($request->filled('name'), function (Builder $query) use ($request) {
     //             $name = '%' . $request->name . '%';
     //             return $query->whereHas('filesProfessor', function (Builder $q) use ($name) {
@@ -97,21 +100,21 @@ class TemporaryFileController extends Controller
     //         })->orderBy("created_at", 'desc')                
     //             ->whereNotNull('ariza_holati')
     //             ->paginate(4);
-              
+
     //     } else {
-            
+
     //         if($category){
     //             // Agar name parametri mavjud bo'lmasa, barcha userlarni tartib bilan olish
     //             $murojatlar = $files->whereNotNull('ariza_holati')->Where('ariza_holati', $category)->orderBy("created_at", 'desc')->paginate(4);
-                
+
     //         }else{
     //              // Agar name parametri mavjud bo'lmasa, barcha userlarni tartib bilan olish
     //              $murojatlar = $files->whereNotNull('ariza_holati')->orderBy("created_at", 'desc')->paginate(4);
-                
+
     //         }
-           
+
     //     }
-    
+
 
     //     $murojatlar->getCollection()->each(function ($item) {
     //         // name xususiyatini belgilash
@@ -163,43 +166,75 @@ class TemporaryFileController extends Controller
     // }
 
 
+
     public function list(TemporaryFile $files, Request $request)
-    { 
-        dd($request);
+    {
+        if ($request->filled('category')) {
+            if ($request->category == 'all') {
+                $request->category = "all";
+            } elseif ($request->category == 'must_be_confirmed') {
+                $request->category = "kutulmoqda";
+            } elseif ($request->category == 'approved') {
+                $request->category = "maqullandi";
+            } elseif ($request->category == 'rejected') {
+                $request->category = "rad_etildi";
+            }
+            // dd($request->category);
+        }
+
+        $form_info = [
+            'category' => $request->get('category'),
+            'name' => $request->get('name'),
+            'sort' => $request->get('sort'),
+            'start_data' => $request->get('start_data'),
+            'end_data' => $request->get('end_data'),
+        ];
+
+        $start_date = DateTime::createFromFormat('m/d/Y', $request->input('start_data'));
+        $end_date = DateTime::createFromFormat('m/d/Y', $request->input('end_data   '));
+
+        
         $filter = TemporaryFile::whereNotNull('ariza_holati')->get();
         // Agar name parametri mavjud bo'lsa, shu nomga mos keladigan userlarni qidirish
-        if ($request->filled('name') && $request->name != "no") {
-
-         
-            $murojatlar = $files->when($request->filled('name'), function (Builder $query) use ($request) {
-                $name = '%' . $request->name . '%';
-                return $query->whereHas('filesProfessor', function (Builder $q) use ($name) {
-                    $q->where('fish', 'like', $name);
-                })
+        if ($request->filled('name') || $request->filled('category') || $request->filled('sort') || $request->filled('start_data') && $request->filled('end_data')) {
+       
+            $murojatlar = $files
+            // Constrain by category if requested and valid
+            ->when($request->filled('category') && $request->category != "all", function (Builder $query) use ($request) {
+                $query->where('ariza_holati', $request->category);
+            })
+            // Search for names if requested
+            ->when($request->filled('name'), function (Builder $query) use ($request) {
+                $name = '%' . $request->name . '%'; // Escape for LIKE queries
+                $query->where(function (Builder $q) use ($name) {
+                    $q->whereHas('filesProfessor', function (Builder $q) use ($name) {
+                        $q->where('fish', 'like', $name);
+                    })
                     ->orWhereHas('filesModerator', function (Builder $q) use ($name) {
                         $q->where('moder_fish', 'like', $name);
                     })
                     ->orWhereHas('filesOperator', function (Builder $q) use ($name) {
                         $q->where('oper_fish', 'like', $name);
                     });
-            })->orderBy("created_at", 'desc')                
-                ->whereNotNull('ariza_holati')
-                ->paginate(4);
-              
+                });
+            })
+            // Order and paginate
+            ->orderBy("created_at", $request->sort)
+            ->whereNotNull('ariza_holati')
+            ->when($start_date && $end_date, function (Builder $query) use ($start_date, $end_date) {
+                $query->whereBetween('created_at', [$start_date, $end_date]);
+            })
+            ->paginate(15);
         } else {
-            
-            if($category){
-                // Agar name parametri mavjud bo'lmasa, barcha userlarni tartib bilan olish
-                $murojatlar = $files->whereNotNull('ariza_holati')->Where('ariza_holati', $category)->orderBy("created_at", 'desc')->paginate(4);
-                
-            }else{
-                 // Agar name parametri mavjud bo'lmasa, barcha userlarni tartib bilan olish
-                 $murojatlar = $files->whereNotNull('ariza_holati')->orderBy("created_at", 'desc')->paginate(4);
-                
-            }
-           
+
+
+            // Agar name parametri mavjud bo'lmasa, barcha userlarni tartib bilan olish
+            $murojatlar = $files->whereNotNull('ariza_holati')->orderBy("created_at", 'desc')->paginate(4);
+
+
+
         }
-    
+
 
         $murojatlar->getCollection()->each(function ($item) {
             // name xususiyatini belgilash
@@ -247,11 +282,10 @@ class TemporaryFileController extends Controller
         IndexController::calculateOperatorsPoints($murojatlar);
 
         // Natijani ko'rsatish uchun ko'rinishni qaytarish
-        return view('reyting.dashboard.murojatlar-list', compact('murojatlar', 'filter'));
+        return view('reyting.dashboard.murojatlar-list', compact('murojatlar', 'filter', 'form_info'));
     }
 
-
-
+    
     public function show(TemporaryFile $temporaryFile, $id_number)
     {
         // Yuborilgan faylni qidirish
@@ -259,7 +293,7 @@ class TemporaryFileController extends Controller
 
         // Default surat buni o'zgartirsa bo'ladi
         $default_image = 'https://cspu.uz/storage/app/media/2023/avgust/i.webp';
-        
+
         // Ismni belgilash manzilini belgilash
         if ($information->professor_id && $information->filesProfessor) {
 
@@ -283,10 +317,10 @@ class TemporaryFileController extends Controller
 
         } elseif ($information->moderator_id && $information->filesModerator) {
 
-             // Moderator ballarini hisoblash
-             $moderator = $information->filesModerator;
-             ModeratorController::calculateModeratorPoints($moderator);
-             $information->custom_ball = $moderator->custom_ball;
+            // Moderator ballarini hisoblash
+            $moderator = $information->filesModerator;
+            ModeratorController::calculateModeratorPoints($moderator);
+            $information->custom_ball = $moderator->custom_ball;
 
             $information->fish_info = $information->filesModerator->moder_fish;
 
@@ -300,14 +334,14 @@ class TemporaryFileController extends Controller
             $information->small_info2 = $information->filesModerator->moder_small_info2;
 
             $information->muommo_text = $information->duch_kelingan_muommo;
-           
+
         } elseif ($information->operator_id && $information->filesOperator) {
 
-             // Operator ballarini hisoblash
-             $operator = $information->filesOperator;
-             OperatorController::calculateOperatorPoints($operator);
-             $information->custom_ball = $operator->custom_ball;
-          
+            // Operator ballarini hisoblash
+            $operator = $information->filesOperator;
+            OperatorController::calculateOperatorPoints($operator);
+            $information->custom_ball = $operator->custom_ball;
+
             $information->fish_info = $information->filesOperator->oper_fish;
 
             $information->surat = $information->filesOperator->oper_image
@@ -319,7 +353,7 @@ class TemporaryFileController extends Controller
 
             $information->small_info2 = $information->filesOperator->oper_small_info2;
 
-           $information->muommo_text = $information->duch_kelingan_muommo;
+            $information->muommo_text = $information->duch_kelingan_muommo;
             // dd($information->small_info2);
 
         } else {
@@ -415,7 +449,7 @@ class TemporaryFileController extends Controller
     }
 
     public function destroy($fileId)
-    {       
+    {
         $file = TemporaryFile::where('id', $fileId)->firstOrFail();
         $file->delete();
 

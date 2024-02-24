@@ -327,8 +327,7 @@
     
     
                                                 </div>
-                                                <!-- End: Nested accordion -->
-                                                {{ $moderators->links()}}
+                                             
                                             </div>
                                             <div class="inline-flex items-center justify-center w-full ">
                                                 <hr class="w-full h-1 my-8 bg-gray-200 border-0 rounded dark:bg-gray-700">
@@ -340,8 +339,15 @@
                                 @endforeach
     
     
-                            </div>
-                        </div>
+                                </div>   
+                                <div class="mt-6">
+<!-- End: Nested accordion -->
+                                                    {{ $moderators->links()}}
+
+                                </div>
+                                
+                        </div>   
+                     
                     </div>
                 </div>
             </div>
