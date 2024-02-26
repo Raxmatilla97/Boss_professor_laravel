@@ -55,7 +55,12 @@
                                     <label for="category1"
                                         class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                                         <div class="block">
-                                            <div class="w-full text-lg font-semibold"> Barcha ma'lumotlar</div>
+                                            <div class="w-full text-lg font-semibold"> Barcha ma'lumotlar -
+                                                <span
+                                                class="inline-flex items-center justify-center w-auto h-4 ms-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
+                                                {{$filter->count()}}
+                                            </span>    
+                                            </div>
                                             <div class="w-full"> Barcha kelgan ma'lumotlar</div>
                                         </div>
                                         <svg class="w-5 h-5 ms-3 rtl:rotate-180" aria-hidden="true"
@@ -71,7 +76,12 @@
                                     <label for="category2"
                                         class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-indigo-600 peer-checked:text-indigo-600 hover:text-indigo-600 hover:bg-indigo-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                                         <div class="block">
-                                            <div class="w-full text-lg font-semibold">Tasdiqlash kerak</div>
+                                            <div class="w-full text-lg font-semibold">Tasdiqlash kerak - 
+                                                <span
+                                                class="inline-flex items-center justify-center w-auto h-4 ms-2 text-xs font-semibold text-indigo-800 bg-indigo-200 rounded-full">
+                                                {{$filter->where('ariza_holati', 'kutulmoqda')->count()}}
+                                            </span>
+                                            </div>
                                             <div class="w-full">Tasdiqlash lozim bo'lganlar</div>
                                         </div>
                                         <svg class="w-5 h-5 ms-3 rtl:rotate-180" aria-hidden="true"
@@ -87,7 +97,12 @@
                                     <label for="category3"
                                         class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-green-600 peer-checked:text-green-600 hover:text-green-600 hover:bg-green-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                                         <div class="block">
-                                            <div class="w-full text-lg font-semibold"> Tasdiqlangan</div>
+                                            <div class="w-full text-lg font-semibold"> Tasdiqlangan - 
+                                                <span
+                                                class="inline-flex items-center justify-center w-auto h-4 ms-2 text-xs font-semibold text-green-800 bg-green-200 rounded-full">
+                                                {{$filter->where('ariza_holati', 'maqullandi')->count()}}
+                                            </span>
+                                            </div>
                                             <div class="w-full">Tasdiqlangan barcha ma'lumotlar</div>
                                         </div>
                                         <svg class="w-5 h-5 ms-3 rtl:rotate-180" aria-hidden="true"
@@ -103,7 +118,12 @@
                                     <label for="category4"
                                         class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-red-600 peer-checked:text-red-600 hover:text-red-600 hover:bg-red-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                                         <div class="block">
-                                            <div class="w-full text-lg font-semibold">Rad etilgan</div>
+                                            <div class="w-full text-lg font-semibold">Rad etilgan - 
+                                                <span
+                                                class="inline-flex items-center justify-center w-auto h-4 ms-2 text-xs font-semibold text-red-800 bg-red-200 rounded-full">
+                                                {{$filter->where('ariza_holati', 'rad_etildi')->count()}}
+                                            </span>
+                                            </div>
                                             <div class="w-full">Rad etilgan ma'lumotlar</div>
                                         </div>
                                         <svg class="w-5 h-5 ms-3 rtl:rotate-180" aria-hidden="true"
