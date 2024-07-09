@@ -1,3 +1,8 @@
+<h3 align="left">Ha proyekt bitgan! :):</h3>
+<p align="left">
+Bu proyektimda OTM professor va unga biriktirilgan O'qtuvchi va ularga biriktirilgan Talabalarning ilmiy ishlarini baxolab umumiy reyting ballarini chiqaradigan sayt qilganman, unda ma'lumotlar yuklanib so'ng tekshirilgach shu ma'lumotlarni egasiga ballar hisoblanadi.
+</p>
+
 <h1 align="center">Hi 👋, I'm Raxmatilla</h1>
 <h3 align="center">I am a simple web developer from Uzbekistan</h3>
 
